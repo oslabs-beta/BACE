@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "R3F DevTool Google Chrome Extension",
   "scripts": {
-    "build": "./node_modules/.bin/gulp build",
+    "start": "cross-env NODE_ENV=production node server/server.js",
+    "build": "cross-env NODE_ENV=production webpack",
+    "dev": "concurrently \"cross-env NODE_ENV=development webpack-dev-server --progress --color\" \"nodemon ./server/server.js\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

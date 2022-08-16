@@ -10,6 +10,7 @@ module.exports = {
     filename: 'bundle.js',
     publicPath: '/'
   },
+  mode: process.env.NODE_ENV,
   module: {
     loaders: [
       {
