@@ -1,0 +1,10 @@
+{
+  "manifest_version": 2,
+  "name": "R3F DevTool",
+  "description": "Extension for Google Chrome browser",
+  "version": "1.0",
+  "permissions": [
+    "*://*/*"
+  ],
+  "devtools_page": "devtools.html"
+}
