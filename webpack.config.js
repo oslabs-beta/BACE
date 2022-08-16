@@ -12,7 +12,7 @@ module.exports = {
   },
   mode: process.env.NODE_ENV,
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.jsx/,
         exclude: /node_modules/,
