@@ -1,8 +1,12 @@
 // gulp is used to automate workflow
-import gulp from 'gulp'; 
-import rm from 'gulp-rm';
-import webpack from 'webpack';
-import fs from 'fs';
+const gulp = require('gulp');
+const rm = require('gulp-rm');
+const webpack = require('webpack');
+const fs = require('fs');
+// import gulp from 'gulp';
+// import rm from 'gulp-rm';
+// import webpack from 'webpack';
+// import fs from 'fs';
 const paths = {
   build: './build'
 };
