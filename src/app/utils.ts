@@ -1,9 +1,9 @@
 const uuidRegex = /^([a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}){1}$/
-export const isUUID = str => {
+export const isUUID = (str: string) => {
   return typeof str === 'string' && uuidRegex.test(str);
 };
 
-export const getEntityName = entity => {
+export const getEntityName = (entity: {[key: string]:string}) => {
   return entity.name || entity.baseType;
 };
 
@@ -12,7 +12,8 @@ export const getEntityName = entity => {
  * recursively searching through the objects for a
  * matching UUID.
  */
- export const getObjectByUUID = (obj, uuid) => {
+// currently returns type any because it will be an object - not a strict type
+ export const getObjectByUUID: any = (obj: {[key: string]:string}, uuid: string) => {
   if (obj.uuid === uuid) {
     return obj;
   } else if (obj.children && obj.children.length) {

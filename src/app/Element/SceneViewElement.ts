@@ -1,17 +1,24 @@
-import { LitElement, html } from lit-element
-import { getEntityName } from '../utils.js'
+import { LitElement, html, customElement, property } from 'lit-element'
+import { getEntityName } from '../utils'
 
+@customElement('scene-view-element')
 export default class SceneViewElement extends LitElement {
   // That is a static method you are looking at and the get is a getter for the property or the Object you want to get.
   // static class methods are defined on the class itself 
-  static get properties() {
-    return {
-      graph: { type: Object },
-      scenes: { type: Array },
-      activeScene: { type: String },
-      activeEntity: { type: String },
-    }
-  }
+
+  @property({ type: Object, }) graph: {[key: string]:any} = {};
+  @property({ type: Array, }) scenes: Array<any> = [];
+  @property({ type: String, }) activeScene: string | null = null;
+  @property({ type: String, }) activeEntity: string = 'scene';
+  @property({ type: Object, }) app: {[key: string]:any} = {};
+  // static get properties() {
+  //   return {
+  //     graph: { type: Object },
+  //     scenes: { type: Array },
+  //     activeScene: { type: String },
+  //     activeEntity: { type: String },
+  //   }
+  // }
 
   constructor() {
     super();
@@ -53,7 +60,7 @@ export default class SceneViewElement extends LitElement {
     <title-bar title="Scene">
       // when a scene is selected, map it?
       <select @change="${this.onSceneSelect}" class="chrome-select">
-        ${scenes.map(scene => html`<option value="${scene.uuid}" title="${scene.uuid}">${scene.name || scene.uuid}</option>`)}
+        ${this.scenes.map((scene: {[key: string]:string}) => html`<option value="${scene.uuid}" title="${scene.uuid}">${scene.name || scene.uuid}</option>`)}
       </select>
       // create a button to refresh the display
       <devtools-icon-button icon="refresh" @click="${this.onRefreshClick}">
@@ -63,8 +70,8 @@ export default class SceneViewElement extends LitElement {
     `;
   }
 
-  createSceneGraphNode(graph, uuid, selected, depth = 0) {
-    const obj = graph[uuid];
+  createSceneGraphNode(graph: {[key: string]:{[key: string]:any}}, uuid: string, selected: string, depth: number = 0) {
+    const obj: {[key: string]:any} = graph[uuid];
 
     return html`
     <tree-item
@@ -75,7 +82,7 @@ export default class SceneViewElement extends LitElement {
       // if depth is 0, this is the root
       ?root="${depth === 0}"
       // if this is selected, mark it as selected
-      ?selected="${obj.uuid && selected & selected === obj.uuid}"
+      ?selected="${obj.uuid && selected && selected === obj.uuid}"
       // if the obj is a scene in and of itself, mark it as open
       ?open="${obj.baseType === 'Scene'}"
       // display an arrow if the obj has children
@@ -85,16 +92,16 @@ export default class SceneViewElement extends LitElement {
     >
       <div slot="content">${getEntityName(obj)}</div>
       // map children nodes out and create additional nested nodes for them
-      ${obj.children.map(uuid => this[$createSceneGraphNode](graph, uuid, selected, depth + 1))}
+      ${obj.children.map((uuid:string) => this.createSceneGraphNode(graph, uuid, selected, depth + 1))}
     </tree-item>
     `
   }
 
   // should refresh the active scene
-  onRefreshClick(e){
+  onRefreshClick(e:any){
     if(this.activeScene){
       // dispatchEvent invokes event handlers synchronously
-      this.dispatchEvent(new CustomeEven('command', {
+      this.dispatchEvent(new CustomEvent('command', {
         detail: {
           type: 'refresh',
         },
@@ -104,7 +111,7 @@ export default class SceneViewElement extends LitElement {
     }
   }
   
-  onSceneSelect(e){
+  onSceneSelect(e:any){
     this.dispatchEvent(new CustomEvent('command', {
       detail: {
         type: 'select-scene',
@@ -115,13 +122,13 @@ export default class SceneViewElement extends LitElement {
     }));
   }
 
-  onContentUpdate(e){
+  onContentUpdate(e:any){
     if(this.app.content.getEntityCategory(e.detail.uuid) === 'scene'){
       this.requestUpdate();
     }
   }
 
-  onTreeItemSelect(e){
+  onTreeItemSelect(e:any){
     e.stopPropagation();
     const treeItem = e.composedPath()[0];
     const uuid = treeItem.getAttribute('uuid');

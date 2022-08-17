@@ -1,9 +1,18 @@
-import { LitElement, html } from lit-element;
+import { LitElement, html, customElement, property } from 'lit-element';
+import {ifDefined} from 'lit-html/directives/if-defined'
 import ContentBridge from '../ContentBridge.js';
 
 const ERROR_TIMEOUT = 5000;
 
-const panels = {
+type tPanel = {
+  title: string,
+  resource: string | null,
+}
+
+type tPanels = {
+  [key: string]: tPanel
+}
+const panels: tPanels = {
   scene: {
     title: 'Scene',
     resource: 'scenes',
@@ -22,34 +31,46 @@ const panels = {
   },
   rendering: {
     title: 'Rendering',
+    resource: null
   },
 };
 
+@customElement('app-element')
 export default class AppElement extends LitElement {
-  static get properties() {
-    return {
-      errorText: { type: String, },
-      needsReload: { type: Boolean, },
-      isReady: { type: Boolean },
-      // scene, geometries, materials, textures, rendering
-      panel: { type: String, },
-      activeScene: { type: String, },
-      activeEntity: { type: String, },
-      activeRenderer: { type: String, },
-    }
-  }
+  @property({ type: String, }) errorText: string | undefined = undefined;
+  @property({ type: Boolean, }) needsReload;
+  @property({ type: Boolean, }) isReady;
+  @property({ type: String, }) panel;
+  @property({ type: String, }) activeScene: string | undefined = undefined;
+  @property({ type: String, }) activeEntity: string | undefined = undefined;
+  @property({ type: String, }) activeRenderer: string | undefined = undefined;
+  @property({ type: ContentBridge, }) content;
+  @property({ type: Number, }) errorTimeout: number | null = null;
+  // static get properties() {
+  //   return {
+  //     errorText: { type: String, },
+  //     needsReload: { type: Boolean, },
+  //     isReady: { type: Boolean },
+  //     // scene, geometries, materials, textures, rendering
+  //     panel: { type: String, },
+  //     activeScene: { type: String, },
+  //     activeEntity: { type: String, },
+  //     activeRenderer: { type: String, },
+  //   }
+  // }
 
   constructor() {
     super();
 
     this.needsReload = true;
     this.isReady = false;
-    this.panel = 'scene'
+    this.panel = 'scene';
 
     this.onContentLoad = this.onContentLoad.bind(this);
     this.onContentError = this.onContentError.bind(this);
     this.onPanelClick = this.onPanelClick.bind(this);
     this.onContentUpdate = this.onContentUpdate.bind(this);
+    // this.setError = this.setError.bind(this)
     // this.onCommand = this.onCommand.bind(this);
 
     this.content = new ContentBridge();
@@ -63,7 +84,7 @@ export default class AppElement extends LitElement {
 
   }
 
-  setError(error) {
+  setError(error: string) {
     if (this.errorTimeout) {
       window.clearTimeout(this.errorTimeout)
     }
@@ -75,7 +96,7 @@ export default class AppElement extends LitElement {
   }
   
   // fired when content is initially loaded
-  onContentLoad(e){
+  onContentLoad(e: any){
     this.activeScene = undefined;
     this.activeEntity = undefined;
     this.activeRenderer = undefined;
@@ -84,19 +105,35 @@ export default class AppElement extends LitElement {
   }
 
   // error
-  onContentError(e){
+  onContentError(e: any){
     this.setError(e.detail);
   }
 
-  onPanelClick(e){
+  refreshData(config={activeEntity: false}) {
+    const panelDef = panels[this.panel];
+    if (panelDef && panelDef.resource) {
+      this.content.requestOverview(panelDef.resource);
+    }
+    if (this.activeScene && this.panel === 'scene') {
+      this.content.requestSceneGraph(this.activeScene);
+    }
+    if (config.activeEntity !== false && this.activeEntity && this.panel !== 'rendering') {
+      this.content.requestEntity(this.activeEntity);
+    }
+    if (this.panel === 'rendering' && this.activeRenderer) {
+      this.content.requestEntity(this.activeRenderer);
+    }
+  }
+
+  onPanelClick(e: any){
     this.panel = e.target.getAttribute('panel');
   }
 
-  onContentUpdate(e){
+  onContentUpdate(e: any){
     switch(e.type){
       case 'observe':
         this.isReady = true;
-        const renderer = e.detail.uuids.find(id => /renderer/.test(id));
+        const renderer = e.detail.uuids.find((id: string) => /renderer/.test(id));
         if(!this.activeRenderer && renderer){
           this.activeRenderer = renderer;
         }
@@ -132,7 +169,7 @@ export default class AppElement extends LitElement {
   }
 
   render() {
-    const panel = this.panel || 'scene';
+    const panel: string = this.panel || 'scene';
     const panelDef = panels[panel];
     const errorText = this.errorText || '';
 
@@ -153,7 +190,7 @@ export default class AppElement extends LitElement {
     // define which entity is being inspected
     const inspectedEntity = panel === 'rendering' ? this.activeRenderer : this.activeEntity;
     // grab the data of the inspected entity
-    const inspectedEntityData = showInspector ? this.content.getEntityAndDependencies(inspectedEntity) : void 0;
+    const inspectedEntityData = showInspector ? this.content.getEntityandDependencies(inspectedEntity) : void 0;
     // if the panel is rendering, get the info of an active renderer if there is one
     const renderingInfo = panel === 'rendering' && this.activeRenderer ? this.content.getRenderingInfo(this.activeRenderer) : void 0;
     
@@ -175,7 +212,7 @@ export default class AppElement extends LitElement {
 
       // application panes
       // selecting a panel
-      <tab-bar class="flex inverse collapsible" visible-when='ready' @click=${this[$onPanelClick]}> 
+      <tab-bar class="flex inverse collapsible" visible-when='ready' @click=${this.onPanelClick}> 
         // titles of each panels component
         <x-icon class="collapsible" panel="scene" title="${panels.scene.title}" ?active=${panel === 'scene'} icon="cubes" fill></x-icon>
         <x-icon class="collapsible" panel="geometries" title="${panels.geometries.title}" ?active=${panel === 'geometries'} icon="dice-d20" fill></x-icon>
