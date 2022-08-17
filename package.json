@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "R3F DevTool Google Chrome Extension",
   "scripts": {
-    "start": "cross-env NODE_ENV=production node server/server.js",
-    "build": "cross-env NODE_ENV=production webpack",
-    "dev": "concurrently \"cross-env NODE_ENV=development webpack-dev-server --progress --color\" \"nodemon ./server/server.js\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "repository": {
     "type": "git",
@@ -18,12 +18,13 @@
     "bootstrap": "^5.2.0",
     "cors": "^2.8.5",
     "express": "^4.18.1",
+    "next": "^12.2.5",
     "node-fetch": "^2.6.7",
     "pg": "^8.7.3",
-    "react": "^16.8.0",
+    "react": "^16.14.0",
     "react-bootstrap": "^2.4.0",
     "react-chartjs-2": "^4.3.1",
-    "react-dom": "^16.8.0",
+    "react-dom": "^16.14.0",
     "react-hot-loader": "^4.13.0",
     "react-router": "^6.3.0",
     "react-router-bootstrap": "^0.26.2",
