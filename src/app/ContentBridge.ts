@@ -1,6 +1,16 @@
 import { isUUID } from "./utils";
 
+// <EventDef extends { type: any}> ?
 export default class ContentBridge extends EventTarget {
+  // varName: Map<keyType, valueType>
+  // we have to define types outside of the constructor.  They have to have a default.  They can be defined in our outside the constructor.
+  db: Map<string | undefined, {uuid:string | undefined, [key:string]:any}>;
+  overviews: Map<string | null, any>;
+  sceneGraphs: Map<string | undefined, any>;
+  renderers: Map<any, any>; // not called anywhere because this file is incomplete -- will need to adjust types later
+  renderingInfo: Map<string, string>;
+  port: any; // this is chrome port? - not sure what other type this has?
+
   constructor() {
     super();
 
@@ -20,26 +30,37 @@ export default class ContentBridge extends EventTarget {
       tabId: chrome.devtools.inspectedWindow.tabId,
     });
 
-    this.port.onDisconnect.addListener(req => {
+    this.port.onDisconnect.addListener((req: object) => {
       console.error('disconnected from background', req)
     });
 
     // this.port.onMessage.addListener(e => )
 
     // keydown event listener goes here
+
+    // binding all functions seems required in ts?
+    // this.reload = this.reload.bind(this);
+    // this.getEntity = this.getEntity.bind(this);
+    // this.getEntityandDependencies = this.getEntityandDependencies.bind(this)
   }
 
   reload() {
-    chrome.devtools.inspectedWindow.reload();
+    chrome.devtools.inspectedWindow.reload({});
   }
 
-  getEntityandDependencies(rootUUID){
-    const data = {};
-    const uuids = [rootUUID];
+  getEntity(uuid: string | undefined): {uuid: string | undefined, [key:string]:any} {
+    // meant to return an entity object with any keys and any values or the empty obj, defined currently as any
+    // need to complete this
+    return {uuid};
+  }
+
+  getEntityandDependencies(rootUUID: string | undefined){
+    const data : {[key:string]: any} = {};
+    const uuids : Array<string | undefined> = [rootUUID];
     while(uuids.length){
-      const uuid = uuids.shift();
+      const uuid: string | undefined = uuids.shift();
       const entity = this.getEntity(uuid);
-      if(entity && !data[uuid]){
+      if(entity && uuid && !data[uuid]){
         data[uuid] = entity;
         for(let value of Object.values(entity)){
           if(isUUID(value)){
@@ -52,19 +73,19 @@ export default class ContentBridge extends EventTarget {
     return data;
   } 
 
-  getRenderingInfo(uuid) {
+  getRenderingInfo(uuid: string) {
     return this.renderingInfo.get(uuid);
   }
 
-  getResourcesOverview(type) {
+  getResourcesOverview(type: string | null) {
     return this.overviews.get(type);
   }
 
-  getSceneGraph(uuid) {
+  getSceneGraph(uuid: string) {
     return this.sceneGraphs.get(uuid);
   }
 
-  updateProperty(uuid, property, value, dataType) {
+  updateProperty(uuid: string, property: string, value: string, dataType: string | null) {
     const object = this.getEntity(uuid);
     // dispatchToContent should be defined below
     this.dispatchToContent('entity-update', {
@@ -82,35 +103,35 @@ export default class ContentBridge extends EventTarget {
   }
 
   // request methods
-  requestEntity(uuid) {
+  requestEntity(uuid: string) {
     this.dispatchToContent('_request-entity', { uuid });
   }
 
-  requestOverview(type) {
+  requestOverview(type: string | null) {
     this.dispatchToContent('_request-overview', { type })
   }
 
-  requestSceneGraph(uuid) {
+  requestSceneGraph(uuid: string) {
     this.dispatchToContent('_request-scene-graph', { uuid });
   }
 
-  requestRenderingInfo(uuid) {
+  requestRenderingInfo(uuid: string) {
     this.dispatchToContent('_request-rendering-info', { uuid });
   }
 
-  select(uuid) {
+  select(uuid: string) {
     if (!uuid) {
       return;
     }
     this.dispatchToContent('select', { uuid })
   }
 
-  onMessage(request) {
+  onMessage(request: any) {
     // @TODO
   }
 
-  update(entity) {
-    this.db.set(entity.uuid, entity);
+  update(entity: {uuid:string | undefined, [key:string]:any}) {
+    this.db.set(entity.uuid, entity); // this means that db is a map with key entity.uuid and value entity
     this.dispatchEvent(new CustomEvent('entity-update', {
       detail: {
         entity,
@@ -119,18 +140,19 @@ export default class ContentBridge extends EventTarget {
     }));
   }
 
-  dispatchToContent(type, detail) {
+  dispatchToContent(type: string, detail: any) {
     this.eval(`__R3F_DEVTOOLS__.dispatchEvent(new CustomEvent('${type}', {
       detail: ${JSON.stringify(detail)},
     }));`
     );
   }
 
-  async eval(string) {
+  async eval(str: string) {
     // supposed to call log
     // this.log('EVAL', string);
 
-    const [result, error] = await chrome.devtools.inspectedWindow.eval(string);
+    // fixed typing very sketchily - may break -- eyeglasses
+    const [result, error] = await chrome.devtools.inspectedWindow.eval(str) as unknown as Array<any>;
     if (error) {
       console.warn(error);
     }

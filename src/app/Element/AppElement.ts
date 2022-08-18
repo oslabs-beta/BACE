@@ -97,7 +97,7 @@ export default class AppElement extends LitElement {
   
   // fired when content is initially loaded
   onContentLoad(e: any){
-    this.activeScene = undefined;
+
     this.activeEntity = undefined;
     this.activeRenderer = undefined;
     this.isReady = false;
