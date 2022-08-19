@@ -15,8 +15,8 @@ function App() {
     <Route index element={<HomePage/>}/>
     <Route path='/search' element={<Search/>}/>
     <Route path='/test' element={<TestRoute/>}/>
-    {/* Catch all routes incase of error */}
-    <Route path='*' element={<h2>404 Page Not Found</h2>}/>
+    {/* if not added the extension does not render, needs to be resolved*/}
+    <Route path='*'/>
     </Route>
   </Routes>
   </BrowserRouter> 

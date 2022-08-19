@@ -15,7 +15,7 @@ const handleClick = event => {
 // Value of onclick to manipulate object directly with the value of the 3d object 
 // object = event.target.value 
 
-function ObjList() {
+function ObjList(styles) {
   return (
     <div>
       <h3 className={styles.titleBox}>Objects</h3>
