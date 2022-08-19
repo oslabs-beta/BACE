@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../Styles/objlist.css'
+import '../Styles/objlist.css'
 
 // object variable placeholder
 let object = 'Object Test'
@@ -15,12 +15,12 @@ const handleClick = event => {
 // Value of onclick to manipulate object directly with the value of the 3d object 
 // object = event.target.value 
 
-function ObjList(styles) {
+function ObjList() {
   return (
     <div>
-      <h3 className={styles.titleBox}>Objects</h3>
+      <h3 className="titleBox">Objects</h3>
       <div>
-        <div className={styles.listBox}>
+        <div className="listBox">
           <ul> 
             <li>Object 1</li>
             <li>{object}</li>
