@@ -147,12 +147,12 @@ export default class ContentBridge extends EventTarget {
     );
   }
 
-  async eval(str: string) {
+  eval(str: string) {
     // supposed to call log
     // this.log('EVAL', string);
 
     // fixed typing very sketchily - may break -- eyeglasses
-    const [result, error] = await chrome.devtools.inspectedWindow.eval(str) as unknown as Array<any>;
+    const [result, error] = chrome.devtools.inspectedWindow.eval(str) as unknown as Array<any>;
     if (error) {
       console.warn(error);
     }
