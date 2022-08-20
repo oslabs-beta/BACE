@@ -1,3 +1,4 @@
-client/node_modules
-client/build
-client/package-lock.json
+extension/node_modules
+extension/public/*.js
+extension/public/*.txt
+extension/package-lock.json
