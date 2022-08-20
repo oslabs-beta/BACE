@@ -1,3 +1,3 @@
-client2/node_modules
-client2/build
-client2/package-lock.json
+client/node_modules
+client/build
+client/package-lock.json
