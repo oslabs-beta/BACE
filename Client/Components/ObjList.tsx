@@ -24,7 +24,7 @@ function ObjList() {
           <ul> 
             <li>Object 1</li>
             <li>{object}</li>
-            <li>Object 3</li>
+            <li>Object 3 </li>
             <li>Object 4</li>
             <li>Object 5</li>
             <li>Object 6</li>
