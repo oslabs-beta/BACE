@@ -4,7 +4,7 @@ const CopyPlugin = require("copy-webpack-plugin");
 
 
 module.exports = {
-  entry: './src/popup.jsx',
+  entry: './src/popup.tsx',
   output: {
     path: path.resolve(__dirname, 'bundle'),
     filename: 'bundle.js',
@@ -12,15 +12,12 @@ module.exports = {
   module: {
     rules: [
       { 
-      test: /\.(js|jsx)$/, 
+      test: /\.(ts|tsx)$/, 
       exclude: /node_modules/,
       use: {
-       loader: 'babel-loader',
-       options: {
-        presets: ['@babel/preset-env', '@babel/preset-react' ]
-       }
+       loader: 'ts-loader',
       } 
-    }, 
+    },
     {
       test: /\.css$/,
       use: ["style-loader", "css-loader"],
@@ -29,7 +26,10 @@ module.exports = {
       test: /\.png|svg|jpg|gif$/,
       use: ["file-loader"],
     }
-  ],
+  ]
+  },
+  resolve: {
+    extensions: [".tsx", ".ts", ".js"],
   },
   plugins: [
     new HtmlWebpackPlugin(
@@ -42,5 +42,10 @@ module.exports = {
     patterns: [
       { from: "public"},
     ]})
-  ]
+  ],
+  devServer: {
+    static: {
+      directory: path.join(__dirname, "./build"),
+    }
+  }
 };

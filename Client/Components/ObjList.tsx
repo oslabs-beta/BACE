@@ -5,11 +5,11 @@ import '../Styles/objlist.css'
 let object = 'Object Test'
 
 //handling the clicked inspected element ---> this is just a placeholder
-const handleClick = event => {
-  const object = event.target.value;
+// const handleClick = event: any =>  {
+//   const object = event.target.value;
 
-  return object;
-} 
+//   return object;
+// } 
 
 // onclick={handleClick()}
 // Value of onclick to manipulate object directly with the value of the 3d object 

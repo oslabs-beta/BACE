@@ -1,5 +1,5 @@
 import React from 'react';
-import ObjList from "./ObjList.jsx"
+import ObjList from "./ObjList"
 
 
 function Search() {
