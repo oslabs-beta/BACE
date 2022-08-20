@@ -1,4 +1,0 @@
-extension/node_modules
-extension/public/*.js
-extension/public/*.txt
-extension/package-lock.json

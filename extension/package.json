@@ -1,7 +1,7 @@
 {
   "name": "client2",
   "version": "1.0.0",
-  "description": "",
+  "description": "R3F DevTool",
   "main": "index.js",
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack",
