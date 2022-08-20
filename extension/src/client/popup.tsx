@@ -1,6 +1,6 @@
 import React from "react";
 import {render} from 'react-dom';
-import App from '../Components/App'
+import App from './components/App'
 
 function Popup() {
   return (

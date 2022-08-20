@@ -1,9 +1,9 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import HomePage from './HomePage'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import HomePage from './HomePage';
 import Search from "./Search";
 import React from 'react';
-import SharedLayout from './SharedLayout'
-import TestRoute from "./TestRoute";
+import SharedLayout from './SharedLayout';
+import TestRoute from './TestRoute';
 
 //<h2>R3F Devtool</h2>
 function App() {

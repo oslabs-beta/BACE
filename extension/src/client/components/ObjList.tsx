@@ -1,8 +1,8 @@
 import React from 'react';
-import '../Styles/objlist.css'
+import '../../../styles/objlist.css'
 
 // object variable placeholder
-let object = 'Object Test'
+let object: string = 'Object Test'
 
 //handling the clicked inspected element ---> this is just a placeholder
 // const handleClick = event: any =>  {

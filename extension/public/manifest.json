@@ -1,8 +1,10 @@
 {
   "name": "R3F Devtool",
   "description": "Inspect in 3d",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "manifest_version": 3,
+  "permissions": [
+  ],
   "action": {
     "default_popup": "popup.html"
   }
