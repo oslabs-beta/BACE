@@ -5,7 +5,9 @@
   "manifest_version": 3,
   "permissions": [
   ],
+  "devtools_page" : "devtools.html",
   "action": {
     "default_popup": "popup.html"
+   
   }
 }

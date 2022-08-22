@@ -3,11 +3,16 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 // const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-  entry: './src/client/chrome_ext/popup.tsx',
+  entry: {
+    //create multiple entry points
+    popup:  './src/client/chrome_ext/popup.tsx',
+    devtool: './src/client/chrome_ext/devtool.tsx'
+},
   output: {
     path: path.resolve(__dirname, 'public'),
     publicPath: '/',
-    filename: 'bundle.js',
+    //each entry recieve output name of their key
+    filename: '[name].js'
   },
   mode: process.env.NODE_ENV,
   module: {
