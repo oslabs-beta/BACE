@@ -75,7 +75,7 @@ export default class EntityCache extends EventTarget {
       return;
     }
 
-    const id: string = this._getID(entity); // private method to get id
+    const id: string | undefined = this._getID(entity); // private method to get id
 
     if (!id) {
       // if no id, return
@@ -143,7 +143,7 @@ export default class EntityCache extends EventTarget {
       } else {
         // check each dependency
         // register those entities
-        utils.forEachDependency((scene: any, entity: Entity) => {
+        utils.forEachDependency(scene, (entity: Entity) => {
           this._registerEntity(entity);
           // check to see if it has all these three js props
           const valid = type === 'geometries' ? (entity.isGeometry || entity.isBufferGeometry) :
@@ -361,7 +361,7 @@ export default class EntityCache extends EventTarget {
     }
   }
 
-  _getID(entity: Entity) {
+  _getID(entity: Entity): string | undefined {
     // Store any observed renderer so IDs can be synthesized.
     if (typeof entity.render === 'function') {
       let rendererIndex = this.renderers.indexOf(entity);

@@ -35,7 +35,7 @@ const utils = {
   * @param {Object} options 
   * options.recursive [false] whether or not an object should recursively iterate over Object3D children and their dependencies.
   */
-  forEachDependency(entity: Entity, fn: (entity: Entity) => void, options: any = {}) {
+  forEachDependency(entity: Entity, fn: (entity: Entity) => void, options: any = {}): void {
     fn(entity);
 
     // check properties on entity
