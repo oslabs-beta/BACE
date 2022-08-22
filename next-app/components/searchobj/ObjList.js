@@ -1,10 +1,11 @@
-import styles from '../../styles/ObjList.module.css'
+import styles from "../../styles/ObjList.module.css"
 
 // object variable placeholder
 let object = 'Object Test'
 
 //handling the clicked inspected element ---> this is just a placeholder
 const handleClick = event => {
+  event.preventDefault();
   const object = event.target.value;
 
   return object;
@@ -33,10 +34,6 @@ function ObjList() {
     </div>
   )
 }
-
-
-
-
 
 
 export default ObjList

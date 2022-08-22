@@ -1,0 +1,16 @@
+{
+  "name": "R3F DevTool",
+  "description": "Extension for Google Chrome browser",
+  "version": "1.0",
+  "manifest_version": 3,    
+  "action": {
+    "default_title": "R3F DevTool",
+    "default_popup": "index.html"
+  },
+  "icon": [
+    { "16": "./next-assets/bace.png" },
+    { "32": "./next-assets/bace.png" },
+    { "64": "./next-assets/bace.png" },
+    { "128": "./next-assets/bace.png" }
+  ]
+}

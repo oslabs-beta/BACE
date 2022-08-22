@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "R3F DevTool Google Chrome Extension",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "NODE_OPTIONS='--inspect' next dev",
+    "build": "next build && next export && mv out/_next out/next && rsync -va --delete-after out/* ../extension/ && rm -rf out",
     "start": "next start",
     "lint": "next lint"
   },
