@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 // const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-  entry: './src/client/popup.tsx',
+  entry: './src/client/chrome_ext/popup.tsx',
   output: {
     path: path.resolve(__dirname, 'public'),
     publicPath: '/',

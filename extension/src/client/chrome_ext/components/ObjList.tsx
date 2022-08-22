@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../../styles/objlist.css'
+import '../../../../styles/objlist.css'
 
 // object variable placeholder
 let object: string = 'Object Test'
