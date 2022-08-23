@@ -1,7 +1,7 @@
 import { Entity } from '../types';
 import utils from './utils';
 
-export default (() => {
+// export default (() => {
 
   const PATCHED = '__SERIALIZATION_PATCHED__';
 
@@ -30,7 +30,8 @@ export default (() => {
     },
   }
 
-  return class EntityCache extends EventTarget {
+  // return class EntityCache extends EventTarget {
+  class EntityCache extends EventTarget {
     scenes: Set<any>;
     renderers: Entity[];
     entityMap: Map<string, Entity>;
@@ -381,4 +382,6 @@ export default (() => {
       }
     }
   };
-}); 
+// });
+
+export default EntityCache;

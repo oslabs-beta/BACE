@@ -8,6 +8,8 @@ export type Entity = {
 declare global {
   interface Window {
     bbHelper: THREE.BoxHelper;
+    ctor: any;
+    t: Entity | null;
   }
 }
 
