@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import utils from './utils';
-// import { Entity } from '../types'
+import TransformControls from './TransformControls';
 
 export default () => {
   return class DevToolsScene extends THREE.Scene {

@@ -43,6 +43,9 @@ declare global {
       type: 'LineSegments' | string;
       readonly isLineSegments: true;
   }
+}
+
+declare global {
 
   export class Line<
     TGeometry extends BufferGeometry = BufferGeometry,
@@ -64,7 +67,9 @@ declare global {
     raycast(raycaster: THREE.Raycaster, intersects: THREE.Intersection[]): void;
     updateMorphTargets(): void;
   }
+}
 
+declare global {
   export class BufferGeometry extends THREE.EventDispatcher {
     /**
      * This creates a new BufferGeometry. It also sets several properties to an default value.
@@ -242,6 +247,5 @@ declare global {
      * @deprecated Use {@link BufferGeometry#deleteAttribute .deleteAttribute()} instead.
      */
     removeAttribute(name: string): BufferGeometry;
-}
-
+  }
 }
