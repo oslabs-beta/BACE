@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../../styles/objlist.css'
+import '../../../../styles/global.css'
 
 // object variable placeholder
 let object: string = 'Object Test'
@@ -34,10 +34,6 @@ function ObjList() {
     </div>
   )
 }
-
-
-
-
 
 
 export default ObjList

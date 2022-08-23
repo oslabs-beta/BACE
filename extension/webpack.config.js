@@ -35,17 +35,26 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin(
       {
-        filename: 'popup.html',
-        template: path.resolve(__dirname, 'public/popup.html'),
+        filename: 'index.html',
+        template: path.resolve(__dirname, 'public/index.html'),
         inject: false,
         minify: false,
       },
     ),
   ],
   devServer: {
+    port: 8080,
+    hot: true,
+    historyApiFallback: true,
     static: {
       directory: path.resolve(__dirname, 'public/'),
       publicPath: '/public',
     },
+    proxy: {
+      '/api/**': {
+        target: 'http://localhost:3000/',
+        secure: false
+      }
+    }
   },
 };
