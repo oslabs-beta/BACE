@@ -56,9 +56,18 @@ module.exports = {
   //   )
   // ],
   devServer: {
+    port: 8080,
+    hot: true,
+    historyApiFallback: true,
     static: {
       directory: path.resolve(__dirname, 'public/dist'),
       publicPath: '/public',
     },
+    proxy: {
+      '/api/**': {
+        target: 'http://localhost:3000/',
+        secure: false
+      }
+    }
   },
 };
