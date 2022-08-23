@@ -1,12 +1,12 @@
 import { LitElement, html } from 'lit-element'
-import { Entity } from '../../types.js';
-// import RendererTypes from '../data/renderers.js';
-// import ObjectTypes from '../data/objects.js';
-// import LightTypes from '../data/lights.js';
-// import MaterialTypes from '../data/materials.js';
-// import GeometryTypes from '../data/geometry.js';
-// import TextureTypes from '../data/textures.js';
-import { getEntityName } from '../utils.js';
+import { Entity } from '../../types';
+import RendererTypes from '../data/renderers';
+import ObjectTypes from '../data/objects';
+import LightTypes from '../data/lights';
+import MaterialTypes from '../data/materials';
+import GeometryTypes from '../data/geometry';
+import TextureTypes from '../data/textures';
+import { getEntityName } from '../utils';
 
 const propByString = function(o: any /* object */, s: string) {
   s = s.replace(/\[(\w+)\]/g, '.$1'); // convert indexes to properties
