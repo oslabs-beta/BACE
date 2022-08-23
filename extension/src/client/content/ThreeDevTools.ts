@@ -1,6 +1,10 @@
 import React, { FC, useState, Component } from 'react';
 import * as THREE from 'three';
+import EntityCache from './EntityCache';
+import utils from './utils';
+import { Entity } from '../types'
 
+const DEBUG = false; // tells whether we are in debug mode or prod mode
 
 export default(() => {
   return class ThreeDevTools {
@@ -11,7 +15,7 @@ export default(() => {
       entityCache: any; 
       entitiesRecentlyObserved: Set<any>;
       devtoolsScene: any;
-      selected: any;
+      selected: Entity | null;
 
     constructor(target: any){
       this.USE_RENDER_OVERLAY = false;
@@ -24,7 +28,7 @@ export default(() => {
 
       this.devtoolsScene = null;
 
-      this.selected = window.$t = null;
+      this.selected = window.t = null;
 
       this.target.addEventListener('observe', (e: any): any => this.observe(e.detail));
       this.target.addEventListener('register', (e: any): any => this.register(e.detail && e.detail.revision));
@@ -70,7 +74,7 @@ export default(() => {
         if(this.devtoolsScene){
           this.devtoolsScene.selectObject(selected);
         }
-        this.selected = window.$t = selected;
+        this.selected = window.t = selected;
       }
     }
 
@@ -81,7 +85,7 @@ export default(() => {
     //   dataType: any;
     // };
 
-    update(uuid?: string, property?: any, value: number, dataType?: any){
+    update(value: number, uuid?: string, property?: any, dataType?: any){
       this.log('update', uuid, property, value, dataType);
       const entity = this.entityCache.getEntity(uuid);
 
@@ -92,20 +96,20 @@ export default(() => {
       const { target, key } = utils.getTargetAndKey(entity, property);
 
       if(dataType === 'color'){
-        if(target[key] && target[key].isColor){
+        if(key && target[key] && target[key].isColor){
           target[key].setHex(value);
         }
-        else{
+        else if (key){
           // https://stackoverflow.com/questions/17256094/what-does-floatpar4-16-255-255-0f-mean#:~:text=The%20shift%20and%20and%20operator,to%20extract%20only%20one%20byte.&text=This%20gives%20you%20the%20red%20byte.
           // Color constructor looks like it comes from 
-          target[key] = new Color((value >> 16 & 255)/255,
+          target[key] = new THREE.Color((value >> 16 & 255)/255,
           (value >> 8 & 255)/225, (value & 255));
         }
       }
-      else if (dataType === 'enum'){
+      else if (dataType === 'enum' && key){
         target[key] = value === -1 ? null : value;
       }
-      else{
+      else if (key){
         target[key] = value;
       }
     }
@@ -190,7 +194,7 @@ export default(() => {
           id: 'three-devtools',
           type: type,
           data,
-        }, *);
+        }, '*');
       } catch (e){
         if(!data){
           throw e;
