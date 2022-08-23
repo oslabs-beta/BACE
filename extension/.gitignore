@@ -3,4 +3,9 @@ public/bundle.js
 public/bundle.js.LICENSE.txt
 package-lock.json
 
-!node_modules/three/src/constants.js
+# node_modules/*
+!node_modules/three
+node_modules/three/*
+!node_modules/three/src
+node_modules/three/src/*
+!node_modules/three/src/constants.ts

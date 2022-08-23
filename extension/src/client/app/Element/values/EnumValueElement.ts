@@ -4,10 +4,10 @@ import { ConstantTypes } from '../../constants.js';
 // let constants: any[]; 
 // extension/node_modules/three/src/constants.js
 // import * as constants from '../../../../../node_modules/three/src/constants;
-interface constantTypes {
-  [key: string]: string[]
-}
-import * as constants from 'three/src/constants';
+// interface constantTypes {
+//   [key: string]: string[]
+// }
+import constants from 'three/src/constants';
 import ChromeSelectStyle from '../shared-styles/chrome-select';
 
 export default class EnumValueElement extends LitElement {
@@ -42,10 +42,7 @@ export default class EnumValueElement extends LitElement {
 
     const options = ConstantTypes[this.type].map((c, i) => {
       let value: any;
-      console.log(constants)
-      if (c in Object.keys(constants)) {
-        value = constants[c];
-      }
+      value = constants[c];
 
       // let 'null' be a special enum (-1)
       if (c === 'null') value = -1;
