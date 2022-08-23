@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import HomePage from './HomePage';
-import Search from "./Search";
+import Search from "./page1/Search";
 import React from 'react';
 import SharedLayout from './SharedLayout';
 import TestRoute from './TestRoute';

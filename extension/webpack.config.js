@@ -9,9 +9,9 @@ module.exports = {
     devtool: './src/client/chrome_ext/devtool.tsx'
 },
   output: {
-    path: path.resolve(__dirname, 'public'),
-    publicPath: '/',
-    //each entry recieve output name of their key
+    path: path.resolve(__dirname, 'public/dist'),
+    publicPath: '/public',
+    //each entry receive output name of their key
     filename: '[name].js'
   },
   mode: process.env.NODE_ENV,
@@ -37,19 +37,27 @@ module.exports = {
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
   },
-  plugins: [
-    new HtmlWebpackPlugin(
-      {
-        filename: 'popup.html',
-        template: path.resolve(__dirname, 'public/popup.html'),
-        inject: false,
-        minify: false,
-      },
-    ),
-  ],
+  // plugins: [
+  //   new HtmlWebpackPlugin(
+  //     {
+  //       filename: 'index.html',
+  //       template: path.resolve(__dirname, 'public/index.html'),
+  //       inject: false,
+  //       minify: false,
+  //     }
+  //   ),
+  //   new HtmlWebpackPlugin(
+  //     {
+  //       filename: 'devtools.html',
+  //       template: path.resolve(__dirname, 'public/devtools.html'),
+  //       inject: false,
+  //       minify: false,
+  //     },
+  //   )
+  // ],
   devServer: {
     static: {
-      directory: path.resolve(__dirname, 'public/'),
+      directory: path.resolve(__dirname, 'public/dist'),
       publicPath: '/public',
     },
   },

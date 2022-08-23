@@ -105,15 +105,3 @@
 }
 
 
-// this was what we started with
-// {
-//   "compilerOptions": {
-//       "experimentalDecorators": true,
-//       "outDir": "./dist",
-//       "allowJs": true,
-//       "target": "es5"
-//   },
-//       "include": [
-//       "./src/**/*"
-//   ]
-// }

@@ -5,9 +5,12 @@
   "manifest_version": 3,
   "permissions": [
   ],
-  "devtools_page" : "devtools.html",
+  "icons": {
+    "128": "/assets/R3F.png"
+  },
+  "devtools_page": "devtools.html",
   "action": {
-    "default_popup": "popup.html"
+    "default_popup": "index.html"
    
   }
 }
