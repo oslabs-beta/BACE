@@ -1,2 +1,8 @@
 node_modules
+<<<<<<< HEAD
 # public/dist/**
+=======
+public/bundle.js
+public/bundle.js.LICENSE.txt
+package-lock.json
+>>>>>>> dev
