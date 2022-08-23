@@ -2,3 +2,5 @@ node_modules
 public/bundle.js
 public/bundle.js.LICENSE.txt
 package-lock.json
+
+!node_modules/three/src/constants.js

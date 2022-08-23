@@ -7,6 +7,13 @@ export const getEntityName = (entity: {[key: string]:string}) => {
   return entity.name || entity.baseType;
 };
 
+// These color conversions should be way more robust..
+// @TODO use THREE.Color
+export const hexNumberToCSSString = (hex: number) =>
+  `#${("000000" + (hex).toString(16)).slice(-6)}`;
+
+export const cssStringToHexNumber = (css: string) => +`0x${css.substr(1)}`;
+
 /**
  * Operates on a serialized THREE object,
  * recursively searching through the objects for a
