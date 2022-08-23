@@ -10,9 +10,9 @@ export default () => {
       domElement = document;
     }
 
-    THREE.Object3D.call(this);
+    // THREE.Object3D.call(this);
 
-    this.visible = false;
+    // this.visible = false;
 
     return;
 

@@ -1,6 +1,8 @@
 import React from "react";
 import {render} from 'react-dom';
-import App from './components/App'
+import Dev from './components/Dev'
+
+
 
 
 //Theme changed depending on users settings 
@@ -33,12 +35,14 @@ const iconPath: string = '/assets/icon1.png'
   const button = panel.createStatusBarButton(iconPath, 'statusbar', true)
   button.onClicked.addListener(handleShown);
   
-  chrome.devtools.panels.themeName = 'dark'
+  
 });
+
+chrome.devtools.panels.themeName = 'default'
 
 function Devtool() {
   return (
-    <App/>
+    <Dev/>
   ); 
 }
 

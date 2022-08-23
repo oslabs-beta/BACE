@@ -1,10 +1,12 @@
 import React from "react";
 import {render} from 'react-dom';
-import App from './components/App'
+import Pop from './components/Pop'
+
+
 
 function Popup() {
   return (
-    <App/>
+    <Pop/>
   ); 
 }
 
