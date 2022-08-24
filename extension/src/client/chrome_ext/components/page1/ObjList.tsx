@@ -1,11 +1,56 @@
 import React from 'react';
 import '../../../../../styles/search.css'
+import LoadInfo from "./../page2/LoadInfo"
 
 // object variable placeholder
-let object: string = 'Object Test'
 
-function handleView() {
- 
+const entity: any = {
+  Type: {
+    name: 'Type',
+    type: 'string',
+    prop: 'baseType',
+  },
+  UUID: {
+    name: 'UUID',
+    type: 'string',
+    prop: 'uuid',
+  },
+  Name: {
+    name: 'Name',
+    type: 'string',
+    prop: 'name',
+  }
+};
+
+/*
+ * input objectID
+ * output object's three.js property info (ex. material)
+ * pass output info as props to LoadInfo Component
+*/
+/* How to extract ID?
+ * set id when creating objectList as id HTML element attribute
+ * extract id thru event.target.id
+*/
+
+// recieves an ObjectUUID to be passed down to LoadInfo
+function handleInfo(entity: any) {
+  entity.UUID
+
+}
+
+
+const objects: JSX.Element[] = []
+//
+const objectList = () => {
+  // i < graph.length
+  for (let i = 0; i < 5; i++) {
+    //passed into objecct should be graph[uuid].name
+    // passed into handleInfo graph[uuid], which should be an object,
+    // that contains all sorts of properties
+    objects.push(
+    <button className="list-group-item list-group-item-action fs-6" onClick={handleInfo()}>{entity.name.name}</button>
+    )
+  }
 }
 
 function ObjList() {
@@ -16,12 +61,7 @@ function ObjList() {
       </div>
         <div>
           <div className="list-group list-group-light list-group-small"> 
-            <button className="list-group-item list-group-item-action fs-6">Object 1</button>
-            <button className="list-group-item list-group-item-action fs-6" onClick={handleView}>{object}</button>
-            <button className="list-group-item list-group-item-action fs-6">Object 3 </button>
-            <button className="list-group-item list-group-item-action fs-6">Object 4</button>
-            <button className="list-group-item list-group-item-action fs-6">Object 5</button>
-            <button className="list-group-item list-group-item-action fs-6">Object 6</button>
+            {objects}
           </div>
         </div>
     </div>

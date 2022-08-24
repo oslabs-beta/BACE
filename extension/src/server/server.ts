@@ -6,14 +6,15 @@ const app = express();
 app.use(express.json());
 
 app.use(express.static('public'));
-app.get('/', (req: Request, res: Response) => {
-  console.log('serving HTML file to main page')
+app.get('/public', express.static('public/dist'));
+app.get('/devtool.js', (req: Request, res: Response) => {
+  console.log('serving devtools.html file')
+  res.status(200).sendFile(path.resolve(__dirname, '../../public/devtools.html'))
+});
+app.get('/popup.js', (req: Request, res: Response) => {
+  console.log('serving index.html file')
   res.status(200).sendFile(path.resolve(__dirname, '../../public/index.html'))
-})
-
-app.get('/bundle.js', (req: Request, res: Response) => {
-  res.status(200).sendFile(path.resolve(__dirname, '../../public/bundle.js'))
-})
+});
 
 // will comment this out for now as having an error handler is helpful for debugging
 // app.use('/*', (req, res) => {

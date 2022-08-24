@@ -11,6 +11,5 @@
   "devtools_page": "devtools.html",
   "action": {
     "default_popup": "index.html"
-   
   }
 }

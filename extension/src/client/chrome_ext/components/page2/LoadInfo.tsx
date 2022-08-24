@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../../../../styles/global.css';
+import '../../../../../styles/global.css';
 import Collapse from "@kunukn/react-collapse";
 
 function LoadInfo({ duration="290ms" }) {

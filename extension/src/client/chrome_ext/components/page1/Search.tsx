@@ -5,15 +5,18 @@ import '../../../../../styles/search.css'
 import 'bootstrap/dist/css/bootstrap.css';
 
 
+function Search () {
 
-
-function Search() {
   return (
     <div id="container">
       <SearchBar />
-      <ObjList />
+      <ObjList/>
     </div>
   )
+
 }
+
+
+
 
 export default Search;

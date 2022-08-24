@@ -1,4 +1,4 @@
-import BaseElement from './BaseElement';
+import BaseElement from './BasesElement';
 
 export default class SelectElement extends BaseElement {
   constructor() {
