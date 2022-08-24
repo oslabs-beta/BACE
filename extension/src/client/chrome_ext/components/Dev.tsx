@@ -4,8 +4,8 @@ import HomePage from './HomePage';
 import Search from "./page1/Search";
 import SharedLayout_pop from './SharedLayout';
 import TestRoute from './TestRoute';
-import '../../../../../styles/global.css';
-import Collapse from "@kunukn/react-collapse";
+import '../../../../styles/global.css';
+// import Collapse from "@kunukn/react-collapse";
 import LoadInfo from './page2/LoadInfo';
 
 /*
@@ -33,9 +33,6 @@ function Dev() {
       <Search/>
       <LoadInfo/>
     </div>
-   
-
-    
   
   )
 

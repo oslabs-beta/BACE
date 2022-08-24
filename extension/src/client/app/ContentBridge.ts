@@ -1,5 +1,5 @@
 import { isUUID } from "./utils";
-import injection from './injection.js';
+// import injection from './injection.js';
 
 // <EventDef extends { type: any}> ?
 export default class ContentBridge extends EventTarget {
@@ -167,7 +167,7 @@ export default class ContentBridge extends EventTarget {
         this.renderers.clear();
         this.renderingInfo.clear();
 
-        this.eval(injection);
+        // this.eval(injection);
         this.dispatchEvent(new CustomEvent('load'));
         break;
       case 'observe':

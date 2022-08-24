@@ -26,7 +26,7 @@ function LoadInfo({ duration="290ms" }) {
   })
 
   return (
-    <div className="toggleBox">
+    <div className="toggleBox" id="display"> 
       {info}
     </div>
   )

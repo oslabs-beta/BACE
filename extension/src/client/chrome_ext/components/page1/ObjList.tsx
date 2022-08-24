@@ -33,25 +33,31 @@ const entity: any = {
 */
 
 // recieves an ObjectUUID to be passed down to LoadInfo
-function handleInfo(entity: any) {
-  entity.UUID
+function handleInfo(e?: React.MouseEvent<HTMLButtonElement>)  {
+  e?.preventDefault
+  console.log(entity.UUID.prop)
+const load = document.querySelector(".toggleBox")
+
+if(load?.hasAttribute('id')) {
+  load?.removeAttribute('id')
+} else {
+  load?.setAttribute('id', 'display')
+}
+
 
 }
 
 
 const objects: JSX.Element[] = []
-//
-const objectList = () => {
   // i < graph.length
   for (let i = 0; i < 5; i++) {
     //passed into objecct should be graph[uuid].name
     // passed into handleInfo graph[uuid], which should be an object,
     // that contains all sorts of properties
     objects.push(
-    <button className="list-group-item list-group-item-action fs-6" onClick={handleInfo()}>{entity.name.name}</button>
+    <button className="list-group-item list-group-item-action fs-6" onClick={() => handleInfo()}>{entity.Name.name + i}</button>
     )
   }
-}
 
 function ObjList() {
   return (
