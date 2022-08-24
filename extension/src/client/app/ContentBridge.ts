@@ -7,7 +7,7 @@ export default class ContentBridge extends EventTarget {
   db: Map<string | undefined, {uuid:string | undefined, [key:string]:any}>;
   overviews: Map<string | null, any>;
   sceneGraphs: Map<string | undefined, any>;
-  renderers: Map<any, any>; // not called anywhere because this file is incomplete -- will need to adjust types later
+  renderers: Map<any, any>; 
   renderingInfo: Map<string, string>;
   port: any; // this is chrome port? - not sure what other type this has?
 
@@ -51,6 +51,8 @@ export default class ContentBridge extends EventTarget {
   getEntity(uuid: string | undefined): {uuid: string | undefined, [key:string]:any} {
     // meant to return an entity object with any keys and any values or the empty obj, defined currently as any
     // need to complete this
+    if (uuid)
+      return /renderer/.test(uuid) ? this.renderers.get(uuid) : this.db.get(uuid);
     return {uuid};
   }
 
@@ -126,9 +128,12 @@ export default class ContentBridge extends EventTarget {
     this.dispatchToContent('select', { uuid })
   }
 
-  onMessage(request: any) {
-    // @TODO
-  }
+  // onMessage(request: any) {
+  //   // @TODO
+  //   const {id, type, data} = request;
+    
+  //   this.log('>>', )
+  // }
 
   update(entity: {uuid:string | undefined, [key:string]:any}) {
     this.db.set(entity.uuid, entity); // this means that db is a map with key entity.uuid and value entity
