@@ -8,7 +8,7 @@ module.exports = {
     popup:  './src/client/chrome_ext/popup.tsx',
     devtool: './src/client/chrome_ext/devtool.tsx',
     background: './src/client/background/index.ts',
-    contentscript: './src/client/chrome_ex/contentscript.tsx'
+    contentscript: './src/client/chrome_ext/contentscript.tsx'
 },
   output: {
     path: path.resolve(__dirname, 'public/dist'),

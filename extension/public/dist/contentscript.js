@@ -1,0 +1,1 @@
+(()=>{"use strict";chrome.runtime.onMessage.addListener((function(e,t,o){console.log(e.txt)})),window.addEventListener("message",(e=>{if(e.source===window&&"object"==typeof e.data&&"three-devtools"===e.data.id)try{chrome.runtime.sendMessage(e.data)}catch(e){console.error(e),chrome.runtime.sendMessage({type:"error",id:"three-devtools"})}}))})();
