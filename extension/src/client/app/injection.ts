@@ -11,6 +11,14 @@ const red = 'rgb(255, 137, 137)';
 const green = 'rgb(190, 251, 125)'
 const blue = 'rgb(120, 250, 228)';
 
+/*
+TODO: add the following line after (${TransformControls})(THREE);
+and before const EntityCache = (${EntityCache})();
+
+  const DevToolsScene = (${DevToolsScene})(THREE);
+
+*/
+
 export default `
 console.log('%c▲%cthree-devtools%cv${version}',
   'font-size:150%; color:${green}; text-shadow: -10px 0px ${red}, 10px 0px ${blue}; padding: 0 15px 0 10px;',
@@ -21,7 +29,6 @@ console.log('%c▲%cthree-devtools%cv${version}',
   const utils = (${utils})();
   const THREE = (${THREE})();
   (${TransformControls})(THREE);
-//   const DevToolsScene = (${DevToolsScene})(THREE);
   const EntityCache = (${EntityCache})();
   const devtools = new (${ThreeDevTools})(window.__THREE_DEVTOOLS__);
   window.__THREE_DEVTOOLS__.dispatchEvent(new CustomEvent('devtools-ready'));
