@@ -1,12 +1,11 @@
 import { LitElement, html, customElement, property } from 'lit-element'
 import { getEntityName } from '../utils'
-import ChromeSelectStyle from './shared-styles/chrome-select.js';
+import ChromeSelectStyle from './shared-styles/chrome-select';
 
 @customElement('scene-view-element')
 export default class SceneViewElement extends LitElement {
   // That is a static method you are looking at and the get is a getter for the property or the Object you want to get.
   // static class methods are defined on the class itself 
-
   @property({ type: Object, }) graph: {[key: string]:any} = {};
   @property({ type: Array, }) scenes: Array<any> = [];
   @property({ type: String, }) activeScene: string | null = null;

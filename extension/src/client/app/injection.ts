@@ -2,7 +2,7 @@ import utils from '../content/utils.js';
 import TransformControls from '../content/TransformControls.js';
 import EntityCache from '../content/EntityCache.js';
 import ThreeDevTools from '../content/ThreeDevTools';
-// import DevToolsScene from '../content/DevToolsScene';
+import DevToolsScene from '../content/DevToolsScene';
 // import InstrumentedToJSON from '../content/toJSON';
 import THREE from 'three';
 
@@ -21,7 +21,7 @@ console.log('%c▲%cthree-devtools%cv${version}',
   const utils = (${utils})();
   const THREE = (${THREE})();
   (${TransformControls})(THREE);
- const DevToolsScene = (DevToolsScene)(THREE);
+  const DevToolsScene = (${DevToolsScene})(THREE);
   const EntityCache = (${EntityCache})();
   const devtools = new (${ThreeDevTools})(window.__THREE_DEVTOOLS__);
   window.__THREE_DEVTOOLS__.dispatchEvent(new CustomEvent('devtools-ready'));

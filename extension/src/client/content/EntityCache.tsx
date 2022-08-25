@@ -60,9 +60,9 @@ import utils from './utils';
       };
     }
 
-    getEntity(id: string): Entity | undefined{
+    getEntity(uuid: string): Entity | undefined{
       // get Entity from map
-      return this.entityMap.get(id);
+      return this.entityMap.get(uuid);
     }
 
     /**

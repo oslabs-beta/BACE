@@ -72,6 +72,12 @@ declare global {
 }
 
 declare global {
+  interface Element {
+    assignedElements(): any;
+  }
+}
+
+declare global {
   export class BufferGeometry extends THREE.EventDispatcher {
     /**
      * This creates a new BufferGeometry. It also sets several properties to an default value.
