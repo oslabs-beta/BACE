@@ -1,5 +1,6 @@
 node_modules
-public/dist
+public/bundle.js
+public/bundle.js.LICENSE.txt
 
 !node_modules/three
 node_modules/three/*
