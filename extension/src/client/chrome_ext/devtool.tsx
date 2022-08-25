@@ -22,23 +22,25 @@ function handleHidden() {
 }
 
 
-const icon: string = '/assets/R3F.png';
-const url: string = '/devtools.html';
-const iconPath: string = '/assets/icon1.png'
+// const icon: string = '/assets/R3F.png';
+// const url: string = '/devtools.html';
+// const iconPath: string = '/assets/icon1.png'
 
- chrome.devtools.panels.create(`r3f devtool`, icon, url, (panel: any) => {
+//  chrome.devtools.panels.create(`r3f devtool`, icon, url, (panel: any) => {
  
-  panel.onShown.addListener(handleShown);
-  panel.onHidden.addListener(handleHidden);
+//   panel.onShown.addListener(handleShown);
+//   panel.onHidden.addListener(handleHidden);
 
   
-  const button = panel.createStatusBarButton(iconPath, 'statusbar', true)
-  button.onClicked.addListener(handleShown);
+//   const button = panel.createStatusBarButton(iconPath, 'statusbar', true)
+//   button.onClicked.addListener(handleShown);
   
   
-});
+// });
 
-chrome.devtools.panels.themeName = 'default'
+
+
+// chrome.devtools.panels.themeName = 'default'
 
 function Devtool() {
   return (

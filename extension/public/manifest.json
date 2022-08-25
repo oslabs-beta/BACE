@@ -3,8 +3,12 @@
   "description": "Inspect in 3d",
   "version": "1.0.0",
   "manifest_version": 3,
-  "permissions": [
-  ],
+  
+  "commands": {
+    "openWindow" : {
+      "description" : "open a window"
+    }
+  },
   "icons": {
     "128": "/assets/R3F.png"
   },
