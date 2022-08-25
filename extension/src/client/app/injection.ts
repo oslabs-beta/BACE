@@ -1,8 +1,8 @@
 import utils from '../content/utils.js';
-import TransformControls from '../content/TransformControls.js';
+// import TransformControls from '../content/TransformControls.js';
 import EntityCache from '../content/EntityCache.js';
 import ThreeDevTools from '../content/ThreeDevTools';
-import DevToolsScene from '../content/DevToolsScene';
+// import DevToolsScene from '../content/DevToolsScene';
 // import InstrumentedToJSON from '../content/toJSON';
 import THREE from 'three';
 
@@ -10,6 +10,15 @@ const version = chrome.runtime.getManifest().version;
 const red = 'rgb(255, 137, 137)';
 const green = 'rgb(190, 251, 125)'
 const blue = 'rgb(120, 250, 228)';
+
+/*
+TODO: add the following line after const THREE = (${THREE})();
+and before const EntityCache = (${EntityCache})();
+
+  (${TransformControls})(THREE);
+  const DevToolsScene = (${DevToolsScene})(THREE);
+
+*/
 
 export default `
 console.log('%c▲%cthree-devtools%cv${version}',
@@ -20,13 +29,11 @@ console.log('%c▲%cthree-devtools%cv${version}',
   const DEBUG = false;
   const utils = (${utils})();
   const THREE = (${THREE})();
-  (${TransformControls})(THREE);
-  const DevToolsScene = (${DevToolsScene})(THREE);
   const EntityCache = (${EntityCache})();
   const devtools = new (${ThreeDevTools})(window.__THREE_DEVTOOLS__);
   window.__THREE_DEVTOOLS__.dispatchEvent(new CustomEvent('devtools-ready'));
 })();
 `;
 
-  // const InstrumentedToJSON = (${InstrumentedToJSON})(); was originally inside of the export statement -- can add back if we need this toJSON file
+//   const InstrumentedToJSON = (${InstrumentedToJSON})(); was originally inside of the export statement -- can add back if we need this toJSON file
 

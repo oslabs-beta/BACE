@@ -1,8 +1,7 @@
 node_modules
-public/dist
-package-lock.json
+public/bundle.js
+public/bundle.js.LICENSE.txt
 
-# node_modules/*
 !node_modules/three
 node_modules/three/*
 !node_modules/three/src
