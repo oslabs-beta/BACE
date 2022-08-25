@@ -36,11 +36,11 @@ export default class EnumValueElement extends LitElement {
   }
 
   render() {
-    if (!ConstantTypes[this.type]) {
+    if (!ConstantTypes[this.type as keyof typeof ConstantTypes]) {
       return html`<input type="number" value="${this.value}" />`;
     }
 
-    const options = ConstantTypes[this.type as keyof ConstantTypes].map((c, i) => {
+    const options = ConstantTypes[this.type as keyof typeof ConstantTypes].map((c, i) => {
       let value: any;
       value = constants[c];
 
