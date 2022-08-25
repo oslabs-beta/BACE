@@ -21,12 +21,12 @@ console.log('%c▲%cthree-devtools%cv${version}',
   const utils = (${utils})();
   const THREE = (${THREE})();
   (${TransformControls})(THREE);
-//   const DevToolsScene = (${DevToolsScene})(THREE); // DevToolsScene incomplete
+  // const DevToolsScene = (${DevToolsScene})(THREE);
   const EntityCache = (${EntityCache})();
   const devtools = new (${ThreeDevTools})(window.__THREE_DEVTOOLS__);
   window.__THREE_DEVTOOLS__.dispatchEvent(new CustomEvent('devtools-ready'));
 })();
 `;
 
-  // const InstrumentedToJSON = (${InstrumentedToJSON})(); was originally inside of the export statement -- can add back if we need this toJSON file
+  const InstrumentedToJSON = (${InstrumentedToJSON})(); was originally inside of the export statement -- can add back if we need this toJSON file
 
