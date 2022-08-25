@@ -35,5 +35,5 @@ console.log('%c▲%cthree-devtools%cv${version}',
 })();
 `;
 
-  const InstrumentedToJSON = (${InstrumentedToJSON})(); was originally inside of the export statement -- can add back if we need this toJSON file
+//   const InstrumentedToJSON = (${InstrumentedToJSON})(); was originally inside of the export statement -- can add back if we need this toJSON file
 
