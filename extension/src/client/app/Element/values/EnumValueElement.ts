@@ -40,17 +40,17 @@ export default class EnumValueElement extends LitElement {
       return html`<input type="number" value="${this.value}" />`;
     }
 
-    const options = ConstantTypes[this.type as keyof typeof ConstantTypes].map((c, i) => {
+    const options = ConstantTypes[this.type as keyof typeof ConstantTypes].map((child, idx) => {
       let value: any;
-      value = constants[c];
+      value = constants[child as keyof typeof constants];
 
       // let 'null' be a special enum (-1)
-      if (c === 'null') value = -1;
+      if (child === 'null') value = -1;
 
-      if (typeof value !== 'number') throw new Error (`invalid constant value for ${c}`);
+      if (typeof value !== 'number') throw new Error (`invalid constant value for ${child}`);
 
       const selected = this.value === undefined ? i === 0 : this.value === value;
-      return html`<option value="${value}" .selected="${selected}">${c}</option>`;
+      return html`<option value="${value}" .selected="${selected}">${child}</option>`;
     })
 
     return html`
