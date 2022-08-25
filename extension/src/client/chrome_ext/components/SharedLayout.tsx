@@ -6,7 +6,7 @@ const SharedLayout = () => {
   return (
     <>
       <NavBar />
-      {/* Allows for all routes to recive NavBar */}
+      {/* Allows for all routes to receive NavBar */}
       <Outlet />
     </>
   );

@@ -1,0 +1,35 @@
+#container {
+  display: flex;
+  flex-direction: column;
+}
+
+#search {
+  width: auto;
+}
+.titleBox {
+  height: auto;
+  border: 1px solid black;
+  padding: 1px;
+  display: flex;
+  align-items: center;
+}
+
+.listBox {
+  overflow: hidden;
+  overflow-y: scroll;
+  display: flex;
+  align-items: flex-start;
+}
+
+#dev {
+  /*  */
+  display: flex;
+  flex-direction: row;
+}
+
+#devBox {
+  border: 1px solid black;
+  padding: 1px;
+  /* display: flex;
+  align-items: center; */
+}
