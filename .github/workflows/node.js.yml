@@ -21,7 +21,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: ./extension/
+        working-directory: /home/runner/work/BACE/extension/
         
     steps:
     - uses: actions/checkout@v3
