@@ -1,8 +1,6 @@
 node_modules
 public/dist
-package-lock.json
 
-# node_modules/*
 !node_modules/three
 node_modules/three/*
 !node_modules/three/src
