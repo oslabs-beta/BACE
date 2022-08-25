@@ -32,5 +32,6 @@ jobs:
         key: ${{ runner.OS }}-npm-cache-${{ hashFiles('**/package-lock.json') }}
         restore-keys: |
           ${{ runner.OS }}-npm-cache-
+    - run: npm uninstall *
     - run: npm install
     - run: npm run build --if-present
