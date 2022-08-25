@@ -1,4 +1,5 @@
 import { isUUID } from "./utils";
+import injection from './injection.js';
 
 // <EventDef extends { type: any}> ?
 export default class ContentBridge extends EventTarget {
@@ -10,6 +11,7 @@ export default class ContentBridge extends EventTarget {
   renderers: Map<any, any>; 
   renderingInfo: Map<string, string>;
   port: any; // this is chrome port? - not sure what other type this has?
+  revision: any;
 
   constructor() {
     super();
@@ -34,9 +36,24 @@ export default class ContentBridge extends EventTarget {
       console.error('disconnected from background', req)
     });
 
-    // this.port.onMessage.addListener(e => )
+    this.port.onMessage.addListener((e: any) => {
+      this.onMessage(e);
+    })
 
     // keydown event listener goes here
+    document.addEventListener('keydown', e => {
+      let mode, space;
+      switch (e.key) {
+        case 'q': space = true; break;
+        case 'w': mode = 'translate'; break;
+        case 'e': mode = 'rotate'; break;
+        case 'r': mode = 'scale'; break;
+      }
+
+      if (mode || space) {
+        this.dispatchToContent('_transform-controls-update', { mode, space });
+      }
+    }, { passive: true })
 
     // binding all functions seems required in ts?
     // this.reload = this.reload.bind(this);
@@ -48,7 +65,7 @@ export default class ContentBridge extends EventTarget {
     chrome.devtools.inspectedWindow.reload({});
   }
 
-  getEntity(uuid: string | undefined): {uuid: string | undefined, [key:string]:any} {
+  getEntity(uuid: string): {uuid: string | undefined, [key:string]:any} {
     // meant to return an entity object with any keys and any values or the empty obj, defined currently as any
     // need to complete this
     if (uuid)
@@ -61,12 +78,14 @@ export default class ContentBridge extends EventTarget {
     const uuids : Array<string | undefined> = [rootUUID];
     while(uuids.length){
       const uuid: string | undefined = uuids.shift();
-      const entity = this.getEntity(uuid);
-      if(entity && uuid && !data[uuid]){
-        data[uuid] = entity;
-        for(let value of Object.values(entity)){
-          if(isUUID(value)){
-            uuids.push(value);
+      if (uuid) {
+        const entity = this.getEntity(uuid);
+        if(entity && uuid && !data[uuid]){
+          data[uuid] = entity;
+          for(let value of Object.values(entity)){
+            if(isUUID(value)){
+              uuids.push(value);
+            }
           }
         }
       }
@@ -128,12 +147,78 @@ export default class ContentBridge extends EventTarget {
     this.dispatchToContent('select', { uuid })
   }
 
-  // onMessage(request: any) {
-  //   // @TODO
-  //   const {id, type, data} = request;
-    
-  //   this.log('>>', )
-  // }
+  onMessage(request: any) {
+    const { id, type, data } = request;
+
+    // this.log('>>', type, data);
+    switch(type) {
+      case 'error':
+        this.dispatchEvent(new CustomEvent('error', {
+          detail: data,
+        }));
+        break;
+      case 'register':
+        this.revision = data.revision;
+        this.eval(`console.log("three-devtools: debugging three.js r${this.revision}")`);
+        break;
+      case 'committed':
+        this.db.clear();
+        this.overviews.clear();
+        this.sceneGraphs.clear();
+        this.renderers.clear();
+        this.renderingInfo.clear();
+
+        this.eval(injection);
+        this.dispatchEvent(new CustomEvent('load'));
+        break;
+      case 'observe':
+        this.dispatchEvent(new CustomEvent('observe', {
+          detail: {
+            uuids: data.uuids,
+          },
+        }));
+        break;
+      case 'scene-graph':
+        this.sceneGraphs.set(data.uuid, data.graph);
+        this.dispatchEvent(new CustomEvent('scene-graph-update', {
+          detail: {
+            uuid: data.uuid,
+            graph: data.graph,
+          },
+        }));
+        break;
+      case 'overview':
+        this.overviews.set(data.type, data.entities);
+        this.dispatchEvent(new CustomEvent('overview-update', {
+          detail: {
+            type: data.type,
+            entities: data.entities,
+          },
+        }));
+        break;
+      case 'rendering-info':
+        this.dispatchEvent(new CustomEvent('rendering-info-update', {
+          detail: data,
+        }));
+        this.renderingInfo.set(data.uuid, data);
+        break;
+      case 'entity':
+        if (data.type === 'renderer') {
+          this.renderers.set(data.uuid, data);
+          this.dispatchEvent(new CustomEvent('renderer-update', {
+            detail: {
+              renderer: data,
+              uuid: data.uuid,
+            },
+          }));
+        } else if (Array.isArray(data)) {
+          for (let entity of data) {
+            this.update(entity);
+          }
+        }
+        break;
+    }
+  }
 
   update(entity: {uuid:string | undefined, [key:string]:any}) {
     this.db.set(entity.uuid, entity); // this means that db is a map with key entity.uuid and value entity
@@ -169,5 +254,10 @@ export default class ContentBridge extends EventTarget {
 
   // }
 
-  // @TODO need to add _contentLog, log functionality here for onMessage?
+  // @TODO need to add _contentLog, log 
+  // log(...message) {
+  //   if (VERBOSE_CONTENT_BRIDGE) {
+  //     console.log('ContentBridge:', ...message);
+  //   }
+  // }
 }

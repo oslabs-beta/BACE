@@ -1,13 +1,13 @@
 import { LitElement, html } from 'lit-element';
 
-const onVisibilityToggle: any = Symbol('onVisibilityToggle');
-const onClick: any = Symbol('onClick');
+// const onVisibilityToggle: any = Symbol('onVisibilityToggle');
+// const onClick: any = Symbol('onClick');
 
 export default class AccordianViewElement extends LitElement {
   // don't need static get properties in typescript
   //static get properties(): any {
     //return {
-    open: boolean;
+    open: boolean = true; // we initialized to true
    // }
   //}
 
@@ -85,8 +85,8 @@ render(): any {
 
   </style>
     <div class="row"
-      click="${this[onClick]}">
-      <button class="arrow" click="${this[onVisibilityToggle]}"></button>
+      click="${this.onClick}">
+      <button class="arrow" click="${this.onVisibilityToggle}"></button>
       <slot name="content"></slot>
     </div>
     <slot id="children"></slot>  
@@ -94,12 +94,12 @@ render(): any {
   `;
   }
 
-  [onVisibilityToggle](e: any) {
+  onVisibilityToggle(e: any) {
     e.stopPropagation();
     this.open = !this.open;
   }
 
-  [onClick](e: any) {
+  onClick(e: any) {
     e.stopPropagation();
     this.open = !this.open;
   }

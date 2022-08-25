@@ -257,3 +257,10 @@ declare global {
     removeAttribute(name: string): BufferGeometry;
   }
 }
+
+// for ResourcesViewElement.ts
+declare global {
+  interface HTMLElement {
+    open: boolean,
+  }
+}

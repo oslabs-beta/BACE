@@ -1,14 +1,14 @@
 import { LitElement, html } from 'lit-element';
 
-const onClick = Symbol('onClick');
-const onDoubleClick = Symbol('onDoubleClick');
-const onKeyDown = Symbol('onKeyDown');
-const onArrowClick = Symbol('onArrowClick');
-const onTreeItemSelect = Symbol('onTreeItemSelect');
-const addListeners = Symbol('addListeners');
-const removeListeners = Symbol('removeListeners');
-const connected = Symbol('connected');
-const listening = Symbol('listening');
+// const onClick = Symbol('onClick');
+// const onDoubleClick = Symbol('onDoubleClick');
+// const onKeyDown = Symbol('onKeyDown');
+// const onArrowClick = Symbol('onArrowClick');
+// const onTreeItemSelect = Symbol('onTreeItemSelect');
+// const addListeners = Symbol('addListeners');
+// const removeListeners = Symbol('removeListeners');
+// const connected = Symbol('connected');
+// const listening = Symbol('listening');
 const ObservedKeys = [
   'ArrowRight',
   'ArrowLeft',
@@ -24,10 +24,12 @@ export default class TreeItemElement extends LitElement {
   root: boolean;
   selected: boolean;
   open: boolean;
+  listening: boolean;
+  connected: boolean;
 
   constructor() {
     super();
-    this[onKeyDown] = this[onKeyDown].bind(this);
+    this.onKeyDown = this.onKeyDown.bind(this);
 
     this.unique = '';
     this.open = false;
@@ -36,28 +38,28 @@ export default class TreeItemElement extends LitElement {
     this.root = false;
     this.selected = false;
     
-    this[listening] = false;
-    this[connected] = false;
+    this.listening = false;
+    this.connected = false;
   }
 
   connectedCallback(): any {
     super.connectedCallback();
-    this[connected] = true;
-    this[addListeners]();
+    this.connected = true;
+    this.addListeners();
   }
 
   disconnectedCallback(): any {
-    this[removeListeners]();
-    this[connected] = false;
+    this.removeListeners();
+    this.connected = false;
     super.disconnectedCallback();
   }
 
-  shouldUpdate(changed): any {
+  shouldUpdate(changed: any): any {
     if(changed.has('root')){
       if(this.root){
-        this[addListeners]();
+        this.addListeners();
       } else {
-        this[removeListeners]();
+        this.removeListeners();
       }
     }
 
@@ -102,7 +104,7 @@ export default class TreeItemElement extends LitElement {
     }))
   }
 
-  [onKeyDown](e): void {
+  onKeyDown(e: any): void {
     if(ObservedKeys.indexOf(e.key) === -1) {
       return;
     }
@@ -182,24 +184,24 @@ export default class TreeItemElement extends LitElement {
     }
   }
 
-  [onArrowClick](e) {
+  onArrowClick(e: any) {
     if(this.getTreeItemChildren().length) {
       e.stopPropagation();
       this.open = !this.open;
     }
   }
 
-  [onClick](e) {
+  onClick(e: any) {
     e.stopPropagation();
     this.select();
   }
 
-  [onDoubleClick](e) {
+  onDoubleClick(e: any) {
     e.stopPropagation();
     this.open = !this.open;
   }
 
-  [onTreeItemSelect](e) {
+  onTreeItemSelect(e: any) {
     if(!this.root) {
       return;
     }
@@ -217,17 +219,17 @@ export default class TreeItemElement extends LitElement {
   }
 }
 
-[addListeners](): void {
-  if(this.root && this[connected] && !this[listening]){
-    this.addEventListener('keydown', this[onKeyDown]);
-    this.addEventListener('tree-item-select', this[onTreeItemSelect]);
-    this[listening] = true;
+addListeners(): void {
+  if(this.root && this.connected && !this.listening){
+    this.addEventListener('keydown', this.onKeyDown);
+    this.addEventListener('tree-item-select', this.onTreeItemSelect);
+    this.listening = true;
   }
 }
-[removeListeners](): void {
-  this.removeEventListener('keydown', this[onKeyDown]);
-  this.removeEventListener('tree-item-select', this[onTreeItemSelect]);
-  this[listening] = false;
+removeListeners(): void {
+  this.removeEventListener('keydown', this.onKeyDown);
+  this.removeEventListener('tree-item-select', this.onTreeItemSelect);
+  this.listening = false;
 }
 
 render(): any {
@@ -338,9 +340,9 @@ render(): any {
 </style>
 <div class="row"
   style="--depth:${this.depth || 0}"
-  @click="${this[onClick]}"
-  @dblclick="${this[onDoubleClick]}">
-  <div class="arrow-block" @click="${this[onArrowClick]}"> 
+  @click="${this.onClick}"
+  @dblclick="${this.onDoubleClick}">
+  <div class="arrow-block" @click="${this.onArrowClick}"> 
     <div class="arrow"></div>
   </div>
   <slot name="content"></slot>

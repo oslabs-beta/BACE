@@ -21,8 +21,8 @@ class NumberInputElement extends LitElement /*<{}, InputElements>*/ {
       value: any;
       precision: number;
       step: any;
-      distance: number;
-      onMouseDownValue: number;
+      distance: number = 0; // we set this to 0
+      onMouseDownValue: number = 0; // we set this to 0
       prevPointer: any;
       input: any;
       shadowRoot: any;
@@ -50,7 +50,7 @@ class NumberInputElement extends LitElement /*<{}, InputElements>*/ {
     this.onBlur();
   }
 
-  onMouseMove(event): void {
+  onMouseMove(event: any): void {
     const currentValue : number = parseFloat(this.value);
     const pointer: any = [event.clientX, event.clientY];
     const delta: number = pointer[0] - this.prevPointer[0] - (pointer[1] - this.prevPointer[1]);
@@ -71,7 +71,7 @@ class NumberInputElement extends LitElement /*<{}, InputElements>*/ {
     this.prevPointer = [event.clientX, event.clientY]
   }
 
-  onMouseDown(event): void {
+  onMouseDown(event: any): void {
     event.preventDefault();
     this.distance = 0;
     this.onMouseDownValue = this.value;
@@ -80,7 +80,7 @@ class NumberInputElement extends LitElement /*<{}, InputElements>*/ {
     document.addEventListener('mouseup', this.onMouseUp, false);
   }
 
-  onMouseUp(event): void {
+  onMouseUp(event: any): void {
     document.removeEventListener('mousemove', this.onMouseMove, false);
     document.removeEventListener('mouseup', this.onMouseUp, false);
 
@@ -90,7 +90,7 @@ class NumberInputElement extends LitElement /*<{}, InputElements>*/ {
     }
   };
 
-  setValue(value): void {
+  setValue(value: any): void {
     if(value === this.value) return;
 
     if(value !== undefined) {
@@ -118,7 +118,7 @@ class NumberInputElement extends LitElement /*<{}, InputElements>*/ {
     }
   }
 
-  shouldUpdate(changed): boolean {
+  shouldUpdate(changed: any): boolean {
     if(changed.has('value') && changed.get('value') !== this.value){
       return true;
     }
@@ -129,11 +129,11 @@ class NumberInputElement extends LitElement /*<{}, InputElements>*/ {
     this.setValue(parseFloat(this.input.value));
   }
 
-  onChange(e): any {
+  onChange(e: any): any {
     this.setValue(e.target.value);
   };
 
-  onKeyDown(event): any {
+  onKeyDown(event: any): any {
     event.stopPropagation();
 
     // enter

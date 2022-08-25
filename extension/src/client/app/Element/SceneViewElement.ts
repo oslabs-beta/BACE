@@ -1,11 +1,11 @@
 import { LitElement, html, customElement, property } from 'lit-element'
 import { getEntityName } from '../utils'
+import ChromeSelectStyle from './shared-styles/chrome-select';
 
 @customElement('scene-view-element')
 export default class SceneViewElement extends LitElement {
   // That is a static method you are looking at and the get is a getter for the property or the Object you want to get.
   // static class methods are defined on the class itself 
-
   @property({ type: Object, }) graph: {[key: string]:any} = {};
   @property({ type: Array, }) scenes: Array<any> = [];
   @property({ type: String, }) activeScene: string | null = null;
@@ -56,7 +56,25 @@ export default class SceneViewElement extends LitElement {
     // return the scene
     // from litElement/html
     return html`
-    // add style tags
+    <style>
+      :host {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+        overflow-x: hidden;
+      }
+      :host > tree-item {
+        flex: 1;
+        overflow-y: auto;
+        overflow-x: hidden;
+      }
+      :host > tree-item:focus {
+        /* TODO how can focus be shown in the tree view? */
+        outline: none;
+      }
+      ${ChromeSelectStyle}
+    </style>
     <title-bar title="Scene">
       // when a scene is selected, map it?
       <select @change="${this.onSceneSelect}" class="chrome-select">

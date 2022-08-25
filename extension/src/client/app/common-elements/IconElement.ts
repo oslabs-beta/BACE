@@ -6,8 +6,8 @@ import { LitElement, svg, html } from 'lit-element';
 export default class IconElement extends LitElement {
   // static get properties() {
   //   return {
-      icon: String;
-      fill: Boolean;
+      icon: String = ''; // we set to empty string
+      fill: Boolean =  true; // we set to true
   //   }
   // }
 
