@@ -1,5 +1,5 @@
 import utils from '../content/utils.js';
-import TransformControls from '../content/TransformControls.js';
+// import TransformControls from '../content/TransformControls.js';
 import EntityCache from '../content/EntityCache.js';
 import ThreeDevTools from '../content/ThreeDevTools';
 // import DevToolsScene from '../content/DevToolsScene';
@@ -12,9 +12,10 @@ const green = 'rgb(190, 251, 125)'
 const blue = 'rgb(120, 250, 228)';
 
 /*
-TODO: add the following line after (${TransformControls})(THREE);
+TODO: add the following line after const THREE = (${THREE})();
 and before const EntityCache = (${EntityCache})();
 
+  (${TransformControls})(THREE);
   const DevToolsScene = (${DevToolsScene})(THREE);
 
 */
@@ -28,7 +29,6 @@ console.log('%c▲%cthree-devtools%cv${version}',
   const DEBUG = false;
   const utils = (${utils})();
   const THREE = (${THREE})();
-  (${TransformControls})(THREE);
   const EntityCache = (${EntityCache})();
   const devtools = new (${ThreeDevTools})(window.__THREE_DEVTOOLS__);
   window.__THREE_DEVTOOLS__.dispatchEvent(new CustomEvent('devtools-ready'));
