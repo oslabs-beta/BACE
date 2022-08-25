@@ -49,7 +49,7 @@ export default class EnumValueElement extends LitElement {
 
       if (typeof value !== 'number') throw new Error (`invalid constant value for ${child}`);
 
-      const selected = this.value === undefined ? i === 0 : this.value === value;
+      const selected = this.value === undefined ? idx === 0 : this.value === value;
       return html`<option value="${value}" .selected="${selected}">${child}</option>`;
     })
 
