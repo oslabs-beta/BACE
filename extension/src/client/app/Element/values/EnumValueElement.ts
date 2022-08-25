@@ -12,7 +12,7 @@ import ChromeSelectStyle from '../shared-styles/chrome-select';
 
 export default class EnumValueElement extends LitElement {
   uuid: string | undefined;
-  type: string = '';
+  type: string keyof ConstantTypes = '';
   value: number | null = null;
 
   constructor() {
