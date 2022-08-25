@@ -40,9 +40,9 @@ export default class EnumValueElement extends LitElement {
       return html`<input type="number" value="${this.value}" />`;
     }
 
-    const options = ConstantTypes[this.type as keyof typeof ConstantTypes].map((child, idx) => {
+    const options = ConstantTypes[this.type as keyof typeof ConstantTypes].map((child: string, idx: number) => {
       let value: any;
-      value = constants[child as keyof typeof constants];
+      value = constants[child];
 
       // let 'null' be a special enum (-1)
       if (child === 'null') value = -1;
