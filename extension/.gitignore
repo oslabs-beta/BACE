@@ -2,7 +2,6 @@ node_modules
 public/bundle.js
 public/bundle.js.LICENSE.txt
 
-# node_modules/*
 !node_modules/three
 node_modules/three/*
 !node_modules/three/src
