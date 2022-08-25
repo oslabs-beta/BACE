@@ -26,7 +26,7 @@ chrome.windows.create(
 
 chrome.browserAction.onClicked.addListener(buttonClicked)
 
-function buttonClicked(tab) {
+function buttonClicked(tab: any) {
   console.log(tab)
   let msg = {
     txt: "hello"
