@@ -1,8 +1,10 @@
-node_modules
-
 !node_modules/three
 node_modules/three/*
 !node_modules/three/src
 node_modules/three/src/*
 !node_modules/three/src/constants.ts
+
+node_modules
+
+
 
