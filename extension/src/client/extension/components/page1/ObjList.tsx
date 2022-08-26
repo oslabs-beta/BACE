@@ -16,7 +16,7 @@ const entity: any = {
     prop: 'uuid',
   },
   Name: {
-    name: 'Name',
+    name: 'Object',
     type: 'string',
     prop: 'name',
   }
@@ -55,7 +55,7 @@ const objects: JSX.Element[] = []
     // passed into handleInfo graph[uuid], which should be an object,
     // that contains all sorts of properties
     objects.push(
-    <button className="list-group-item list-group-item-action fs-6" onClick={() => handleInfo()}>{entity.Name.name + i}</button>
+    <button className="list-group-item list-group-item-action fs-6" onClick={() => handleInfo()}>{`${entity.Name.name} ${i}`}</button>
     )
   }
 
@@ -63,7 +63,7 @@ function ObjList() {
   return (
     <div>
       <div className="titleBox fs-5">
-      <h6>Objects</h6>
+      <h6>Objects in Scene</h6>
       </div>
         <div>
           <div className="list-group list-group-light list-group-small"> 

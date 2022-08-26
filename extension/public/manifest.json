@@ -3,17 +3,13 @@
   "description": "Inspect in 3d",
   "version": "1.0.0",
   "manifest_version": 3,
-  "background": {
-    "scripts": ["background.js"],
-    "persistent": false
-  },
   "permissions": [
     "contextMenus"
   ],
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*", "<all_urls>" ],
-      "js": "contentscript.js"
+      "js": ["/dist/contentscript.js"]
   }
   ],
   "commands": {

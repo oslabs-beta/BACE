@@ -5,10 +5,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   entry: {
     //create multiple entry points
-    popup:  './src/client/chrome_ext/popup.tsx',
-    devtool: './src/client/chrome_ext/devtool.tsx',
-    background: './src/client/background/index.ts',
-    contentscript: './src/client/chrome_ext/contentscript.tsx'
+    popup:  './src/client/extension/popup.tsx',
+    devtool: './src/client/extension/devtool.tsx',
+    contentscript: './src/client/extension/contentscript.tsx'
 },
   output: {
     path: path.resolve(__dirname, 'public/dist'),

@@ -25,7 +25,7 @@ import IconElement from './common-elements/IconElement';
 
 
 
-window.customElements.define('r3f-devtools-app', AppElement);
+window.customElements.define('r3f-devtools', AppElement);
 
 window.customElements.define('renderer-view', RendererViewElement);
 window.customElements.define('scene-view', SceneViewElement);
@@ -54,6 +54,7 @@ window.customElements.define('x-icon', IconElement);
 window.addEventListener('error', e => {
   // might need to adjust depending on what this app is called!
   // make sure it is of AppElement type
-  const app = document.querySelector('r3f-devtools-app') as AppElement
+  const app = document.querySelector('r3f-devtools') as AppElement
   app.setError(e.message);
 });
+
