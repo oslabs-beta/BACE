@@ -1,13 +1,14 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const CopyPlugin = require('copy-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
   entry: {
     //create multiple entry points
-    popup:  './src/client/extension/popup.tsx',
-    devtool: './src/client/extension/devtool.tsx',
-    contentscript: './src/client/extension/contentscript.tsx'
+    // popup:  './src/client/extension/popup.tsx',
+    // devtool: './src/client/extension/devtool.tsx',
+    background: './src/client/extension/background.ts',
+    contentscript: './src/client/app/ContentBridge.ts'
 },
   output: {
     path: path.resolve(__dirname, 'public/dist'),
@@ -38,24 +39,10 @@ module.exports = {
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
   },
-  // plugins: [
-  //   new HtmlWebpackPlugin(
-  //     {
-  //       filename: 'index.html',
-  //       template: path.resolve(__dirname, 'public/index.html'),
-  //       inject: false,
-  //       minify: false,
-  //     }
-  //   ),
-  //   new HtmlWebpackPlugin(
-  //     {
-  //       filename: 'devtools.html',
-  //       template: path.resolve(__dirname, 'public/devtools.html'),
-  //       inject: false,
-  //       minify: false,
-  //     },
-  //   )
-  // ],
+  optimization: {
+    minimize: true,
+    minimizer: [new TerserPlugin()],
+  },
   devServer: {
     port: 8080,
     hot: true,

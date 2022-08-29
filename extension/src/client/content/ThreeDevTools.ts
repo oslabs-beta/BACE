@@ -123,7 +123,7 @@ export default(() => {
       this.log('requestSceneGraph', uuid);
       try{
         const data = this.entityCache.getSceneGraph(uuid);
-        this.USE_RENDER_OVERLAY('scene-graph', {
+        this.send('scene-graph', {
           uuid,
           graph: data,  
         });

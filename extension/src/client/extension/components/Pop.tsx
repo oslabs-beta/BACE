@@ -6,7 +6,18 @@ import React from 'react';
 import SharedLayout_pop from './SharedLayout';
 import TestRoute from './TestRoute';
 
-//<h2>R3F Devtool</h2>
+// const handleClick = () => {
+//   console.log('button clicked')
+//   const params = {
+//     active: true,
+//     currentWindow: true
+//   }
+//   chrome.tabs.query(params, function sendResponse(tabs: any) {
+//     let message = { openWindow: 'open-window' }
+//     chrome.tabs.sendMessage(tabs[0].id, message)
+//   })
+// }
+
 function Pop() {
   return (
   // <BrowserRouter>
@@ -22,8 +33,13 @@ function Pop() {
   //   </Route>
   // </Routes>
   // </BrowserRouter> 
-
-  <h1>3 tools has started!</h1>
+  <div>
+      <h3>ThreeDevTool</h3>
+      {/* <h3>Would you like to run ThreeDevTool?</h3>
+      <button id="start-dev" onClick={handleClick}>
+        <strong>Yes</strong>
+      </button> */}
+  </div>
   )
 
 }
