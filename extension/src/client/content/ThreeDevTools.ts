@@ -123,7 +123,7 @@ export default(() => {
       this.log('requestSceneGraph', uuid);
       try{
         const data = this.entityCache.getSceneGraph(uuid);
-        this.USE_RENDER_OVERLAY('scene-graph', {
+        this.send('scene-graph', {
           uuid,
           graph: data,  
         });
@@ -191,7 +191,7 @@ export default(() => {
       this.log('emitting', type, data);
       try{
         window.postMessage({
-          id: 'three-devtools',
+          id: 'r3f-devtools',
           type: type,
           data,
         }, '*');
@@ -201,7 +201,7 @@ export default(() => {
         }
         console.error('Data could not be cloned; ensure "userData" is serializable.', e);
         window.postMessage({
-          id: 'three-devtools',
+          id: 'r3f-devtools',
           type,
           data: JSON.parse(JSON.stringify(data))
         });

@@ -1,6 +1,6 @@
-import utils from '../content/utils.js';
+import utils from '../content/utils';
 // import TransformControls from '../content/TransformControls.js';
-import EntityCache from '../content/EntityCache.js';
+import EntityCache from '../content/EntityCache';
 import ThreeDevTools from '../content/ThreeDevTools';
 // import DevToolsScene from '../content/DevToolsScene';
 // import InstrumentedToJSON from '../content/toJSON';

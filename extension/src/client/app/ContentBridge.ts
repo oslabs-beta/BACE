@@ -1,5 +1,5 @@
 import { isUUID } from "./utils";
-import injection from './injection.js';
+import injection from './injection';
 
 // <EventDef extends { type: any}> ?
 export default class ContentBridge extends EventTarget {
@@ -22,9 +22,7 @@ export default class ContentBridge extends EventTarget {
     this.renderers = new Map();
     this.renderingInfo = new Map();
 
-    this.port = chrome.runtime.connect({
-      name: 'r3f-devtools',
-    });
+    this.port = chrome.runtime.connect({ name: 'r3f-devtools' });
 
     // notify background port that tools panel is open
     this.port.postMessage({
@@ -38,6 +36,7 @@ export default class ContentBridge extends EventTarget {
 
     this.port.onMessage.addListener((e: any) => {
       this.onMessage(e);
+      console.log(e)
     })
 
     // keydown event listener goes here

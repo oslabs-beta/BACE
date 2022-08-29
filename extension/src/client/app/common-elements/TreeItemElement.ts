@@ -234,7 +234,7 @@ removeListeners(): void {
 
 render(): any {
   if(!this.unique) {
-    console.warn(`TreeItemElement's 'unqie' attribute not set.`);
+    console.warn(`TreeItemElement's 'unique' attribute not set.`);
   }
   return html`
 <style>

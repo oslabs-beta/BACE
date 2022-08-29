@@ -3,17 +3,25 @@
   "description": "Inspect in 3d",
   "version": "1.0.0",
   "manifest_version": 3,
-  
-  "commands": {
-    "openWindow" : {
-      "description" : "open a window"
+  "permissions": [ "contextMenus" ],
+  "background": {
+    "service_worker": "/dist/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["/dist/contentscript.js"]
     }
+  ],
+  "devtools_page": "background.html",
+  "action": {
+    "default_icon": {
+      "16": "/assets/R3F.png",
+      "32": "/assets/R3F.png"
+    },
+    "default_title": "three.JS DevTool"
   },
   "icons": {
     "128": "/assets/R3F.png"
-  },
-  "devtools_page": "devtools.html",
-  "action": {
-    "default_popup": "index.html"
   }
 }
