@@ -158,7 +158,7 @@ export default class ContentBridge extends EventTarget {
         break;
       case 'register':
         this.revision = data.revision;
-        this.eval(`console.log("three-devtools: debugging three.js r${this.revision}")`);
+        this.eval(`console.log("r3f-devtools: debugging three.js r${this.revision}")`);
         break;
       case 'committed':
         this.db.clear();

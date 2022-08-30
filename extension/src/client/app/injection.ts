@@ -1,5 +1,5 @@
 import utils from '../content/utils';
-// import TransformControls from '../content/TransformControls.js';
+// import TransformControls from '../content/TransformControls';
 import EntityCache from '../content/EntityCache';
 import ThreeDevTools from '../content/ThreeDevTools';
 // import DevToolsScene from '../content/DevToolsScene';
