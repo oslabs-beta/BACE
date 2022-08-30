@@ -1,5 +1,11 @@
 import THREE from 'three'
 
+declare global {
+  type obj = {
+    [key:string]:any
+  }
+}
+
 export type Entity = {
   uuid: string, 
   [key:string]:any
