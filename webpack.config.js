@@ -7,8 +7,11 @@ module.exports = {
     // popup:  './src/client/extension/popup.tsx',
     // devtool: './src/client/extension/devtool.tsx',
     index: './src/client/app/index.ts',
-    webcomponent:"./webcomponentsjs/webcomponents-bundle.js",
-    contentscript: './src/client/app/ContentBridge.ts'
+    webcomponent: './webcomponentsjs/webcomponents-bundle.js',
+    injection: './src/client/app/injection.ts',
+    contentbridge: './src/client/app/ContentBridge.ts',
+    appelement: './src/client/app/Element/AppElement.ts',
+    background: './src/client/content/background.ts'
 },
   output: {
     path: path.resolve(__dirname, 'public/dist'),

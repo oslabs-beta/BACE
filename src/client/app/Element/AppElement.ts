@@ -78,6 +78,10 @@ export default class AppElement extends LitElement {
 
     this.content = new ContentBridge();
     
+    // chrome.runtime.onMessage.addListener('devtools-ready', () => {
+    //   this.onContentInitialLoad,
+    //   this.onContentLoad
+    // })
     this.content.addEventListener('devtools-ready', () => {
       this.onContentInitialLoad,
       this.onContentLoad
@@ -125,13 +129,18 @@ export default class AppElement extends LitElement {
   onContentInitialLoad(e: any){
     const script = document.createElement('script')
 
+    let height: number | undefined
+    chrome.windows.getCurrent(window => { 
+      height = window.height
+    })
+
     function createWindow() {
       const params: chrome.windows.CreateData = {
         focused: true, 
         url: chrome.extension.getURL('devtools.html'), // chrome treats urls relative to extension root directory
         type: 'popup',
         width: 380, 
-        height: window.screen.availHeight, 
+        height: height, 
         setSelfAsOpener: true
       }
 

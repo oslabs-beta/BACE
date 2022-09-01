@@ -190,11 +190,22 @@ export default(() => {
     send(type: any, data: any){
       this.log('emitting', type, data);
       try{
-        window.postMessage({
-          id: 'r3f-devtools',
-          type: type,
-          data,
-        }, '*');
+        // const params = {
+        //   active: true,
+        //   currentWindow: true,
+        // }
+        // chrome.tabs.query(params, function(tabs: any) {
+        //   chrome.tabs.sendMessage(tabs[0].id, {
+        //     id: 'r3f-devtools',
+        //     type: type,
+        //     data,
+        //   }, () => console.log('ThreeDevTools successfully sent message to ContentBridge!'));
+        // })
+        // window.postMessage({
+        //   id: 'r3f-devtools',
+        //   type: type,
+        //   data,
+        // }, '*');
       } catch (e){
         if(!data){
           throw e;

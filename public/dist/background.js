@@ -1,0 +1,1 @@
+(()=>{"use strict";chrome.action.onClicked.addListener((e=>{chrome.tabs.query({active:!0,currentWindow:!0},(e=>{const c=e[0].id;chrome.tabs.sendMessage(c,"cascade-trigger")}))}))})();

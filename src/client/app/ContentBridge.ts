@@ -167,8 +167,13 @@ export default class ContentBridge extends EventTarget {
         this.renderers.clear();
         this.renderingInfo.clear();
 
-        this.eval(injection);
-        this.dispatchEvent(new CustomEvent('devtools-ready'))
+        const script = document.createElement('script')
+        script.setAttribute('type', 'text/javascript')
+        script.setAttribute('src', chrome.runtime.getURL('/dist/injection.js'))
+        document.body.appendChild(script)
+        // chrome.scripting.executeScript
+        // this.eval(injection);
+        // this.dispatchEvent(new CustomEvent('devtools-ready'))
         // this.dispatchEvent(new CustomEvent('load'));
         break;
       case 'observe':

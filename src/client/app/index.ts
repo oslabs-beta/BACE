@@ -22,14 +22,14 @@ import DevtoolsIconElement from './common-elements/DevtoolsIconButtonElement';
 import DevtoolsButtonElement from './common-elements/DevtoolsButtonElement';
 import DevtoolsIconButtonElement from './common-elements/DevtoolsIconButtonElement';
 import IconElement from './common-elements/IconElement';
-import { customElement } from 'lit-element';
+// import { customElement } from 'lit-element';
 
-const script: HTMLScriptElement = document.createElement('script')
-script.src = '../../../public/dist/webcomponent.js'
-script.async = false
-document.head.appendChild(script)
+// const script: HTMLScriptElement = document.createElement('script')
+// script.src = '../../../public/dist/webcomponent.js'
+// script.async = false
+// document.head.appendChild(script)
 
-script.onload = () => {
+// script.onload = () => {
   customElements.define('r3f-devtools', AppElement);
 
   customElements.define('renderer-view', RendererViewElement);
@@ -55,7 +55,7 @@ script.onload = () => {
   customElements.define('devtools-button', DevtoolsButtonElement);
   customElements.define('devtools-icon-button', DevtoolsIconButtonElement);
   customElements.define('x-icon', IconElement);
-}
+// }
 
 // window.addEventListener('error', e => {
 //   // might need to adjust depending on what this app is called!

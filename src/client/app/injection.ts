@@ -33,6 +33,12 @@ console.log('%c▲%cthree-devtools%cv${version}',
   const DevToolsScene = (${DevToolsScene})(THREE);
   const EntityCache = (${EntityCache})();
   const devtools = new (${ThreeDevTools})(window.__R3F_DEVTOOLS__);
+  window.addEventListener('cascade-trigger', event => {
+    if (event.data.type === 'cascade-trigger') {
+      chrome.runtime.sendMessage('devtools-ready')
+      // window.dispatchEvent(new CustomEvent('devtools-ready'));
+    }
+  })
 })();
 `;
 // put after devtools variable:
