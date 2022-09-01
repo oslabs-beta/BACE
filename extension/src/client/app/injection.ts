@@ -32,8 +32,8 @@ console.log('%c▲%cthree-devtools%cv${version}',
   (${TransformControls})(THREE);
   const DevToolsScene = (${DevToolsScene})(THREE);
   const EntityCache = (${EntityCache})();
-  const devtools = new (${ThreeDevTools})(window.__THREE_DEVTOOLS__);
-  window.__THREE_DEVTOOLS__.dispatchEvent(new CustomEvent('devtools-ready'));
+  const devtools = new (${ThreeDevTools})(window.__R3F_DEVTOOLS__);
+  window.__R3F_DEVTOOLS__.dispatchEvent(new CustomEvent('devtools-ready'));
 })();
 `;
 
