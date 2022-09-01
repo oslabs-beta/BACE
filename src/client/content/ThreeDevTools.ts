@@ -201,11 +201,11 @@ export default(() => {
         //     data,
         //   }, () => console.log('ThreeDevTools successfully sent message to ContentBridge!'));
         // })
-        // window.postMessage({
-        //   id: 'r3f-devtools',
-        //   type: type,
-        //   data,
-        // }, '*');
+        window.postMessage({
+          id: 'r3f-devtools',
+          type: type,
+          data,
+        }, '*');
       } catch (e){
         if(!data){
           throw e;

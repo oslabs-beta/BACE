@@ -1,0 +1,1 @@
+(()=>{"use strict";chrome.runtime.onConnect.addListener((e=>{e.onMessage.addListener((e=>{"r3f-devtools"===e.name?console.log("SUCCESS"):console.log(e)}))})),chrome.runtime.onMessage.addListener(((e,o,s)=>{e.tabId&&chrome.devtools.panels.create("R3F-DevTool","../assets/R3F.png","../index.html")}))})();

@@ -11,7 +11,8 @@ module.exports = {
     injection: './src/client/app/injection.ts',
     contentbridge: './src/client/app/ContentBridge.ts',
     appelement: './src/client/app/Element/AppElement.ts',
-    background: './src/client/content/background.ts'
+    background: './src/client/content/background.ts',
+    devtools: './src/client/extension/devtools.ts'
 },
   output: {
     path: path.resolve(__dirname, 'public/dist'),

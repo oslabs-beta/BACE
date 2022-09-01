@@ -1,5 +1,5 @@
 import { isUUID } from "./utils";
-import injection from './injection';
+// import injection from './injection';
 
 // <EventDef extends { type: any}> ?
 export default class ContentBridge extends EventTarget {
@@ -160,22 +160,31 @@ export default class ContentBridge extends EventTarget {
         this.revision = data.revision;
         this.eval(`console.log("r3f-devtools: debugging three.js r${this.revision}")`);
         break;
-      case 'committed':
+      case 'injection':
         this.db.clear();
         this.overviews.clear();
         this.sceneGraphs.clear();
         this.renderers.clear();
         this.renderingInfo.clear();
-
-        const script = document.createElement('script')
-        script.setAttribute('type', 'text/javascript')
-        script.setAttribute('src', chrome.runtime.getURL('/dist/injection.js'))
-        document.body.appendChild(script)
-        // chrome.scripting.executeScript
-        // this.eval(injection);
-        // this.dispatchEvent(new CustomEvent('devtools-ready'))
-        // this.dispatchEvent(new CustomEvent('load'));
+        data()
+        this.dispatchEvent(new CustomEvent('devtools-ready'))
         break;
+      // case 'committed':
+      //   this.db.clear();
+      //   this.overviews.clear();
+      //   this.sceneGraphs.clear();
+      //   this.renderers.clear();
+      //   this.renderingInfo.clear();
+
+      //   const script = document.createElement('script')
+      //   script.setAttribute('type', 'text/javascript')
+      //   script.setAttribute('src', chrome.runtime.getURL('/dist/injection.js'))
+      //   document.body.appendChild(script)
+      //   // chrome.scripting.executeScript
+      //   // this.eval(injection);
+      //   // this.dispatchEvent(new CustomEvent('devtools-ready'))
+      //   // this.dispatchEvent(new CustomEvent('load'));
+      //   break;
       case 'observe':
         this.dispatchEvent(new CustomEvent('observe', {
           detail: {

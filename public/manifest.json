@@ -4,13 +4,14 @@
   "version": "1.0.0",
   "manifest_version": 3,
   "permissions": [ "contextMenus", "tabs" ],
+  "devtools_page": "devtools.html",
   "background": {
     "service_worker": "/dist/background.js"
   },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["/dist/contentbridge.js", "/dist/appelement.js"]
+      "js": ["/dist/contentbridge.js"]
     }
   ],
   "action": {
@@ -24,7 +25,7 @@
     "128": "/assets/R3F.png"
   },
   "web_accessible_resources": [{
-    "resources": ["/dist/injection.js"],
+    "resources": ["../src/content/*.ts"],
     "matches": ["<all_urls>"]
   }]
 }

@@ -57,10 +57,10 @@ import IconElement from './common-elements/IconElement';
   customElements.define('x-icon', IconElement);
 // }
 
-// window.addEventListener('error', e => {
-//   // might need to adjust depending on what this app is called!
-//   // make sure it is of AppElement type
-//   const app = document.querySelector('r3f-devtools') as AppElement
-//   app.setError(e.message);
-// });
+window.addEventListener('error', e => {
+  // might need to adjust depending on what this app is called!
+  // make sure it is of AppElement type
+  const app = document.querySelector('r3f-devtools') as AppElement
+  app.setError(e.message);
+});
 
