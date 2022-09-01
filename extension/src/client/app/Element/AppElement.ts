@@ -1,5 +1,5 @@
 import { LitElement, html, customElement, property } from 'lit-element';
-import {ifDefined} from 'lit-html/directives/if-defined'
+import { ifDefined } from './lit-html/directives/if-defined'
 import ContentBridge from '../ContentBridge';
 
 const ERROR_TIMEOUT = 5000;
@@ -40,6 +40,7 @@ export default class AppElement extends LitElement {
   @property({ type: String, }) errorText: string | undefined = undefined;
   @property({ type: Boolean, }) needsReload;
   @property({ type: Boolean, }) isReady;
+  @property({ type: Boolean, }) loadReady;
   @property({ type: String, }) panel;
   @property({ type: String, }) activeScene: string | undefined = undefined;
   @property({ type: String, }) activeEntity: string | undefined = undefined;
@@ -65,6 +66,7 @@ export default class AppElement extends LitElement {
     this.needsReload = true;
     this.isReady = false;
     this.panel = 'scene';
+    this.loadReady = false;
 
     this.onContentLoad = this.onContentLoad.bind(this);
     this.onContentError = this.onContentError.bind(this);
@@ -76,8 +78,11 @@ export default class AppElement extends LitElement {
 
     this.content = new ContentBridge();
     
-    this.content.addEventListener('devtools-ready', this.onContentInitialLoad)
-    this.content.addEventListener('load', this.onContentLoad);
+    this.content.addEventListener('devtools-ready', () => {
+      this.onContentInitialLoad,
+      this.onContentLoad
+    })
+    // this.content.addEventListener('load', this.onContentLoad);
     this.content.addEventListener('error', this.onContentError);
 
     // onContentUpdate event listeners --- has switch statement to account for these
@@ -120,7 +125,7 @@ export default class AppElement extends LitElement {
   onContentInitialLoad(e: any){
     const script = document.createElement('script')
 
-    async function createWindow() {
+    function createWindow() {
       const params: chrome.windows.CreateData = {
         focused: true, 
         url: chrome.extension.getURL('devtools.html'), // chrome treats urls relative to extension root directory
@@ -135,6 +140,11 @@ export default class AppElement extends LitElement {
       })
     }
 
+    script.async = true
+    script.innerHTML = `${createWindow()}`
+    document.head.appendChild(script)
+
+    // this.loadReady = true;
     // this.onContentLoad()
     // https://medium.com/geekculture/how-to-use-eval-in-a-v3-chrome-extension-f21ca8c2160c
     // fix this to evaluate onContentLoad
@@ -142,11 +152,13 @@ export default class AppElement extends LitElement {
   }
 
   // fired when content is initially loaded
-  onContentLoad(e: any){
-    this.activeEntity = undefined;
-    this.activeRenderer = undefined;
-    this.isReady = false;
-    this.needsReload = false;
+  onContentLoad(e: any) {
+    // if (this.loadReady) {
+      this.activeEntity = undefined;
+      this.activeRenderer = undefined;
+      this.isReady = false;
+      this.needsReload = false;
+    // }
   }
 
   // error

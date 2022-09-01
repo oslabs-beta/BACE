@@ -33,9 +33,9 @@ console.log('%c▲%cthree-devtools%cv${version}',
   const DevToolsScene = (${DevToolsScene})(THREE);
   const EntityCache = (${EntityCache})();
   const devtools = new (${ThreeDevTools})(window.__R3F_DEVTOOLS__);
-  window.__R3F_DEVTOOLS__.dispatchEvent(new CustomEvent('devtools-ready'));
 })();
 `;
-
+// put after devtools variable:
+  // window.__R3F_DEVTOOLS__.dispatchEvent(new CustomEvent('devtools-ready'));
 //   const InstrumentedToJSON = (${InstrumentedToJSON})(); was originally inside of the export statement -- can add back if we need this toJSON file
 

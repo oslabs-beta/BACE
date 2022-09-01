@@ -1,5 +1,5 @@
 import { LitElement, html } from 'lit-element';
-import { getEntityName } from '../../utils.js';
+import { getEntityName } from '../../utils';
 
 export default class TextureValueElement extends LitElement {
   uuid?: string;

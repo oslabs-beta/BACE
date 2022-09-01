@@ -7,7 +7,7 @@ module.exports = {
     // popup:  './src/client/extension/popup.tsx',
     // devtool: './src/client/extension/devtool.tsx',
     index: './src/client/app/index.ts',
-    webcomponent:"./@webcomponents/webcomponentsjs/webcomponents-bundle.js",
+    webcomponent:"./webcomponentsjs/webcomponents-bundle.js",
     contentscript: './src/client/app/ContentBridge.ts'
 },
   output: {

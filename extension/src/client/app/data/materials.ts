@@ -1,9 +1,9 @@
-import common from './material-common.js';
-import * as prop from './material-shared.js';
-import blending from './material-blending.js';
-import polygonOffset from './material-polygon-offset.js';
-import { line, lineDashed } from './material-line.js';
-import { metalness, roughness, clearCoat } from './material-pbr.js';
+import common from './material-common';
+import * as prop from './material-shared';
+import blending from './material-blending';
+import polygonOffset from './material-polygon-offset';
+import { line, lineDashed } from './material-line';
+import { metalness, roughness, clearCoat } from './material-pbr';
 
 const standard = [
   {

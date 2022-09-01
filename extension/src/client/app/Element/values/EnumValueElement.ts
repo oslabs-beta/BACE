@@ -1,5 +1,5 @@
 import { LitElement, html } from 'lit-element'
-import { ConstantTypes } from '../../constants.js';
+import { ConstantTypes } from '../../constants';
 // import * as THREE from 'three';
 // let constants: any[]; 
 // extension/node_modules/three/src/constants.js

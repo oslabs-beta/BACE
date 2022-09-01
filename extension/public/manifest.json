@@ -4,9 +4,6 @@
   "version": "1.0.0",
   "manifest_version": 3,
   "permissions": [ "contextMenus" ],
-  "background": {
-    "service_worker": "/dist/background.js"
-  },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
