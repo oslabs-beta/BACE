@@ -50,6 +50,7 @@
     "eslint": "^7.17.0",
     "eslint-plugin-react": "^7.21.5",
     "html-webpack-plugin": "^5.5.0",
+    "lit": "^2.3.1",
     "nodemon": "^2.0.19",
     "postcss-loader": "^7.0.1",
     "sass": "^1.54.0",

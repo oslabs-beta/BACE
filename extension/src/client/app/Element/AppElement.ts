@@ -70,12 +70,14 @@ export default class AppElement extends LitElement {
     this.onContentError = this.onContentError.bind(this);
     this.onPanelClick = this.onPanelClick.bind(this);
     this.onContentUpdate = this.onContentUpdate.bind(this);
+    this.onContentInitialLoad = this.onContentInitialLoad.bind(this);
     // this.setError = this.setError.bind(this)
     // this.onCommand = this.onCommand.bind(this);
 
     this.content = new ContentBridge();
-
-    this.content.addEventListener('load', this.onContentLoad);
+    
+    this.content.addEventListener('devtools-ready', this.onContentInitialLoad)
+    // this.content.addEventListener('load', this.onContentLoad);
     this.content.addEventListener('error', this.onContentError);
 
     // need to add event listeners for onContentUpdate, and onCommand
@@ -95,9 +97,32 @@ export default class AppElement extends LitElement {
     }, ERROR_TIMEOUT);
   }
   
+  onContentInitialLoad(e: any){
+    const script = document.createElement('script')
+
+    async function createWindow() {
+      const params: chrome.windows.CreateData = {
+        focused: true, 
+        url: chrome.extension.getURL('devtools.html'), // chrome treats urls relative to extension root directory
+        type: 'popup',
+        width: 380, 
+        height: window.screen.availHeight, 
+        setSelfAsOpener: true
+      }
+
+      chrome.windows.create(params, popup => {
+        console.log('popup up!')
+      })
+    }
+
+    // this.onContentLoad()
+    // https://medium.com/geekculture/how-to-use-eval-in-a-v3-chrome-extension-f21ca8c2160c
+    // fix this to evaluate onContentLoad
+    // fix all 'eval' references as this is outdated
+  }
+
   // fired when content is initially loaded
   onContentLoad(e: any){
-
     this.activeEntity = undefined;
     this.activeRenderer = undefined;
     this.isReady = false;
@@ -200,7 +225,7 @@ export default class AppElement extends LitElement {
       // reload panes
       <devtools-message visible-when='needs-reload'>
         <span>R3F Devtools requires a page reload.</span>
-        <devtools-button @click="${() => this.content.reload()}"> // this calls content.reload() to just basically reload the page
+        <devtools-button @click="${this.onContentLoad}"> // this calls content.reload() to just basically reload the page
           <span>Reload</span>
         </devtools-button>
       </devtools-message>

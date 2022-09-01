@@ -13,7 +13,6 @@
       "js": ["/dist/contentscript.js"]
     }
   ],
-  "devtools_page": "background.html",
   "action": {
     "default_icon": {
       "16": "/assets/R3F.png",

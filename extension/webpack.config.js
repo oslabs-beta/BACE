@@ -1,13 +1,13 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
+// const HtmlWebpackPlugin = require('html-webpack-plugin');
+// const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
   entry: {
-    //create multiple entry points
     // popup:  './src/client/extension/popup.tsx',
     // devtool: './src/client/extension/devtool.tsx',
-    background: './src/client/extension/background.ts',
+    index: './src/client/app/index.ts',
+    webcomponent:"./@webcomponents/webcomponentsjs/webcomponents-bundle.js",
     contentscript: './src/client/app/ContentBridge.ts'
 },
   output: {
@@ -39,10 +39,10 @@ module.exports = {
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
   },
-  optimization: {
-    minimize: true,
-    minimizer: [new TerserPlugin()],
-  },
+  // optimization: {
+  //   minimize: true,
+  //   minimizer: [new TerserPlugin()],
+  // },
   devServer: {
     port: 8080,
     hot: true,

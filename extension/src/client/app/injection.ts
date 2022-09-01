@@ -30,10 +30,11 @@ console.log('%c▲%cthree-devtools%cv${version}',
   const utils = (${utils})();
   const THREE = (${THREE})();
   const EntityCache = (${EntityCache})();
-  const devtools = new (${ThreeDevTools})(window.__THREE_DEVTOOLS__);
-  window.__THREE_DEVTOOLS__.dispatchEvent(new CustomEvent('devtools-ready'));
+  const devtools = new (${ThreeDevTools})(window.__THREE_TOOLS__);
 })();
 `;
+// taken out of above script and devtools-ready fired from ContentBridge
+// window.__R3F_TOOLS__.dispatchEvent(new CustomEvent('devtools-ready'));
 
 //   const InstrumentedToJSON = (${InstrumentedToJSON})(); was originally inside of the export statement -- can add back if we need this toJSON file
 
