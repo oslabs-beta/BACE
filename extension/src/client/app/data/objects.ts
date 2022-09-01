@@ -1,5 +1,5 @@
-import transform from './object-transform.js';
-import renderable from './object-renderable.js';
+import transform from './object-transform';
+import renderable from './object-renderable';
 
 const geometry = {
   name: 'Geometry',

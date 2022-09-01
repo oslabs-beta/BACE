@@ -1,5 +1,5 @@
 import { LitElement, html, customElement, property } from 'lit-element';
-import {ifDefined} from 'lit-html/directives/if-defined'
+import { ifDefined } from './lit-html/directives/if-defined'
 import ContentBridge from '../ContentBridge';
 
 const ERROR_TIMEOUT = 5000;
@@ -40,6 +40,7 @@ export default class AppElement extends LitElement {
   @property({ type: String, }) errorText: string | undefined = undefined;
   @property({ type: Boolean, }) needsReload;
   @property({ type: Boolean, }) isReady;
+  @property({ type: Boolean, }) loadReady;
   @property({ type: String, }) panel;
   @property({ type: String, }) activeScene: string | undefined = undefined;
   @property({ type: String, }) activeEntity: string | undefined = undefined;
@@ -65,17 +66,23 @@ export default class AppElement extends LitElement {
     this.needsReload = true;
     this.isReady = false;
     this.panel = 'scene';
+    this.loadReady = false;
 
     this.onContentLoad = this.onContentLoad.bind(this);
     this.onContentError = this.onContentError.bind(this);
     this.onPanelClick = this.onPanelClick.bind(this);
     this.onContentUpdate = this.onContentUpdate.bind(this);
+    this.onContentInitialLoad = this.onContentInitialLoad.bind(this);
     this.setError = this.setError.bind(this)
     this.onCommand = this.onCommand.bind(this);
 
     this.content = new ContentBridge();
-
-    this.content.addEventListener('load', this.onContentLoad);
+    
+    this.content.addEventListener('devtools-ready', () => {
+      this.onContentInitialLoad,
+      this.onContentLoad
+    })
+    // this.content.addEventListener('load', this.onContentLoad);
     this.content.addEventListener('error', this.onContentError);
 
     // onContentUpdate event listeners --- has switch statement to account for these
@@ -99,7 +106,7 @@ export default class AppElement extends LitElement {
       this.errorTimeout = null;
     }, ERROR_TIMEOUT);
   }
-
+  
   shouldUpdate(changedProps: any) {
     // is this ever called? -- not by us but maybe by LitElement?
     if (changedProps.has('activeEntity') && this.activeEntity) {
@@ -113,6 +120,50 @@ export default class AppElement extends LitElement {
       this.refreshData();
     }
     return true;
+  }
+
+  onContentInitialLoad(e: any){
+    const script = document.createElement('script')
+
+    function createWindow() {
+      const params: chrome.windows.CreateData = {
+        focused: true, 
+        url: chrome.extension.getURL('devtools.html'), // chrome treats urls relative to extension root directory
+        type: 'popup',
+        width: 380, 
+        height: window.screen.availHeight, 
+        setSelfAsOpener: true
+      }
+
+      chrome.windows.create(params, popup => {
+        console.log('popup up!')
+      })
+    }
+
+    script.async = true
+    script.innerHTML = `${createWindow()}`
+    document.head.appendChild(script)
+
+    // this.loadReady = true;
+    // this.onContentLoad()
+    // https://medium.com/geekculture/how-to-use-eval-in-a-v3-chrome-extension-f21ca8c2160c
+    // fix this to evaluate onContentLoad
+    // fix all 'eval' references as this is outdated
+  }
+
+  // fired when content is initially loaded
+  onContentLoad(e: any) {
+    // if (this.loadReady) {
+      this.activeEntity = undefined;
+      this.activeRenderer = undefined;
+      this.isReady = false;
+      this.needsReload = false;
+    // }
+  }
+
+  // error
+  onContentError(e: any){
+    this.setError(e.detail);
   }
 
   refreshData(config={activeEntity: false}) {
@@ -172,20 +223,6 @@ export default class AppElement extends LitElement {
         }
         break;
     }
-  }
-
-   // fired when content is initially loaded
-   onContentLoad(e: any){
-
-    this.activeEntity = undefined;
-    this.activeRenderer = undefined;
-    this.isReady = false;
-    this.needsReload = false;
-  }
-
-  // error
-  onContentError(e: any){
-    this.setError(e.detail);
   }
 
   // API for Components Event Handlers 

@@ -168,7 +168,8 @@ export default class ContentBridge extends EventTarget {
         this.renderingInfo.clear();
 
         this.eval(injection);
-        this.dispatchEvent(new CustomEvent('load'));
+        this.dispatchEvent(new CustomEvent('devtools-ready'))
+        // this.dispatchEvent(new CustomEvent('load'));
         break;
       case 'observe':
         this.dispatchEvent(new CustomEvent('observe', {

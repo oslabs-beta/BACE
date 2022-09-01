@@ -4,16 +4,12 @@
   "version": "1.0.0",
   "manifest_version": 3,
   "permissions": [ "contextMenus" ],
-  "background": {
-    "service_worker": "/dist/background.js"
-  },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
       "js": ["/dist/contentscript.js"]
     }
   ],
-  "devtools_page": "background.html",
   "action": {
     "default_icon": {
       "16": "/assets/R3F.png",
