@@ -77,7 +77,7 @@ export default class AppElement extends LitElement {
     this.content = new ContentBridge();
     
     this.content.addEventListener('devtools-ready', this.onContentInitialLoad)
-    // this.content.addEventListener('load', this.onContentLoad);
+    this.content.addEventListener('load', this.onContentLoad);
     this.content.addEventListener('error', this.onContentError);
 
     // onContentUpdate event listeners --- has switch statement to account for these
@@ -102,6 +102,21 @@ export default class AppElement extends LitElement {
     }, ERROR_TIMEOUT);
   }
   
+  shouldUpdate(changedProps: any) {
+    // is this ever called? -- not by us but maybe by LitElement?
+    if (changedProps.has('activeEntity') && this.activeEntity) {
+      this.content.select(this.activeEntity);
+      this.content.requestEntity(this.activeEntity);
+    }
+    if (changedProps.has('activeScene') && this.activeScene) {
+      this.content.requestSceneGraph(this.activeScene);
+    }
+    if (changedProps.has('panel') || (changedProps.has('isReady') && this.isReady)) {
+      this.refreshData();
+    }
+    return true;
+  }
+
   onContentInitialLoad(e: any){
     const script = document.createElement('script')
 
@@ -196,20 +211,6 @@ export default class AppElement extends LitElement {
         }
         break;
     }
-  }
-
-   // fired when content is initially loaded
-   onContentLoad(e: any){
-
-    this.activeEntity = undefined;
-    this.activeRenderer = undefined;
-    this.isReady = false;
-    this.needsReload = false;
-  }
-
-  // error
-  onContentError(e: any){
-    this.setError(e.detail);
   }
 
   // API for Components Event Handlers 
