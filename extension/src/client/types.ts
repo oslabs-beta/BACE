@@ -1,5 +1,11 @@
 import THREE from 'three'
 
+declare global {
+  type obj = {
+    [key:string]:any
+  }
+}
+
 export type Entity = {
   uuid: string, 
   [key:string]:any
@@ -139,9 +145,7 @@ declare global {
      */
     boundingSphere: THREE.Sphere | null;
 
-    /**
-     * @default { start: 0, count: Infinity }
-     */
+    // @default { start: 0, count: Infinity }
     drawRange: { start: number; count: number };
 
     /**
@@ -264,3 +268,60 @@ declare global {
     open: boolean,
   }
 }
+
+// for TransformControls.ts:
+// declare global {
+//   interface THREE {
+//     // addAttribute(TransformControls: any): any;
+//     TransformControls: any; // (THREE.Camera, any) => any
+//   }
+// }
+
+
+
+// export type THREEwithTransformControls <T> = Partial<T> & {TransformControls: any}
+
+// for TransformControls.ts: -- for gizmo
+declare global {
+  export interface LineBasicMaterialParameters extends THREE.MaterialParameters {
+    color?: THREE.ColorRepresentation | undefined;
+    linewidth?: number | undefined;
+    linecap?: string | undefined;
+    linejoin?: string | undefined;
+    fog?: boolean;
+  }
+
+  export class LineBasicMaterial extends THREE.Material {
+    constructor(parameters?: LineBasicMaterialParameters);
+
+    /**
+     * @default 'LineBasicMaterial'
+     */
+    type: string;
+
+    /**
+     * @default 0xffffff
+     */
+    color: THREE.Color;
+
+    /**
+     * @default 1
+     */
+    linewidth: number;
+
+    /**
+     * @default 'round'
+     */
+    linecap: string;
+
+    /**
+     * @default 'round'
+     */
+    linejoin: string;
+
+    fog: boolean;
+
+    setValues(parameters: LineBasicMaterialParameters): void;
+  }
+}
+  

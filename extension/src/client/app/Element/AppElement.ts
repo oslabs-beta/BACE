@@ -70,18 +70,23 @@ export default class AppElement extends LitElement {
     this.onContentError = this.onContentError.bind(this);
     this.onPanelClick = this.onPanelClick.bind(this);
     this.onContentUpdate = this.onContentUpdate.bind(this);
-    // this.setError = this.setError.bind(this)
-    // this.onCommand = this.onCommand.bind(this);
+    this.setError = this.setError.bind(this)
+    this.onCommand = this.onCommand.bind(this);
 
     this.content = new ContentBridge();
 
     this.content.addEventListener('load', this.onContentLoad);
     this.content.addEventListener('error', this.onContentError);
 
-    // need to add event listeners for onContentUpdate, and onCommand
-    // in the three dev tool source code, there are 6 onContentUpdate event listeners?
-    // this.content.addEventListener('')
+    // onContentUpdate event listeners --- has switch statement to account for these
+    this.content.addEventListener('rendering-info-update', this.onContentUpdate);
+    this.content.addEventListener('entity-update', this.onContentUpdate);
+    this.content.addEventListener('renderer-update', this.onContentUpdate);
+    this.content.addEventListener('scene-graph-update', this.onContentUpdate);
+    this.content.addEventListener('overview-update', this.onContentUpdate);
+    this.content.addEventListener('observe', this.onContentUpdate);
 
+    this.content.addEventListener('command', this.onCommand);
   }
 
   setError(error: string) {
@@ -94,19 +99,20 @@ export default class AppElement extends LitElement {
       this.errorTimeout = null;
     }, ERROR_TIMEOUT);
   }
-  
-  // fired when content is initially loaded
-  onContentLoad(e: any){
 
-    this.activeEntity = undefined;
-    this.activeRenderer = undefined;
-    this.isReady = false;
-    this.needsReload = false;
-  }
-
-  // error
-  onContentError(e: any){
-    this.setError(e.detail);
+  shouldUpdate(changedProps: any) {
+    // is this ever called? -- not by us but maybe by LitElement?
+    if (changedProps.has('activeEntity') && this.activeEntity) {
+      this.content.select(this.activeEntity);
+      this.content.requestEntity(this.activeEntity);
+    }
+    if (changedProps.has('activeScene') && this.activeScene) {
+      this.content.requestSceneGraph(this.activeScene);
+    }
+    if (changedProps.has('panel') || (changedProps.has('isReady') && this.isReady)) {
+      this.refreshData();
+    }
+    return true;
   }
 
   refreshData(config={activeEntity: false}) {
@@ -168,6 +174,62 @@ export default class AppElement extends LitElement {
     }
   }
 
+   // fired when content is initially loaded
+   onContentLoad(e: any){
+
+    this.activeEntity = undefined;
+    this.activeRenderer = undefined;
+    this.isReady = false;
+    this.needsReload = false;
+  }
+
+  // error
+  onContentError(e: any){
+    this.setError(e.detail);
+  }
+
+  // API for Components Event Handlers 
+  onCommand(e: any){
+    const type: any = e.detail.type;
+
+    switch(type){
+      case 'refresh':
+        this.refreshData();
+        break;
+      case 'select-scene':
+        this.activeScene = e.detail.uuid;
+        break;
+      case 'select-entity':
+        this.activeEntity = e.detail.uuid;
+        break;
+      case 'select-renderer':
+        this.activeRenderer = e.detail.id;
+        break;
+      case 'select-panel':
+        this.panel = e.detail.panel;
+        break;
+      case 'request-entity':
+        this.content.requestEntity(e.detail.uuid);
+        break;
+      case 'request-overview':
+        this.content.requestOverview(e.detail.resourceType);
+        break;
+      case 'request-scene-graph':
+        this.content.requestSceneGraph(e.detail.uuid);
+        break;
+      case 'request-rendering-info':
+        this.content.requestRenderingInfo(e.details.uuid);
+        break;
+      case 'update-property':
+        const { uuid, property, value, dataType } : {uuid: any; property: any; value: any; dataType: any} = e.detail;
+        this.content.updateProperty(uuid, property, value, dataType);
+        break;
+      default: 
+        console.warn(`Unknown command ${type}`);
+    }
+  }
+  
+
   render() {
     const panel: string = this.panel || 'scene';
     const panelDef = panels[panel];
@@ -195,7 +257,122 @@ export default class AppElement extends LitElement {
     const renderingInfo = panel === 'rendering' && this.activeRenderer ? this.content.getRenderingInfo(this.activeRenderer) : void 0;
     
     return html`
-    // add style tags
+    // add style tags- copy/pasted directly.  Can modify later.
+    <style>
+  :host {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Vertical */
+
+  #container {
+    width: 100%;
+    height: 100%;
+    user-select: none;
+  }
+  #container > * {
+    border-top: 1px solid var(--view-border-color);
+    border-left: 0px;
+  }
+  #container > devtools-message {
+    border: 0px;
+  }
+  #container > tab-bar {
+    border: 0px;
+  }
+  .flex {
+    display: flex;
+    flex-direction: column;
+  }
+  .flex > * {
+    flex: 1;
+    overflow: hidden;
+  }
+  .flex.inverse {
+    flex-direction: row;
+  }
+  .collapsible {
+    flex: 0 1 auto;
+  }
+
+  .inspector-frame {
+    max-height: 50%;
+    flex: 0 1 auto;
+  }
+  .inspector-frame[show-inspector] {
+    flex: 1;
+  }
+
+  /* @TODO turn these into generic flex components? */
+  .frame > * {
+    display: none;
+  }
+  .frame > [enabled] {
+    display: inherit;
+  }
+
+  /* Horizontal frames */
+
+  @media (min-aspect-ratio: 1/1) {
+    .flex {
+      flex-direction: row;
+    }
+    .flex.inverse {
+      flex-direction: column;
+    }
+    #container > * {
+      border-left: 1px solid var(--view-border-color);
+      border-top: 0px;
+    }
+    tab-bar {
+      flex-direction: column;
+      height: 100%;
+    }
+    .inspector-frame {
+      max-height: 100%;
+      max-width: 50%;
+    }
+  }
+
+  .error {
+    background-color: red;
+    position: absolute;
+    bottom: 0;
+    color: white;
+    width: 100%;
+    display: none;
+  }
+  .show-error {
+    display: block;
+  }
+
+  /* Animations and visibility handling */
+
+  [state] [visible-when] {
+    display: none;
+  }
+  [state='ready'] [visible-when='ready'] {
+    display: inherit;
+  }
+  [state='needs-reload'] [visible-when='needs-reload'] {
+    display: inherit;
+  }
+  [state='waiting'] [visible-when='waiting'] {
+    display: inherit;
+  }
+  .loading {
+    animation: loading 1s infinite;
+  }
+  @keyframes loading {
+    from {
+      transform: rotateY(0deg);
+    }
+    to {
+      transform: rotateY(180deg);
+    }
+  }
+</style>
     <div class="flex" state=${this.isReady ? 'ready' : this.needsReload ? 'needs-reload' : 'waiting'} id="container">
       // reload panes
       <devtools-message visible-when='needs-reload'>
