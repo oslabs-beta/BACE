@@ -4,7 +4,7 @@ const path = require('path');
 
 module.exports = {
   entry: {
-    index: './src/client/app/index.ts',
+    app: './src/client/app/Element/AppElement.tsx',
     webcomponent: './webcomponentsjs/webcomponents-bundle.js',
     // injection: './src/client/app/injection.ts',
     // contentbridge: './src/client/app/ContentBridge.ts',

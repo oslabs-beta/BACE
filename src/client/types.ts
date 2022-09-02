@@ -1,4 +1,60 @@
 import THREE from 'three'
+import { DOMAttributes }  from 'react';
+
+import AppElement from './app/Element/AppElement';
+
+import SceneViewElement from './app/Element/SceneViewElement';
+
+import RendererViewElement from './app/Element/RendererViewElement';
+import ResourcesViewElement from './app/Element/ResourcesViewElement';
+import ParametersViewElement from './app/Element/ParametersViewElement';
+
+import TitleBarElement from './app/Element/TitleBarElement';
+
+import ImagePreviewElement from './app/Element/ImagePreviewElement';
+import KeyValueElement from './app/Element/values/KeyValueElement';
+import MaterialValueElement from './app/Element/values/MaterialValueElement';
+import TextureValueElement from './app/Element/values/TextureValueElement';
+import EnumValueElement from './app/Element/values/EnumValueElement';
+import TabBarElement from './app/Element/TabBarElement';
+
+import NumberInputElement from './app/Element/common-elements/NumberInputElement';
+import TreeItemElement from './app/Element/common-elements/TreeItemElement';
+import AccordianViewElement from './app/Element/common-elements/AccordianViewElement';
+import DevtoolsMessageElement from './app/Element/common-elements/DevtoolsMessageElement';
+import DevtoolsIconElement from './app/Element/common-elements/DevtoolsIconButtonElement';
+import DevtoolsButtonElement from './app/Element/common-elements/DevtoolsButtonElement';
+import DevtoolsIconButtonElement from './app/Element/common-elements/DevtoolsIconButtonElement';
+import IconElement from './app/Element/common-elements/IconElement';
+
+// for AppElement as a TSX file
+type CustomElement<T> = Partial<T & DOMAttributes<T> & { children: any }>;
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      ['r3f-devtool']: CustomElement<AppElement>;
+      ['devtools-icon']: CustomElement<DevtoolsIconElement>;
+      ['renderer-view']: CustomElement<RendererViewElement>;
+      ['scene-view']: CustomElement<SceneViewElement>;
+      ['resources-view']: CustomElement<ResourcesViewElement>;
+      ['parameters-view']: CustomElement<ParametersViewElement>;
+      ['title-bar']: CustomElement<TitleBarElement>;
+      ['image-preview']: CustomElement<ImagePreviewElement>;
+      ['key-value']: CustomElement<KeyValueElement>;
+      ['material-value']: CustomElement<MaterialValueElement>;
+      ['texture-value']: CustomElement<TextureValueElement>;
+      ['enum-value']: CustomElement<EnumValueElement>;
+      ['tab-bar']: CustomElement<TabBarElement>;
+      ['number-input']: CustomElement<NumberInputElement>;
+      ['tree-item']: CustomElement<TreeItemElement>;
+      ['accordian-view']: CustomElement<AccordianViewElement>;
+      ['devtools-message']: CustomElement<DevtoolsMessageElement>;
+      ['devtools-button']: CustomElement<DevtoolsButtonElement>;
+      ['devtools-icon-button']: CustomElement<DevtoolsIconButtonElement>;
+      ['x-icon']: CustomElement<IconElement>;
+    }
+  }
+}
 
 declare global {
   type obj = {

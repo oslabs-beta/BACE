@@ -22,6 +22,54 @@
 
 console.log('this is at the start of content script');
 
+const port = chrome.runtime.connect({ name: 'r3f-devtools' });
+console.log("this is port in content script: ", port)
+// notify background port that tools panel is open
+
+port.postMessage({ name: 'connect' });
+
+console.log("port has posted a message")
+
+port.onDisconnect.addListener((req: object) => {
+  console.error('disconnected from background', req)
+});
+
+// port.onMessage.addListener((e: any) => {
+//   console.log("INSIDE PORT.ONMESSAGE LISTENER!!")
+//   onMessage(e);
+//   console.log(e)
+// })
+
+port.onMessage.addListener((function(msg) {
+  console.log('before sending out msg.data')
+  if (msg) {
+    port.postMessage(msg)
+  }
+}))
+
+// chrome.runtime.onMessage.addListener((message: any, sender: any, sendResponse: any) => {
+//   console.log(message)
+//   this.onMessage(message);
+// })
+
+// chrome.runtime.sendMessage({ name: 'r3f-devtools' }, (res) => {
+//   console.log('got response from background saying: ')
+//   if (chrome.runtime.lastError) console.log("BOO ERROR: ", chrome.runtime.lastError)
+//   else console.log(res.json())
+// })
+
+
+// function onMessage(request: any) {
+//   console.log("inside onMessage in ContentScript!")
+//   const { id, type, data } = request;
+//   console.log("going to post message from port")
+//   port.postMessage(data)
+//   // chrome.runtime.sendMessage(data, (response) => {
+//   //   console.log(response)
+//   //   if (chrome.runtime.lastError) console.log(chrome.runtime.lastError || 'ERROR in ContentScript')
+//   // })
+// }
+
 const script: any = document.createElement('script');
 script.text = `
 (() => {
@@ -78,7 +126,6 @@ window.addEventListener('message', e => {
       e.data.id !== 'three-devtools') {
     return;
   }
-
   try {
     chrome.runtime.sendMessage(e.data);
   } catch (error: any) {

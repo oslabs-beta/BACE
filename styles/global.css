@@ -1,32 +1,115 @@
-.titleBox {
-  height: auto;
-  border: 1px solid black;
-  padding: 1px;
-  display: flex;
-  align-items: center;
+
+:host {
+  width: 100%;
+  height: 100%;
 }
 
-.listBox {
-  width: 300px;
-  height: 75px;
-  border: 3px solid black;
-  padding: 5px;
+/* Vertical */
+
+#container {
+  width: 100%;
+  height: 100%;
+  user-select: none;
+}
+#container > * {
+  border-top: 1px solid var(--view-border-color);
+  border-left: 0px;
+}
+#container > devtools-message {
+  border: 0px;
+}
+#container > tab-bar {
+  border: 0px;
+}
+.flex {
+  display: flex;
+  flex-direction: column;
+}
+.flex > * {
+  flex: 1;
   overflow: hidden;
-  overflow-y: scroll;
-  display: flex;
-  align-items: flex-start;
+}
+.flex.inverse {
+  flex-direction: row;
+}
+.collapsible {
+  flex: 0 1 auto;
 }
 
-.toggleBox {
-  width: 500px;
-  height: 700px;
-  border: 3px solid black;
-  padding: 5px;
-  display: flex;
-  align-items: flex-start;
-  
+.inspector-frame {
+  max-height: 50%;
+  flex: 0 1 auto;
+}
+.inspector-frame[show-inspector] {
+  flex: 1;
 }
 
-#display {
- display:none !important;
+/* @TODO turn these into generic flex components? */
+.frame > * {
+  display: none;
+}
+.frame > [enabled] {
+  display: inherit;
+}
+
+/* Horizontal frames */
+
+@media (min-aspect-ratio: 1/1) {
+  .flex {
+    flex-direction: row;
+  }
+  .flex.inverse {
+    flex-direction: column;
+  }
+  #container > * {
+    border-left: 1px solid var(--view-border-color);
+    border-top: 0px;
+  }
+  tab-bar {
+    flex-direction: column;
+    height: 100%;
+  }
+  .inspector-frame {
+    max-height: 100%;
+    max-width: 50%;
+  }
+}
+
+.error {
+  background-color: red;
+  position: absolute;
+  bottom: 0;
+  color: white;
+  width: 100%;
+  display: none;
+}
+.show-error {
+  display: block;
+}
+
+/* Animations and visibility handling */
+
+[state] [visible-when] {
+  display: none;
+}
+[state='ready'] [visible-when='ready'] {
+  display: inherit;
+}
+[state='needs-reload'] [visible-when='needs-reload'] {
+  display: inherit;
+}
+[state='waiting'] [visible-when='waiting'] {
+  display: inherit;
+}
+.loading {
+  animation: loading 1s infinite;
+}
+
+@keyframes loading {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(180deg);
+  }
 }

@@ -12,7 +12,7 @@ export default class ContentBridge extends EventTarget {
   sceneGraphs: Map<string | undefined, any>;
   renderers: Map<any, any>; 
   renderingInfo: Map<string, string>;
-  port: any; // this is chrome port? - not sure what other type this has?
+  port: chrome.runtime.Port;
   revision: any;
 
   constructor() {
@@ -26,23 +26,25 @@ export default class ContentBridge extends EventTarget {
 
     console.log('ContentBridge class loaded')
     this.port = chrome.runtime.connect({ name: 'r3f-devtools' });
-
+    console.log('ContentBridge port: ', this.port)
     // notify background port that tools panel is open
     this.port.postMessage({
       name: 'connect',
       tabId: chrome.devtools.inspectedWindow.tabId,
     });
-
+    console.log('what? did we post a message from content bridge port')
     this.port.onDisconnect.addListener((req: object) => {
       console.error('disconnected from background', req)
     });
 
     this.port.onMessage.addListener((e: any) => {
+      console.log('inside this.port.onMessage in content bridge')
       this.onMessage(e);
       console.log(e)
     })
 
     chrome.runtime.onMessage.addListener((message: any, sender: any, sendResponse: any) => {
+      console.log('inside chrome.runtime.onMessage listener in ContentBridge')
       console.log(message)
       this.onMessage(message);
     })
