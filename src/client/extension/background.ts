@@ -50,6 +50,7 @@ chrome.webNavigation.onCommitted.addListener(function(details) {
   }
 })
 
+console.log('this is at the end of background.ts');
   // const params = {
   //     active: true,
   //     currentWindow: true,

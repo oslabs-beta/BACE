@@ -1,18 +1,23 @@
-
-import THREE from 'three'
-import React, {useState} from 'react';
-import e from 'express';
+//@ts-nocheck
+// import * as THREE from '../three'
+// import React, {useState} from 'react';
+// import e from 'express';
 // import { THREEwithTransformControls } from './../types'
 // this.THREE: THREEwithTransformControls<THREE>;
 // NOTE: this class was NOT a THREE.Object3D extension before 
 // would want to extend Object3D class -- add additional functionality beyond original class
+
+console.log('this is at the start of transform controls');
+
 type EventType = {
   type: string
   mode?: any
 }
-
-export default class TransformControls  extends THREE.Object3D {
-  camera: THREE.Camera
+export default (THREE) => {
+  // var exports = {};
+  // var module = { exports };
+// export default class TransformControls {
+  class TransformControls extends THREE.Object3D {camera: THREE.Camera
   domElement: any
   visible: boolean
   _gizmo: any
@@ -533,6 +538,7 @@ export default class TransformControls  extends THREE.Object3D {
     this.document.removeEventListener("mousemove", this.onPointerMove, false);
     this.scope.pointerUp(this.getPointer(event));
   }
+};
   
   // previous code says "TODO: deprecate" -- should we try to deprecate this -- might already be deprecated? never called (left commented out)
   /*
@@ -568,7 +574,6 @@ export default class TransformControls  extends THREE.Object3D {
     console.warn('TransformControls: update unction has no more functionality and has therefore been deprecated');
   }
   */
-}
 
 // there was originally a THREE.TransformControls.prototype assignment but do we need that since it's already a class component?
 
@@ -1375,6 +1380,7 @@ class TransformControlsPlane extends TransformControls {
   }
 }
 
+console.log('this is at the end of transform controls');
 // THREE.TransformControlsPlane.prototype assigned to Object -- needed??
 
 // interface TransformControlsType {
@@ -1401,3 +1407,7 @@ class TransformControlsPlane extends TransformControls {
 //   return;
 
 // }
+  return TransformControls;
+};
+
+console.log('this is at the end of transform controls');

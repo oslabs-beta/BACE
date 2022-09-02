@@ -6,7 +6,7 @@ import injection from './injection';
 console.log('ContentBridge file loaded')
 export default class ContentBridge extends EventTarget {
   // varName: Map<keyType, valueType>
-  // we have to define types outside of the constructor.  They have to have a default.  They can be defined in our outside the constructor.
+  // we have to define types outside of the constructor.  They have to have a default.  They can be defined in or outside the constructor.
   db: Map<string | undefined, {uuid:string | undefined, [key:string]:any}>;
   overviews: Map<string | null, any>;
   sceneGraphs: Map<string | undefined, any>;
@@ -169,6 +169,7 @@ export default class ContentBridge extends EventTarget {
         this.eval(`console.log("r3f-devtools: debugging three.js r${this.revision}")`);
         break;
       case 'committed':
+        console.log('case committed has been reached')
         this.db.clear();
         this.overviews.clear();
         this.sceneGraphs.clear();
@@ -272,3 +273,5 @@ export default class ContentBridge extends EventTarget {
   //   }
   // }
 }
+
+console.log('this is at the end of content bridge');

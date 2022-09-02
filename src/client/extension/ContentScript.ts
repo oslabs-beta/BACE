@@ -20,6 +20,8 @@
 // window.__R3f_TOOLS__.dispatchEvent(')
 // `
 
+console.log('this is at the start of content script');
+
 const script: any = document.createElement('script');
 script.text = `
 (() => {
@@ -40,7 +42,9 @@ const target = new class ThreeDevToolsTarget extends EventTarget {
     super();
     this[$devtoolsReady] = false;
     this[$backlog] = [];
+    console.log("inside ThreeDevToolsTarget but not devtools ready :(");
     this.addEventListener('devtools-ready', e => {
+      console.log("WHOA DEVTOOLS-READY!?");
       this[$devtoolsReady] = true;
       for (let event of this[$backlog]) {
         this.dispatchEvent(event);
@@ -86,3 +90,5 @@ window.addEventListener('message', e => {
     });
   }
 });
+
+console.log('this is at the end of content script')

@@ -1,15 +1,17 @@
-import * as THREE from 'three';
+// import * as THREE from 'three';
 import utils from './utils';
 import TransformControls from './TransformControls';
 
-export default () => {
+console.log('this is at the start of devtoolsscene');
+
+export default (THREE: any) => {
   return class DevToolsScene extends THREE.Scene {
 
     bbHelper: BoxHelper;
     target: any;
     camera: THREE.Camera;
     domElement: Element;
-    transformControls: TransformControls; // must import from TransformControls.ts
+    transformControls: any; // must import from TransformControls.ts
     selectedObject: any;
 
     constructor(target: any, domElement: Element, camera: THREE.Camera) {
@@ -25,7 +27,8 @@ export default () => {
       this.target = target;
       this.camera = camera;
       this.domElement = domElement;
-      this.transformControls = new TransformControls(camera, domElement);
+      console.log("UH OH TRANSFORM CONTROLS? WHYYYYYYY")
+      this.transformControls = TransformControls(THREE);
       this.transformControls.space = 'local';
       this.add(this.transformControls);
 
@@ -106,3 +109,5 @@ export default () => {
     }
   }
 };
+
+console.log('this is at the end of devtoolsscene');

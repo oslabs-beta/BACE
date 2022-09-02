@@ -35,6 +35,7 @@ const panels: tPanels = {
   },
 };
 
+console.log("HI APP ELEMENT")
 @customElement('app-element')
 export default class AppElement extends LitElement {
   @property({ type: String, }) errorText: string | undefined = undefined;
@@ -76,6 +77,7 @@ export default class AppElement extends LitElement {
     this.setError = this.setError.bind(this)
     this.onCommand = this.onCommand.bind(this);
 
+    console.log("setting this.content as ContentBridge instance in AppElement")
     this.content = new ContentBridge();
     
     // chrome.runtime.onMessage.addListener('devtools-ready', () => {
@@ -277,6 +279,7 @@ export default class AppElement extends LitElement {
   
 
   render() {
+    console.log("app element rendering")
     const panel: string = this.panel || 'scene';
     const panelDef = panels[panel];
     const errorText = this.errorText || '';

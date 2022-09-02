@@ -2,6 +2,8 @@
 // import {render} from 'react-dom';
 // import Dev from './components/Dev'
 
+console.log('this is at the start at devtools');
+
 if (chrome.devtools.inspectedWindow.tabId) {
   // currently, only inspects content windows
   // not when debugging devtools panel for example
@@ -50,3 +52,5 @@ function panelCreate() {
 // }
 
 // render(<Devtool />, document.getElementById("devroot"))
+
+console.log('this is at the end of devtools');

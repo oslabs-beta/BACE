@@ -4,7 +4,7 @@ import EntityCache from '../content/EntityCache';
 import ThreeDevTools from '../content/ThreeDevTools';
 import DevToolsScene from '../content/DevToolsScene';
 // import InstrumentedToJSON from '../content/toJSON';
-import THREE from 'three';
+import THREE from '../three';
 
 // const version = chrome.runtime.getManifest().version;
 // const red = 'rgb(255, 137, 137)';
@@ -20,12 +20,16 @@ and before const EntityCache = (${EntityCache})();
 
 */
 
+console.log('this is at the start of injection.ts');
+
 export default `
 (() => {
   const DEBUG = false;
   const utils = (${utils})();
   const THREE = (${THREE})();
+  console.log("three before transform controls: ", THREE)
   (${TransformControls})(THREE);
+  console.log('transform controls hopefully came in');
   const DevToolsScene = (${DevToolsScene})(THREE);
   const EntityCache = (${EntityCache})();
   const devtools = new (${ThreeDevTools})(window.__R3F_DEVTOOLS__);
@@ -66,3 +70,4 @@ export default `
   // window.__R3F_DEVTOOLS__.dispatchEvent(new CustomEvent('devtools-ready'));
 //   const InstrumentedToJSON = (${InstrumentedToJSON})(); was originally inside of the export statement -- can add back if we need this toJSON file
 
+console.log('this is at the end of injection.ts');

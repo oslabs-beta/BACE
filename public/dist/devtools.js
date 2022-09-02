@@ -1,1 +1,1 @@
-(()=>{"use strict";chrome.devtools.inspectedWindow.tabId&&chrome.devtools.panels.create("R3F-DevTool","../assets/R3F.png","../index.html")})();
+(()=>{"use strict";console.log("this is at the start at devtools"),chrome.devtools.inspectedWindow.tabId&&chrome.devtools.panels.create("R3F-DevTool","../assets/R3F.png","../index.html"),console.log("this is at the end of devtools")})();

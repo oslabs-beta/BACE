@@ -9,6 +9,7 @@ module.exports = {
     // injection: './src/client/app/injection.ts',
     // contentbridge: './src/client/app/ContentBridge.ts',
     // appelement: './src/client/app/Element/AppElement.ts',
+    browserpolyfill: './webcomponentsjs/browser-polyfill',
     background: './src/client/extension/background.ts',
     devtools: './src/client/extension/devtools.ts',
     contentscript: './src/client/extension/contentScript.ts'
