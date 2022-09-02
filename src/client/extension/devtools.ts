@@ -2,34 +2,46 @@
 // import {render} from 'react-dom';
 // import Dev from './components/Dev'
 
+if (chrome.devtools.inspectedWindow.tabId) {
+  // currently, only inspects content windows
+  // not when debugging devtools panel for example
+  // might need to add second param: options
+  // chrome.devtools.inspectedWindow.eval(
+  //   expression: string,
+  //   options?: object,
+  //   callback?: function,
+  // )
+  
+  panelCreate()
+  
+  // chrome.devtools.inspectedWindow.eval(`window.DevToolsAPI`, (result: any) => {
+  //   if (!result) {
+  //     panelCreate();
+  //   }
+  // })
 
-// port.onMessage.addListener((message, sender, sendResponse?:any) => {
-//   //message is the information sent by the contentscript
-//   console.log(message)
-//   //sender is information about the chrome tab information such as tabid and other information
-//   console.log(sender)
-//   //send response is to send information back to the content scripts 
+  // .then(([result, error]: [any, any]) => {
+  //   if (!result) {
+  //     panelCreate();
+  //   }
+  // })
+}
 
+// chrome.runtime.onConnect.addListener(port => {
+//   port.onMessage.addListener(msg => {
+//     if (msg.name === 'r3f-devtools') console.log('SUCCESS')
+//     else console.log(msg)
+//   });
+// });
+
+// chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+//   if (message.tabId) panelCreate()
 // })
-
-chrome.runtime.onConnect.addListener(port => {
-  port.onMessage.addListener(msg => {
-    if (msg.name === 'r3f-devtools') console.log('SUCCESS')
-    else console.log(msg)
-  });
-});
-
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message.tabId) panelCreate()
-})
 
 function panelCreate() {
   chrome.devtools.panels.create('R3F-DevTool', '../assets/R3F.png', '../index.html')
 }
 
-// chrome.runtime.onMessage.addListener((request, sender, sendResponse) => sendResponse('pong'));
-
-// chrome.devtools.panels.themeName = 'default'
 
 // function Devtool() {
 //   return (

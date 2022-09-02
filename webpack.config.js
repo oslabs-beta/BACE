@@ -4,15 +4,14 @@ const path = require('path');
 
 module.exports = {
   entry: {
-    // popup:  './src/client/extension/popup.tsx',
-    // devtool: './src/client/extension/devtool.tsx',
     index: './src/client/app/index.ts',
     webcomponent: './webcomponentsjs/webcomponents-bundle.js',
-    injection: './src/client/app/injection.ts',
-    contentbridge: './src/client/app/ContentBridge.ts',
-    appelement: './src/client/app/Element/AppElement.ts',
-    background: './src/client/content/background.ts',
-    devtools: './src/client/extension/devtools.ts'
+    // injection: './src/client/app/injection.ts',
+    // contentbridge: './src/client/app/ContentBridge.ts',
+    // appelement: './src/client/app/Element/AppElement.ts',
+    background: './src/client/extension/background.ts',
+    devtools: './src/client/extension/devtools.ts',
+    contentscript: './src/client/extension/contentScript.ts'
 },
   output: {
     path: path.resolve(__dirname, 'public/dist'),

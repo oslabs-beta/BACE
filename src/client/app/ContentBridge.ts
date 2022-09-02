@@ -42,7 +42,7 @@ export default class ContentBridge extends EventTarget {
       console.log(e)
     })
 
-    chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    chrome.runtime.onMessage.addListener((message: any, sender: any, sendResponse: any) => {
       console.log(message)
       this.onMessage(message);
     })
@@ -63,9 +63,9 @@ export default class ContentBridge extends EventTarget {
     }, { passive: true })
 
     // binding all functions seems required in ts?
-    // this.reload = this.reload.bind(this);
-    // this.getEntity = this.getEntity.bind(this);
-    // this.getEntityandDependencies = this.getEntityandDependencies.bind(this)
+    this.reload = this.reload.bind(this);
+    this.getEntity = this.getEntity.bind(this);
+    this.getEntityandDependencies = this.getEntityandDependencies.bind(this)
   }
 
   reload() {
@@ -168,31 +168,20 @@ export default class ContentBridge extends EventTarget {
         this.revision = data.revision;
         this.eval(`console.log("r3f-devtools: debugging three.js r${this.revision}")`);
         break;
-      case 'injection':
+      case 'committed':
         this.db.clear();
         this.overviews.clear();
         this.sceneGraphs.clear();
         this.renderers.clear();
         this.renderingInfo.clear();
         chrome.devtools.inspectedWindow.eval(injection)
-        this.dispatchEvent(new CustomEvent('devtools-ready'))
+        this.dispatchEvent(new CustomEvent('load'));
         break;
-      // case 'committed':
-      //   this.db.clear();
-      //   this.overviews.clear();
-      //   this.sceneGraphs.clear();
-      //   this.renderers.clear();
-      //   this.renderingInfo.clear();
-
         // const script = document.createElement('script')
         // script.setAttribute('type', 'text/javascript')
         // script.setAttribute('src', chrome.runtime.getURL('/dist/injection.js'))
         // document.body.appendChild(script)
       //   // chrome.scripting.executeScript
-        // this.eval(injection);
-      //   // this.dispatchEvent(new CustomEvent('devtools-ready'))
-      //   // this.dispatchEvent(new CustomEvent('load'));
-      //   break;
       case 'observe':
         this.dispatchEvent(new CustomEvent('observe', {
           detail: {

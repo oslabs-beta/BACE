@@ -1,4 +1,4 @@
-import React, { FC, useState, Component } from 'react';
+// import React, { FC, useState, Component } from 'react';
 import * as THREE from 'three';
 import EntityCache from './EntityCache';
 import utils from './utils';

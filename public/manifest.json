@@ -3,30 +3,23 @@
   "description": "Inspect in 3D",
   "version": "1.0.0",
   "manifest_version": 2,
-  "permissions": [ "contextMenus", "tabs" ],
+  "permissions": [ "contextMenus", "tabs", "webNavigation" ],
   "devtools_page": "devtools.html",
   "background": {
-    "service_worker": "/dist/background.js"
+    "page": "./background.html",
+    "scripts": "browser-polyfill.js"
   },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["/dist/contentbridge.js"]
+      "js": ["./dist/contentscript.js"],
+      "run_at": "document_start"
     }
   ],
-  "action": {
-    "default_icon": {
-      "16": "/assets/R3F.png",
-      "32": "/assets/R3F.png"
-    },
-    "default_popup": "index.html",
-    "default_title": "Three.JS DevTool"
-  },
   "icons": {
     "128": "/assets/R3F.png"
   },
-  "web_accessible_resources": [{
-    "resources": ["../src/content/*.ts"],
-    "matches": ["<all_urls>"]
-  }]
+  "web_accessible_resources": [
+    "../src/content/*.ts"
+  ]
 }

@@ -130,7 +130,7 @@ export default class AppElement extends LitElement {
     const script = document.createElement('script')
 
     let height: number | undefined
-    chrome.windows.getCurrent(window => { 
+    chrome.windows.getCurrent((window: any) => { 
       height = window.height
     })
 
@@ -144,7 +144,7 @@ export default class AppElement extends LitElement {
         setSelfAsOpener: true
       }
 
-      chrome.windows.create(params, popup => {
+      chrome.windows.create(params, (popup: any) => {
         console.log('popup up!')
       })
     }
