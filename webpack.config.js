@@ -43,6 +43,9 @@ module.exports = {
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
   },
+  watchOptions: {
+    ignored: /node_modules/
+  },
   // optimization: {
   //   minimize: true,
   //   minimizer: [new TerserPlugin()],

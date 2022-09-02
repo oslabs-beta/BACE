@@ -2,7 +2,7 @@
   "name": "R3F Devtool",
   "description": "Inspect in 3D",
   "version": "1.0.0",
-  "manifest_version": 3,
+  "manifest_version": 2,
   "permissions": [ "contextMenus", "tabs" ],
   "devtools_page": "devtools.html",
   "background": {
@@ -19,6 +19,7 @@
       "16": "/assets/R3F.png",
       "32": "/assets/R3F.png"
     },
+    "default_popup": "index.html",
     "default_title": "Three.JS DevTool"
   },
   "icons": {

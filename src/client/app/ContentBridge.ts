@@ -1,7 +1,9 @@
 import { isUUID } from "./utils";
-// import injection from './injection';
+import injection from './injection';
 
 // <EventDef extends { type: any}> ?
+
+console.log('ContentBridge file loaded')
 export default class ContentBridge extends EventTarget {
   // varName: Map<keyType, valueType>
   // we have to define types outside of the constructor.  They have to have a default.  They can be defined in our outside the constructor.
@@ -22,6 +24,7 @@ export default class ContentBridge extends EventTarget {
     this.renderers = new Map();
     this.renderingInfo = new Map();
 
+    console.log('ContentBridge class loaded')
     this.port = chrome.runtime.connect({ name: 'r3f-devtools' });
 
     // notify background port that tools panel is open
@@ -37,6 +40,11 @@ export default class ContentBridge extends EventTarget {
     this.port.onMessage.addListener((e: any) => {
       this.onMessage(e);
       console.log(e)
+    })
+
+    chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+      console.log(message)
+      this.onMessage(message);
     })
 
     // keydown event listener goes here
@@ -166,7 +174,7 @@ export default class ContentBridge extends EventTarget {
         this.sceneGraphs.clear();
         this.renderers.clear();
         this.renderingInfo.clear();
-        data()
+        chrome.devtools.inspectedWindow.eval(injection)
         this.dispatchEvent(new CustomEvent('devtools-ready'))
         break;
       // case 'committed':
@@ -176,12 +184,12 @@ export default class ContentBridge extends EventTarget {
       //   this.renderers.clear();
       //   this.renderingInfo.clear();
 
-      //   const script = document.createElement('script')
-      //   script.setAttribute('type', 'text/javascript')
-      //   script.setAttribute('src', chrome.runtime.getURL('/dist/injection.js'))
-      //   document.body.appendChild(script)
+        // const script = document.createElement('script')
+        // script.setAttribute('type', 'text/javascript')
+        // script.setAttribute('src', chrome.runtime.getURL('/dist/injection.js'))
+        // document.body.appendChild(script)
       //   // chrome.scripting.executeScript
-      //   // this.eval(injection);
+        // this.eval(injection);
       //   // this.dispatchEvent(new CustomEvent('devtools-ready'))
       //   // this.dispatchEvent(new CustomEvent('load'));
       //   break;
