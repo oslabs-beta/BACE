@@ -1,0 +1,17 @@
+<!doctype>
+<html>
+    <head>
+      <link type="text/css" href="styles/devtools.css" rel="stylesheet" />
+      <link type="text/css" href="styles/inspectorCommon.css" rel="stylesheet" />
+      <link type="text/css" href="styles/app.css" rel="stylesheet" />
+      <!-- Must include fontawesome in header here since if only linked in a LitElement template, the request to the font never executes (??) -->
+      <link type="text/css" href="styles/fontawesome.css" rel="stylesheet" />
+    </head>
+    <body>
+      <script type="module" src="../../web_modules/webextension-polyfill/dist/browser-polyfill.js"></script>
+      <script type="module" src="index.js"></script>
+
+      <three-devtools-app class="responsive">
+      </three-devtools-app>
+    </body>
+</html>

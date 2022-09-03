@@ -1,0 +1,85 @@
+<html>
+    <head></head>
+    <body style="margin:0">
+<script type="module">
+import * as THREE from '../web_modules/three.js';
+
+window.app = new class App {
+  constructor() {
+    this.render = this.render.bind(this);
+    this.updateSize = this.updateSize.bind(this);
+
+    this.textureLoader = new THREE.TextureLoader();
+    this.renderer = new THREE.WebGLRenderer({
+      antialias: true,
+    });
+    this.renderer.setPixelRatio(window.devicePixelRatio);
+
+    this.scene = new THREE.Scene();
+    this.camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 0.1, 100);
+    this.camera.position.z = 3;
+    this.camera.position.y = 3;
+    this.camera.lookAt(0, 0, 0);
+    this.updateSize();
+
+    let meshMaterial = new THREE.MeshBasicMaterial();
+    let pointsMaterial = new THREE.PointsMaterial({
+      size: 0.1,
+    });
+    let lineMaterial = new THREE.LineBasicMaterial();
+      let geometry = new THREE.SphereBufferGeometry(0.4, 16, 16);
+    for (let z = 0; z < 5; z++) {
+      for (let x = 0; x < 3; x++) {
+        let obj;
+        switch (x) {
+          case 0:
+            obj = new THREE.Mesh(geometry, meshMaterial);
+            obj.name = `Mesh #${z+1}`;
+            break;
+          case 1:
+            obj = new THREE.Points(geometry, pointsMaterial);
+            obj.name = `Points #${z+1}`;
+            break;
+          case 2:
+            obj = new THREE.Line(geometry, lineMaterial);
+            obj.name = `Line #${z+1}`;
+            break;
+        }
+        obj.position.set(x - 1, 0, -z);
+        if (z === 4) {
+          obj.castShadow = true;
+          obj.receiveShadow = true;
+          obj.renderOrder = x;
+        }
+        this.scene.add(obj);
+      }
+    }
+
+    this.dLight = new THREE.DirectionalLight(0xffffff,0.7);
+    this.dLight.position.y = 5;
+    this.scene.add(this.dLight);
+    this.light = new THREE.AmbientLight(0xffffff, 0.3);
+    this.scene.add(this.light);
+
+    this.render();
+    //this.renderer.setAnimationLoop(this.render);
+    document.body.appendChild(this.renderer.domElement);
+    window.addEventListener('resize', this.updateSize);
+  }
+
+  render() {
+    this.renderer.render(this.scene, this.camera);
+  }
+
+  updateSize() {
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    this.camera.aspect = w/h;
+    this.camera.updateProjectionMatrix();
+    this.renderer.setSize(w, h);
+  }
+}
+
+</script>
+    </body>
+</html>
