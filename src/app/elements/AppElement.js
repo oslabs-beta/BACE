@@ -253,6 +253,8 @@ export default class AppElement extends LitElement {
 
     const renderingInfo = panel === 'rendering' && this.activeRenderer ? this.content.getRenderingInfo(this.activeRenderer) : void 0;
 
+    // reload on first render? -- this removes need for button reload
+    this.isReady ? console.log('ready') : this.needsReload ? this.content.reload() : console.log('waiting')
     return html`
 <style>
   :host {
@@ -371,16 +373,16 @@ export default class AppElement extends LitElement {
 </style>
 <div class="flex" state=${this.isReady ? 'ready' : this.needsReload ? 'needs-reload' : 'waiting'} id="container">
   <!-- Reload panes -->
-  <devtools-message visible-when='needs-reload'>
-    <span>BACE Three Devtools requires a page reload.</span>
-    <devtools-button @click="${() => this.content.reload()}">
-      <span>Reload</span>
-    </devtools-button>
-  </devtools-message>
-  <devtools-message visible-when='waiting'>
-    <span>Waiting for a scene to be observed...</span>
-    <span class="loading">▲</span>
-  </devtools-message>
+  // <devtools-message visible-when='needs-reload'>
+  //   <span>BACE Three Devtools requires a page reload.</span>
+  //   <devtools-button @click="${() => this.content.reload()}">
+  //     <span>Reload</span>
+  //   </devtools-button>
+  // </devtools-message>
+  // <devtools-message visible-when='waiting'>
+  //   <span>Waiting for a scene to be observed...</span>
+  //   <span class="loading">▲</span>
+  // </devtools-message>
 
   <!-- Application panes -->
   <tab-bar class="flex inverse collapsible" visible-when='ready' @click=${this[$onPanelClick]}>
