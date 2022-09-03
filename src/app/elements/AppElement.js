@@ -372,17 +372,17 @@ export default class AppElement extends LitElement {
   }
 </style>
 <div class="flex" state=${this.isReady ? 'ready' : this.needsReload ? 'needs-reload' : 'waiting'} id="container">
-  <!-- Reload panes -->
-  // <devtools-message visible-when='needs-reload'>
-  //   <span>BACE Three Devtools requires a page reload.</span>
-  //   <devtools-button @click="${() => this.content.reload()}">
-  //     <span>Reload</span>
-  //   </devtools-button>
-  // </devtools-message>
-  // <devtools-message visible-when='waiting'>
-  //   <span>Waiting for a scene to be observed...</span>
-  //   <span class="loading">▲</span>
-  // </devtools-message>
+  <!-- Reload panes only when needs to reload, but should autoreload normally -->
+  <devtools-message visible-when='needs-reload'>
+    <span>BACE Three Devtools requires a page reload.</span>
+    <devtools-button @click="${() => this.content.reload()}">
+      <span>Reload</span>
+    </devtools-button>
+  </devtools-message>
+  <devtools-message visible-when='waiting'>
+    <span>Waiting for a scene to be observed...</span>
+    <span class="loading">▲</span>
+  </devtools-message>
 
   <!-- Application panes -->
   <tab-bar class="flex inverse collapsible" visible-when='ready' @click=${this[$onPanelClick]}>
