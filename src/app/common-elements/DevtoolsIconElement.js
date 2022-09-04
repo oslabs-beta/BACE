@@ -29,6 +29,24 @@ export default class DevtoolsIconElement extends LitElement {
 
   render() {
     const icon = icons[this.icon || "refresh"];
+    // console.log("devtools icon element: ", this.icon)
+    // if (this.icon === "visibility_on" || this.icon === "visibility_off") {
+    //   return specific html code for those two icons if import separately -- relies on Eden's code
+    //   return html`
+    //     <style>
+    //     :host {
+    //       display: inline-block;
+    //       flex-shrink: 0;
+    //       ${sizes[icon.sheet]};
+    //       background-color: rgb(145, 145, 145);
+    //       -webkit-mask-position: ${icon.position};
+    //               mask-position: ${icon.position};
+    //       -webkit-mask-image: -webkit-image-set(url(assets/${icon.sheet}Icons.png) 1x, url(assets/${icon.sheet}Icons_2x.png) 2x);
+    //               mask-image: url(assets/${icon.sheet}Icons.png);
+    //     }
+    //     </style>
+    //     `;
+    // }
     return html`
 <style>
 :host {
