@@ -5,3 +5,4 @@
 ## Changes from the previous Three Devtool
 - removed requirement to hit reload button when extension is first opened
 - implemented search bar functionality to allow users to search through entities by uuid, name or type
+- updated three.js version to the latest version
