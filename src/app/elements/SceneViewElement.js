@@ -137,7 +137,7 @@ ${sceneGraphNode}
         }
       }
       return getObjectByUUID(this.graph, inputUUID)
-    } else if (ObjectTypes.includes(inputUUID)) {
+    } else if (ObjectTypes.includes(inputUUID) || inputUUID === 'Object3D') {
       console.log("ObjectTypes includes inputUUID");
       for (let key of keys) {
         if (this.graph[key].baseType == inputUUID) {
@@ -152,9 +152,25 @@ ${sceneGraphNode}
             composed: true,
           }));
           return;
-        }
+        } 
       }
       return;
+    } else {
+      for (let key of keys) {
+        if (this.graph[key].name == inputUUID) {
+          console.log("graph has item of this name! ", this.graph[key])
+          // select the first occurance of this name from the tree
+          this.dispatchEvent(new CustomEvent('command', {
+            detail: {
+              type: 'select-entity',
+              uuid: key,
+            },
+            bubbles: true,
+            composed: true,
+          }));
+          return;
+        }
+      }
     }
   }
 
