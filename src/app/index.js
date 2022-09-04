@@ -83,3 +83,15 @@ if (agent.os.name === 'window') {
 window.addEventListener('error', e => {
   document.querySelector('three-devtools-app').setError(e.message);
 });
+
+// const uuidSearchInput = document.getElementById('inputUUID')
+// console.log("UUID SEARCH INPUT: ", uuidSearchInput)
+// uuidSearchInput.addEventListener("input", (e) => {
+//   console.log("search uuid has been found");
+//   let value = e.target.value;
+
+//   if (isUUID(value)) {
+//     console.log("UUID is valid", this.requestEntity(value))
+//     return this.requestEntity(value)
+//   }
+// })
