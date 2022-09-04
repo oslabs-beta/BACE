@@ -89,39 +89,30 @@ ${sceneGraphNode}
 
   [$createSceneGraphNode](graph, uuid, selected, depth=0) {
     const obj = graph[uuid];
+
     return html`
-      <tree-item
-        tabindex="${depth === 0 ? 0 : ''}"
-        unique="${obj.uuid}"
-        ?root="${depth === 0}"
-        ?selected="${obj.uuid && selected && selected === obj.uuid}"
-        ?open="${obj.baseType === 'Scene'}"
-        ?show-arrow="${obj.children.length > 0}"
-        depth="${depth}"
-        uuid="${obj.uuid}"
-        >
-        <div slot="content">${getEntityName(obj)}</div>
-        ${obj.children.map(uuid => this[$createSceneGraphNode](graph, uuid, selected, depth + 1))}
-      </tree-item>
+    <tree-item
+      tabindex="${depth === 0 ? 0 : ''}"
+      unique="${obj.uuid}"
+      ?root="${depth === 0}"
+      ?selected="${obj.uuid && selected && selected === obj.uuid}"
+      ?open="${obj.baseType === 'Scene'}"
+      ?show-arrow="${obj.children.length > 0}"
+      depth="${depth}"
+      uuid="${obj.uuid}"
+      >
+      <div slot="content">${getEntityName(obj)}</div>
+      ${obj.children.map(uuid => this[$createSceneGraphNode](graph, uuid, selected, depth + 1))}
+    </tree-item>
   `;
   }
 
 
   [$setInputUUID](e) {
-    console.log("setting input UUID")
     inputUUID = e.target.value
-    const { activeScene, activeEntity, scenes, graph } = this;
-    console.log("active scene: ", activeScene)
-    console.log("active entity: ", activeEntity)
-    console.log("scenes: ", scenes);
-    console.log("graph: ", graph)
-    console.log("this is inputUUID: ", inputUUID)
-    console.log(this)
     const keys = Object.keys(this.graph)
     if (isUUID(inputUUID)) {
-      console.log("scenes: ", this.scenes)
       for (let key of keys) {
-        console.log(this.graph[key])
         if(getObjectByUUID(this.graph[key], inputUUID) != null) {
           // select this item from the tree
           this.dispatchEvent(new CustomEvent('command', {
@@ -137,10 +128,8 @@ ${sceneGraphNode}
       }
       return getObjectByUUID(this.graph, inputUUID)
     } else if (ObjectTypes.includes(inputUUID) || inputUUID === 'Object3D') {
-      console.log("ObjectTypes includes inputUUID");
       for (let key of keys) {
         if (this.graph[key].baseType == inputUUID) {
-          console.log("graph has item of this baseType! ", this.graph[key])
           // select the first occurance of this type from the tree
           this.dispatchEvent(new CustomEvent('command', {
             detail: {
@@ -157,7 +146,6 @@ ${sceneGraphNode}
     } else {
       for (let key of keys) {
         if (this.graph[key].name == inputUUID) {
-          console.log("graph has item of this name! ", this.graph[key])
           // select the first occurance of this name from the tree
           this.dispatchEvent(new CustomEvent('command', {
             detail: {
@@ -186,7 +174,6 @@ ${sceneGraphNode}
   }
 
   [$onSceneSelect](e) {
-    console.log("ON SCENE SELECT")
     this.dispatchEvent(new CustomEvent('command', {
       detail: {
         type: 'select-scene',
@@ -208,7 +195,6 @@ ${sceneGraphNode}
   [$onTreeItemSelect](e) {
     e.stopPropagation();
     const treeItem = e.composedPath()[0];
-    console.log("tree item: ", treeItem)
     const uuid = treeItem.getAttribute('uuid');
     this.dispatchEvent(new CustomEvent('command', {
       detail: {
