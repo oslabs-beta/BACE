@@ -121,9 +121,16 @@ export default class ContentBridge extends EventTarget {
     // the local state so that elements' values are in sync with their
     // HTML input state, important when switching between different items
     // with LitElement.
-
-    object[property] = value;
-    this[$update](object);
+    console.log("before setting object[property]")
+    if (object) {
+      object[property] = value;
+      console.log("after setting object[property]")
+      this[$update](object);
+    } else {
+      // this may be problematic later if object property is not set / updated??
+      console.log('hmm')
+    }
+    console.log("after calling update on object")
   }
 
   /**

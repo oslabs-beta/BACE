@@ -115,6 +115,7 @@ export default class ParametersViewElement extends LitElement {
   }
 
   [$onRefresh](e) {
+    console.log("dispatching refresh event from ParametersViewElement")
     this.dispatchEvent(new CustomEvent('command', {
       detail: {
         type: 'refresh',

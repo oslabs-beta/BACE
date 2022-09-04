@@ -29,6 +29,7 @@ export default class DevtoolsIconElement extends LitElement {
 
   render() {
     const icon = icons[this.icon || "refresh"];
+    console.log("devtools icon element: ", this.icon)
     return html`
 <style>
 :host {
