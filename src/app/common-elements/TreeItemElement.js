@@ -1,6 +1,7 @@
 import { LitElement, html } from '../../../web_modules/lit-element.js'
 
 const $onClick = Symbol('onClick');
+const $onHide = Symbol('onHide');
 const $onDoubleClick = Symbol('onDoubleClick');
 const $onKeyDown = Symbol('onKeyDown');
 const $onArrowClick = Symbol('onArrowClick');
@@ -32,6 +33,7 @@ export default class TreeItemElement extends LitElement {
       root: {type: Boolean, reflect: true },
       selected: {type: Boolean, reflect: true },
       open: {type: Boolean, reflect: true },
+      visible: {type: Boolean, reflect: true},
     }
   }
 
@@ -45,6 +47,7 @@ export default class TreeItemElement extends LitElement {
     this.depth = 0;
     this.root = false;
     this.selected = false;
+    this.visible = true;
 
     // Non-managed properties
     this[$listening] = false;
@@ -202,6 +205,22 @@ export default class TreeItemElement extends LitElement {
     this.open = !this.open;
   }
 
+  [$onHide](e) {
+    e.stopPropagation();
+    if (this.visible) this.visible = false;
+    else this.visible = true;
+    this.dispatchEvent(new CustomEvent('command', { detail: {
+      type: 'update-property',
+      uuid: this.unique,
+      property: "visible",
+      dataType: "boolean",
+      value: this.visible,
+    },
+      bubbles: true,
+      composed: true,
+    }));
+  }
+
   /**
    * A tree item in this root's descendents has been
    * selected. Update the styling here before further
@@ -252,6 +271,7 @@ export default class TreeItemElement extends LitElement {
     if (!this.unique) {
       console.warn(`TreeItemElement's "unique" attribute not set.`);
     }
+    let visibilityIcon = this.visible ? "visibility" : "close"
     return html`
 <style>
   /**
@@ -366,6 +386,7 @@ export default class TreeItemElement extends LitElement {
       <div class="arrow"></div>
   </div>
   <slot name="content"></slot>
+  <devtools-icon-button icon="${visibilityIcon}" @click="${this[$onHide]}"/>
 </div>
 <slot id="children"></slot>
 `;

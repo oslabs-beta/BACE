@@ -89,21 +89,20 @@ ${sceneGraphNode}
 
   [$createSceneGraphNode](graph, uuid, selected, depth=0) {
     const obj = graph[uuid];
-
     return html`
-    <tree-item
-      tabindex="${depth === 0 ? 0 : ''}"
-      unique="${obj.uuid}"
-      ?root="${depth === 0}"
-      ?selected="${obj.uuid && selected && selected === obj.uuid}"
-      ?open="${obj.baseType === 'Scene'}"
-      ?show-arrow="${obj.children.length > 0}"
-      depth="${depth}"
-      uuid="${obj.uuid}"
-      >
-      <div slot="content">${getEntityName(obj)}</div>
-      ${obj.children.map(uuid => this[$createSceneGraphNode](graph, uuid, selected, depth + 1))}
-    </tree-item>
+      <tree-item
+        tabindex="${depth === 0 ? 0 : ''}"
+        unique="${obj.uuid}"
+        ?root="${depth === 0}"
+        ?selected="${obj.uuid && selected && selected === obj.uuid}"
+        ?open="${obj.baseType === 'Scene'}"
+        ?show-arrow="${obj.children.length > 0}"
+        depth="${depth}"
+        uuid="${obj.uuid}"
+        >
+        <div slot="content">${getEntityName(obj)}</div>
+        ${obj.children.map(uuid => this[$createSceneGraphNode](graph, uuid, selected, depth + 1))}
+      </tree-item>
   `;
   }
 

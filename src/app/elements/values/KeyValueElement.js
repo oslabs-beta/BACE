@@ -207,6 +207,7 @@ export default class KeyValueElement extends LitElement {
     let value = null;
     let dataType = null;
     let property = this.property;
+
     switch (this.type) {
       case 'color':
         value = target.value ? cssStringToHexNumber(target.value) : 0;
