@@ -271,6 +271,7 @@ export default class TreeItemElement extends LitElement {
     if (!this.unique) {
       console.warn(`TreeItemElement's "unique" attribute not set.`);
     }
+    let visibilityIcon = this.visible ? "visibility" : "close"
     return html`
 <style>
   /**
@@ -385,7 +386,7 @@ export default class TreeItemElement extends LitElement {
       <div class="arrow"></div>
   </div>
   <slot name="content"></slot>
-  <devtools-icon-button icon="visibility" @click="${this[$onHide]}"/>
+  <devtools-icon-button icon="${visibilityIcon}" @click="${this[$onHide]}"/>
 </div>
 <slot id="children"></slot>
 `;
