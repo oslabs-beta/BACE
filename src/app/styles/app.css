@@ -1,0 +1,22 @@
+:root {
+  --title-color: var(--tab-selected-fg-color);
+  --title-background-color: var(--tab-selected-bg-color);
+  --title-border-color: var(--divider-color);
+  --view-border-color: var(--divider-color);
+
+  --tree-item-hover-color: inherit;
+  --tree-item-hover-background-color: rgba(56, 121, 217, 0.1);
+  --tree-item-selected-color: var(--selection-fg-color);
+  --tree-item-selected-background-color: var(--selection-bg-color);
+  --tree-item-hover-selected-color: var(--selection-fg-color);
+  --tree-item-hover-selected-background-color: var(--selection-bg-color);
+  --tree-item-indent-per-level: 10px;
+  --tree-item-row-height: 20px;
+  --tree-item-border-color: var(--divider-color);
+  --key-value-height: 30px;
+  --key-value-divider-position: 40%;
+}
+
+body {
+  margin: 0;
+}

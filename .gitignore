@@ -1,10 +1,6 @@
-!node_modules/three
-node_modules/three/*
-!node_modules/three/src
-node_modules/three/src/*
-!node_modules/three/src/constants.ts
-
+dist
 node_modules
-
-
-
+**/*.sw*
+.DS_Store
+.idea
+*.iml
