@@ -1,6 +1,7 @@
 import { LitElement, html } from '../../../web_modules/lit-element.js'
 import { getEntityName, isUUID, getObjectByUUID } from '../utils.js';
 import ChromeSelectStyle from './shared-styles/chrome-select.js';
+import { ObjectTypes } from '../constants.js';
 
 const $createSceneGraphNode = Symbol('createSceneGraphNode');
 const $onRefreshClick = Symbol('onRefreshClick');
@@ -117,18 +118,13 @@ ${sceneGraphNode}
     console.log("graph: ", graph)
     console.log("this is inputUUID: ", inputUUID)
     console.log(this)
+    const keys = Object.keys(this.graph)
     if (isUUID(inputUUID)) {
       console.log("scenes: ", this.scenes)
-      const keys = Object.keys(this.graph)
       for (let key of keys) {
         console.log(this.graph[key])
         if(getObjectByUUID(this.graph[key], inputUUID) != null) {
-          // this[$onSceneSelect](e);
-          // this.dispatchEvent(new CustomEvent('tree-item-select', {
-          //   detail: {},
-          //   bubbles: true,
-          //   composed: true
-          // })); // select this item from the tree?
+          // select this item from the tree
           this.dispatchEvent(new CustomEvent('command', {
             detail: {
               type: 'select-entity',
@@ -140,8 +136,25 @@ ${sceneGraphNode}
           return;
         }
       }
-      // console.log("UUID is valid", getObjectByUUID(this.graph, inputUUID))
       return getObjectByUUID(this.graph, inputUUID)
+    } else if (ObjectTypes.includes(inputUUID)) {
+      console.log("ObjectTypes includes inputUUID");
+      for (let key of keys) {
+        if (this.graph[key].baseType == inputUUID) {
+          console.log("graph has item of this baseType! ", this.graph[key])
+          // select the first occurance of this type from the tree
+          this.dispatchEvent(new CustomEvent('command', {
+            detail: {
+              type: 'select-entity',
+              uuid: key,
+            },
+            bubbles: true,
+            composed: true,
+          }));
+          return;
+        }
+      }
+      return;
     }
   }
 
