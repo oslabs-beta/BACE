@@ -1,8 +1,12 @@
 import { LitElement, html } from '../../../web_modules/lit-element.js'
-import { getEntityName } from '../utils.js';
+import { getEntityName, isUUID, getObjectByUUID } from '../utils.js';
 
 const $onTreeItemSelect = Symbol('onTreeItemSelect');
 const $onRefreshClick = Symbol('onRefreshClick');
+const $setInput = Symbol('setInput');
+
+// global variable for input
+let input = '';
 
 export default class ResourcesViewElement extends LitElement {
   static get properties() {
@@ -68,6 +72,7 @@ export default class ResourcesViewElement extends LitElement {
 <title-bar title="${title}">
   <devtools-icon-button icon="refresh" @click="${this[$onRefreshClick]}">
 </title-bar>
+<input type="text" id="input" placeholder="Search ${title} by UUID or Name" @change="${this[$setInput]}"></input>
 <tree-item
   id="tree-root"
   tabindex="0"
@@ -118,5 +123,41 @@ export default class ResourcesViewElement extends LitElement {
       bubbles: true,
       composed: true,
     }));
+  }
+
+  [$setInput](e) {
+    input = e.target.value
+    if (isUUID(input)) {
+      for (let i = 0; i < this.resources.length; i++) {
+        if(getObjectByUUID(this.resources[i], input) != null) {
+          // select this item from the tree
+          this.dispatchEvent(new CustomEvent('command', {
+            detail: {
+              type: 'select-entity',
+              uuid: input,
+            },
+            bubbles: true,
+            composed: true,
+          }));
+          return;
+        }
+      }
+      return getObjectByUUID(this.resources, input)
+    } else {
+      for (let i = 0; i < this.resources.length; i++) {
+        if (this.resources[i].name == input || this.resources[i].baseType == input) {
+          // select the first occurance of this name or type from the tree
+          this.dispatchEvent(new CustomEvent('command', {
+            detail: {
+              type: 'select-entity',
+              uuid: this.resources[i].uuid,
+            },
+            bubbles: true,
+            composed: true,
+          }));
+          return;
+        } 
+      }
+    }
   }
 }
