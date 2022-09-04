@@ -82,7 +82,7 @@ export default class SceneViewElement extends LitElement {
   </select>
   <devtools-icon-button icon="refresh" @click="${this[$onRefreshClick]}">
 </title-bar>
-<input type="text" id="inputUUID" placeholder="Search by UUID" @change="${this[$setInputUUID]}"></input>
+<input type="text" id="inputUUID" placeholder="Search Entities by UUID, Name or Type" @change="${this[$setInputUUID]}"></input>
 ${sceneGraphNode}
 `;
   }
