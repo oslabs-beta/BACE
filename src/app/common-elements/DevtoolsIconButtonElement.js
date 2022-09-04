@@ -8,7 +8,6 @@ export default class DevtoolsIconButtonElement extends LitElement {
   }
 
   render() {
-    console.log("rendering devtools icon button: ", this.icon)
     return html`
 <style>
   :host {

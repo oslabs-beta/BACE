@@ -89,7 +89,6 @@ ${sceneGraphNode}
 
   [$createSceneGraphNode](graph, uuid, selected, depth=0) {
     const obj = graph[uuid];
-    console.log("Creating new scene graph node")
     return html`
       <tree-item
         tabindex="${depth === 0 ? 0 : ''}"
