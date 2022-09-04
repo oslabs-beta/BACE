@@ -123,13 +123,20 @@ ${sceneGraphNode}
       for (let key of keys) {
         console.log(this.graph[key])
         if(getObjectByUUID(this.graph[key], inputUUID) != null) {
-          console.log("WE HAVE FOUND AN OBJECT OMG")
           // this[$onSceneSelect](e);
-          this.dispatchEvent(new CustomEvent('tree-item-select', {
-            detail: {},
+          // this.dispatchEvent(new CustomEvent('tree-item-select', {
+          //   detail: {},
+          //   bubbles: true,
+          //   composed: true
+          // })); // select this item from the tree?
+          this.dispatchEvent(new CustomEvent('command', {
+            detail: {
+              type: 'select-entity',
+              uuid: inputUUID,
+            },
             bubbles: true,
-            composed: true
-          })); // select this item from the tree?
+            composed: true,
+          }));
           return;
         }
       }
