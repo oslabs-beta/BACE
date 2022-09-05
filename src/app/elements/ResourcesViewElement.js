@@ -68,11 +68,20 @@ export default class ResourcesViewElement extends LitElement {
     /* TODO how can focus be shown in the tree view? */
     outline: none;
   }
+
+  ::placeholder {
+    color: white;
+  }
+  
+  #text {
+    background-color: rgba(141, 141, 141, 0.606); 
+  }
+    
 </style>
 <title-bar title="${title}">
   <devtools-icon-button icon="refresh" @click="${this[$onRefreshClick]}">
 </title-bar>
-<input type="text" id="input" placeholder="Search ${title} by UUID or Name" @change="${this[$setInput]}"></input>
+<input id="text" type="text" placeholder="Search ${title} by UUID or Name" @change="${this[$setInput]}"></input>
 <tree-item
   id="tree-root"
   tabindex="0"
