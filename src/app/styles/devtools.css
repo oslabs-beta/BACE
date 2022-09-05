@@ -59,7 +59,7 @@ body {
   margin: 0;
   cursor: default;
   /* font-weight: bold; */
-  font-family: 'Courier New', Courier, monospace
+  font-family: 'Courier New', Courier, monospace;
   /* 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; */
   /* font-family: '.SFNSDisplay-Regular', 'Helvetica Neue', 'Lucida Grande', sans-serif; */
   font-size: 12px;
