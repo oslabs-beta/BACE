@@ -74,6 +74,15 @@ export default class SceneViewElement extends LitElement {
     outline: none;
   }
 
+  #text {
+    background-color: rgba(141, 141, 141, 0.606); 
+  }
+
+  ::placeholder {
+  color: white;
+  
+}
+
   ${ChromeSelectStyle}
 </style>
 <title-bar title="Scene">
@@ -82,7 +91,7 @@ export default class SceneViewElement extends LitElement {
   </select>
   <devtools-icon-button icon="refresh" @click="${this[$onRefreshClick]}">
 </title-bar>
-<input type="text" id="inputUUID" placeholder="Search Entities by UUID, Name or Type" @change="${this[$setInputUUID]}"></input>
+<input type="text" id="text" id="inputUUID" placeholder="Search Entities by UUID, Name or Type" @change="${this[$setInputUUID]}"></input>
 ${sceneGraphNode}
 `;
   }
