@@ -3,7 +3,6 @@
  */
 
 :root {
-  /* Utility not apparent  */
     --accent-color: #1a73e8;
     --accent-fg-color: #1a73e8;
     --accent-color-hover: #3b86e8;
@@ -59,7 +58,10 @@ body {
   overflow: hidden;
   margin: 0;
   cursor: default;
-  font-family: '.SFNSDisplay-Regular', 'Helvetica Neue', 'Lucida Grande', sans-serif;
+  /* font-weight: bold; */
+  font-family: 'Courier New', Courier, monospace
+  /* 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; */
+  /* font-family: '.SFNSDisplay-Regular', 'Helvetica Neue', 'Lucida Grande', sans-serif; */
   font-size: 12px;
   tab-size: 4;
   -webkit-user-select: none;

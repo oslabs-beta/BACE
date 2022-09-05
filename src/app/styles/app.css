@@ -6,18 +6,14 @@
 
   --tree-item-hover-color: inherit;
   --tree-item-hover-background-color:  rgba(232, 59, 32, 0.606); 
-  /* rgba(56, 121, 217, 0.1); */
   --tree-item-selected-color: var(--selection-fg-color); 
   --tree-item-selected-background-color: var(--selection-bg-color);
   --tree-item-hover-selected-color: var(--selection-fg-color);
   --tree-item-hover-selected-background-color: var(--selection-bg-color);
   --tree-item-indent-per-level: 20px;
-  /* 10px; */
   --tree-item-row-height: 30px;
-  /* 20px; */
   --tree-item-border-color: var(--divider-color);
   --key-value-height: 40px;
-  /* 30px; */
   --key-value-divider-position: 40%;
 }
 
