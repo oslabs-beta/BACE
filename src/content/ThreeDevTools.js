@@ -6,6 +6,7 @@ export default (() => {
  * `scene`
  * `renderer`
  */
+
 return class ThreeDevTools {
   constructor(target) {
     this.USE_RENDER_OVERLAY = false;
@@ -13,6 +14,7 @@ return class ThreeDevTools {
     this.scenes = new Set();
     this.renderers = new Set();
 
+    console.log("target in ThreeDevTools: ", this.target)
     this.entityCache = new EntityCache();
     this.entitiesRecentlyObserved = new Set();
 
@@ -45,8 +47,15 @@ return class ThreeDevTools {
         if (mode) {
           this.devtoolsScene.setTransformMode(mode);
         }
+      } else {
+        this.createDevToolsScene()
       }
     });
+    // this.target.addEventListener('_highlight-element', event => {
+    //   console.log(this.entityCache.renderers[0].domElement);
+    //   console.log(this);
+    //   console.log(this.selected);
+    // })
 
     // The 'visualization-change' event is fired by DevToolsScene, indicating
     // something has changed and if not rendering on a RAF loop, a render
@@ -155,6 +164,7 @@ return class ThreeDevTools {
 
   requestEntity(uuid) {
     this.log('requestEntity', uuid);
+    console.log("requesting Entity in ThreeDevTools")
     try {
       let data = this.entityCache.getSerializedEntity(uuid);
       if (data) {

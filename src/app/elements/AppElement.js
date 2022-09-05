@@ -232,6 +232,9 @@ export default class AppElement extends LitElement {
         const { uuid, property, value, dataType } = e.detail;
         this.content.updateProperty(uuid, property, value, dataType);
         break;
+      case 'highlight-element':
+        this.content.highlightElement(e.detail.uuid);
+        break;
       default:
         console.warn(`Unknown command ${type}`);
     }

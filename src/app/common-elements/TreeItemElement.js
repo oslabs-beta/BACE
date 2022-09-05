@@ -1,5 +1,5 @@
 import { LitElement, html } from '../../../web_modules/lit-element.js'
-
+let prev; // global for onClick for highlight effect
 const $onClick = Symbol('onClick');
 const $onHide = Symbol('onHide');
 const $onDoubleClick = Symbol('onDoubleClick');
@@ -197,6 +197,29 @@ export default class TreeItemElement extends LitElement {
 
   [$onClick](e) {
     e.stopPropagation();
+    console.log(e.target);
+    console.log(document.body);
+    console.log("prev at beginning: ", prev)
+    // if (e.target === document.body ||
+    //   (prev && prev === e.target)) {
+    // return;
+    // }
+    // if (prev) {
+    //   prev.className = prev.className.replace(/\bhighlight\b/, '');
+    //   prev = undefined;
+    // }
+    // if (e.target) {
+    //   prev = e.target;
+    //   prev.className += " highlight";
+    // }
+    this.dispatchEvent(new CustomEvent('command', { detail: {
+      type: 'highlight-element',
+      uuid: this.unique,
+    },
+      bubbles: true,
+      composed: true,
+    }));
+    console.log("prev at end: ", prev)
     this.select();
   }
 

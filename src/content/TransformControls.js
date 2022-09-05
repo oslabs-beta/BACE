@@ -2,9 +2,12 @@ export default (THREE) => {
 /**
  * @author arodic / https://github.com/arodic
  */
+console.log("inside TransformControls file")
+// const camera = new THREE.camera();
 
 THREE.TransformControls = function ( camera, domElement ) {
 
+	console.log("constructing TransformControls")
 	if ( domElement === undefined ) {
 
 		console.warn( 'THREE.TransformControls: The second parameter "domElement" is now mandatory.' );
@@ -16,6 +19,8 @@ THREE.TransformControls = function ( camera, domElement ) {
 
 	this.visible = false;
 	this.domElement = domElement;
+
+	console.log("this.domElement in TransformControls: ", this.domElement);
 
 	var _gizmo = new THREE.TransformControlsGizmo();
 	this.add( _gizmo );
@@ -225,7 +230,6 @@ THREE.TransformControls = function ( camera, domElement ) {
 	};
 
 	this.pointerHover = function ( pointer ) {
-
 		if ( this.object === undefined || this.dragging === true || ( pointer.button !== undefined && pointer.button !== 0 ) ) return;
 
 		ray.setFromCamera( pointer, this.camera );

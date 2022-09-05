@@ -5,6 +5,7 @@ const PATCHED = '__SERIALIZATION_PATCHED__';
 return class EntityCache extends EventTarget {
   constructor() {
     super();
+    console.log("CONSTRUCTING ENTITYCACHE")
     this.scenes = new Set();
     this.renderers = [];
 
@@ -26,6 +27,9 @@ return class EntityCache extends EventTarget {
   }
 
   getEntity(id) {
+    console.log("ENTITY MAP IN ENTITY CACHE: ", this.entityMap)
+    console.log("EntityMap entity: ", this.entityMap.get(id))
+    console.log("EntityMap entity baseType: ", utils.getBaseType(this.entityMap.get(id)))
     return this.entityMap.get(id);
   }
 
@@ -146,12 +150,14 @@ return class EntityCache extends EventTarget {
   }
 
   getSerializedEntity(id) {
+    console.log("Getting Serialized entity in EntityCache")
     const entity = this.getEntity(id);
     if (!entity) {
       return;
     }
 
     if (/renderer/.test(id)) {
+      console.log("about to call InstrumentedToJSON")
       const data = InstrumentedToJSON.call(entity);
       data.type = 'renderer';
       data.uuid = id;
@@ -322,6 +328,7 @@ return class EntityCache extends EventTarget {
         rendererIndex = this.renderers.length;
         this.renderers.push(entity);
       }
+      console.log("this.renderers in EntityCache: ", this.renderers)
       return `renderer-${rendererIndex}`;
     } else if (entity.uuid) {
       return entity.uuid;
