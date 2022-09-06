@@ -21,6 +21,7 @@ Credits to the previous Three Devtool (@jsantell), https://github.com/threejs/th
   - these objects (DevToolsScenes and TransformControls) are not yet functional
   - currently calls updateMatrixWorld but does not see properties updated
   - updated dropdown menu on scene viewing tab to include Camera entities 
+- support for scene background colors
 
 ## Recommended Next Steps:
 - add support to change camera properties (Recommended to take a look at TransformControls.js)
