@@ -1,5 +1,5 @@
 import { LitElement, html } from '../../../web_modules/lit-element.js'
-let prev; // global for onClick for highlight effect
+// let prev; // global for onClick for highlight effect
 const $onClick = Symbol('onClick');
 const $onHide = Symbol('onHide');
 const $onDoubleClick = Symbol('onDoubleClick');
@@ -199,7 +199,7 @@ export default class TreeItemElement extends LitElement {
     e.stopPropagation();
     console.log(e.target);
     console.log(document.body);
-    console.log("prev at beginning: ", prev)
+    // console.log("prev at beginning: ", prev)
     // if (e.target === document.body ||
     //   (prev && prev === e.target)) {
     // return;
@@ -219,7 +219,7 @@ export default class TreeItemElement extends LitElement {
       bubbles: true,
       composed: true,
     }));
-    console.log("prev at end: ", prev)
+    // console.log("prev at end: ", prev)
     this.select();
   }
 
@@ -291,6 +291,7 @@ export default class TreeItemElement extends LitElement {
   }
 
   render() {
+    // console.log("TREE ITEM ELEMENT: ", this)
     if (!this.unique) {
       console.warn(`TreeItemElement's "unique" attribute not set.`);
     }

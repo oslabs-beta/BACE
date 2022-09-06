@@ -97,6 +97,7 @@ return class ThreeDevTools {
   }
 
   update({ uuid, property, value, dataType }) {
+    console.log("update in ThreeDevTools: ", uuid, property, value, dataType)
     this.log('update', uuid, property, value, dataType);
     const entity = this.entityCache.getEntity(uuid);
 
@@ -123,6 +124,7 @@ return class ThreeDevTools {
     else {
       target[key] = value;
     }
+    console.log("target in ThreeDevTools update: ", target)
   }
 
   register(revision) {
@@ -136,7 +138,7 @@ return class ThreeDevTools {
     this.log('requestSceneGraph', uuid);
     try {
       const data = this.entityCache.getSceneGraph(uuid);
-      console.log("requestSceneGraph entity cache: ", this.entityCache)
+      // console.log("requestSceneGraph entity cache: ", this.entityCache)
       console.log("requestSceneGraph from entity cache: ", data)
       // for (let i = 0; i < this.entityCache.entityMap.length; i++) {
       //   console.log("this.entityCache.entityMap[i] ", this.entityCache.entityMap[i])
@@ -158,7 +160,7 @@ return class ThreeDevTools {
       //     console.log("newValue: ", newValue)
       //   }
       // })
-      console.log("data after trying to add in cameras? ", data)
+      // console.log("data after trying to add in cameras? ", data)
       this.send('scene-graph', {
         uuid,
         graph: data,

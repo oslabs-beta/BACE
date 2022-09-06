@@ -155,6 +155,7 @@ export default class AppElement extends LitElement {
         }
         break;
       case 'entity-update':
+        console.log("inside entity-update in AppElement: ", e)
         // @TODO figure out when this should be updated
         this.requestUpdate();
         break;

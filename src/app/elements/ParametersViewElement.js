@@ -5,6 +5,7 @@ import LightTypes from '../data/lights.js';
 import MaterialTypes from '../data/materials.js';
 import GeometryTypes from '../data/geometry.js';
 import TextureTypes from '../data/textures.js';
+import CameraTypes from '../data/cameras.js'
 import { getEntityName } from '../utils.js';
 
 // https://stackoverflow.com/a/6491621
@@ -115,6 +116,7 @@ export default class ParametersViewElement extends LitElement {
   }
 
   [$onRefresh](e) {
+    console.log("I'M REFRESHING IN PARAMETERSVIEWELEMENT")
     this.dispatchEvent(new CustomEvent('command', {
       detail: {
         type: 'refresh',
@@ -129,21 +131,36 @@ export default class ParametersViewElement extends LitElement {
     const entityTitle = entityData ? getEntityName(entityData) : '';
     const elements = [];
 
+    // if (entityData && (entityData.baseType === 'Camera' || entityData.baseType === 'ArrayCamera' || entityData.baseType === 'PerspectiveCamera' || entityData.baseType === 'OrthographicCamera'|| entityData.baseType === 'CubeCamera')) {
+    //   console.log("CAMERA TYPE!!")
+
+    // }
+
     if (entityData) {
-      let definition = RendererTypes[entityData.baseType] ||
+      const commonProps = entityData.type === 'renderer' ? [CommonProps.Type, CommonProps.Name] :
+		                                           [CommonProps.Type, CommonProps.UUID, CommonProps.Name];
+
+      // if (entityData.baseType === 'Camera' || entityData.baseType === 'ArrayCamera' || entityData.baseType === 'PerspectiveCamera' || entityData.baseType === 'OrthographicCamera'|| entityData.baseType === 'CubeCamera') {
+      // } else {
+        let definition = CameraTypes[entityData.baseType] ||
+                       RendererTypes[entityData.baseType] ||
                        ObjectTypes[entityData.baseType] ||
                        LightTypes[entityData.baseType] ||
                        MaterialTypes[entityData.baseType] ||
                        GeometryTypes[entityData.baseType] ||
-                       TextureTypes[entityData.baseType];
-      if (!definition) {
-        definition = ObjectTypes.Object3D;
-      }
+                       TextureTypes[entityData.baseType]
+                       ;
+        if (!definition) {
+          definition = ObjectTypes.Object3D;
+        }
 
-      const commonProps = entityData.type === 'renderer' ? [CommonProps.Type, CommonProps.Name] :
-		                                           [CommonProps.Type, CommonProps.UUID, CommonProps.Name];
+        // const commonProps = entityData.type === 'renderer' ? [CommonProps.Type, CommonProps.Name] :
+        //                                          [CommonProps.Type, CommonProps.UUID, CommonProps.Name];
+        // console.log("commonProps: ", commonProps)
+      // }
       propsToElements(entityData, elements, [...commonProps, ...definition.props], this.entities);
     }
+    
 
     return html`
 <style>

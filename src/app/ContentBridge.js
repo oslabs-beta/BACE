@@ -123,6 +123,10 @@ export default class ContentBridge extends EventTarget {
     // with LitElement.
     if (object) {
       object[property] = value;
+      console.log("object in ContentBridge updateProperty: ", object)
+      console.log("property in ContentBridge updateProperty: ", property)
+      console.log("value in ContentBridge updateProperty: ", value)
+      console.log("object[property] in ContentBridge updateProperty: ", object[property])
       this[$update](object);
     } else {
       // this may be problematic later if object property is not set / updated??
@@ -238,6 +242,9 @@ export default class ContentBridge extends EventTarget {
 
   [$update](entity) {
     this[$db].set(entity.uuid, entity);
+    console.log("[$update](entity) in content bridge")
+    console.log(this[$db])
+    console.log(entity)
     this.dispatchEvent(new CustomEvent('entity-update', {
       detail: {
         entity,

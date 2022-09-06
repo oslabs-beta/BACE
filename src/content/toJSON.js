@@ -46,9 +46,6 @@ return function InstrumentedToJSON (meta) {
   // base classes here.
   const baseType = utils.getBaseType(this);
 
-  console.log("THIS IN TOJSON: ", this)
-  console.log("toJSON in TOJSON: ", toJSON)
-
   let textureData;
   if (this.isTexture) {
     // If `image` is a plain object (via DataTexture or WebGLRenderTarget)
@@ -156,13 +153,13 @@ return function InstrumentedToJSON (meta) {
     }
   }
   // Handle camera functionality:
-  else if (baseType === 'Camera' || baseType === 'ArrayCamera' || baseType === 'PerspectiveCamera' || baseType === 'OrthographicCamera'|| baseType === 'CubeCamera') {
-    console.log("TYPE IS A CAMERA! -- WE FOUND A CAMERA!!")
-  }
+  // else if (baseType === 'Camera' || baseType === 'ArrayCamera' || baseType === 'PerspectiveCamera' || baseType === 'OrthographicCamera'|| baseType === 'CubeCamera') {
+  //   console.log("TYPE IS A CAMERA! -- WE FOUND A CAMERA!!")
+  // }
 
-  if (this.isCamera) {
-    console.log("THIS IN TOJSON IS A CAMERA! -- WE FOUND A CAMERA!!")
-  }
+  // if (this.isCamera) {
+  //   console.log("THIS IN TOJSON IS A CAMERA! -- WE FOUND A CAMERA!!")
+  // }
 
 
   if (data.object) {
