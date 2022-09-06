@@ -26,10 +26,33 @@ const GeometryRenderable = {
     renderable,
   ]
 }
-
+const background = {
+  name: 'Background',
+  type: 'group',
+  props: [{
+    name: 'Background - r',
+    prop: 'background.r',
+    type: 'number',
+  }, {
+    name: 'Background - g',
+    prop: 'background.g',
+    type: 'number',
+  }, {
+    name: 'Background - b',
+    prop: 'background.b',
+    type: 'number',
+  }]
+}
 const Scene = {
   type: 'scene',
-  props: object,
+  props: [
+    ...object,
+    {
+      name: 'Background',
+      prop: 'background',
+      type: 'color',
+    }
+  ]
 }
 
 const Helper = {
