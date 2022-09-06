@@ -26,32 +26,30 @@ const GeometryRenderable = {
     renderable,
   ]
 }
+
 const background = {
   name: 'Background',
   type: 'group',
-  props: [{
-    name: 'Background - r',
-    prop: 'background.r',
-    type: 'number',
-  }, {
-    name: 'Background - g',
-    prop: 'background.g',
-    type: 'number',
-  }, {
-    name: 'Background - b',
-    prop: 'background.b',
-    type: 'number',
-  }]
+  props: [
+    {
+      name: 'Background Color',
+      prop: 'background',
+      type: 'color',
+    },
+    // {
+    //   // background texture is not yet functional
+    //   name: 'Background Texture',
+    //   prop: 'background',
+    //   type: 'texture',
+    // }
+  ]
 }
+
 const Scene = {
   type: 'scene',
   props: [
     ...object,
-    {
-      name: 'Background',
-      prop: 'background',
-      type: 'color',
-    }
+    background
   ]
 }
 
