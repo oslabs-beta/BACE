@@ -76,7 +76,7 @@ var PMREMGenerator = ( function () {
 		 * gives okay results unless we see the reflection very carefully, or zoom in too much), however the math
 		 * goes wrong as the distribution function tries to sample a larger area than what it should be. So I simply scaled
 		 * the roughness by 0.9(totally empirical) to try to visually match the original result.
-		 * The condition "if(i <5)" is also an attemt to make the result match the original result.
+		 * The condition "if(i <5)" is also an attempt to make the result match the original result.
 		 * This method requires the most amount of thinking I guess. Here is a paper which we could try to implement in future::
 		 * https://developer.nvidia.com/gpugems/GPUGems3/gpugems3_ch20.html
 		 */
