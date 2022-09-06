@@ -136,6 +136,29 @@ return class ThreeDevTools {
     this.log('requestSceneGraph', uuid);
     try {
       const data = this.entityCache.getSceneGraph(uuid);
+      console.log("requestSceneGraph entity cache: ", this.entityCache)
+      console.log("requestSceneGraph from entity cache: ", data)
+      // for (let i = 0; i < this.entityCache.entityMap.length; i++) {
+      //   console.log("this.entityCache.entityMap[i] ", this.entityCache.entityMap[i])
+      //   data[this.entityCache.entityMap[i].uuid] = this.entityCache.entityMap[i]
+      // }
+      // this.entityCache.entityMap.forEach((value, key) => {
+      //   if (!(key in data) && value.type) {
+      //     // add cameras but not renderers to data
+      //     // pick(value, [ 'children',  'name', 'uuid', 'type'])
+      //     const {children, name, uuid, type} = value;
+      //     const newValue = {
+      //       children,
+      //       name,
+      //       uuid,
+      //       type
+      //     }
+      //     newValue.baseType = type
+      //     data[key] = newValue
+      //     console.log("newValue: ", newValue)
+      //   }
+      // })
+      console.log("data after trying to add in cameras? ", data)
       this.send('scene-graph', {
         uuid,
         graph: data,
@@ -143,6 +166,7 @@ return class ThreeDevTools {
     } catch (e) {
       // Why must this be wrapped in a try/catch
       // to report errors? Where's the async??
+      console.log("this mapping isn't working")
       console.error(e);
     }
   }
@@ -187,6 +211,8 @@ return class ThreeDevTools {
 
   observe(entity) {
     this.log('observe', entity);
+    console.log("entity in ThreeDevTools before it's added to entityCache: ", entity)
+    console.log("entity.isCamera in ThreeDevTools before it's added to entityCache: ", entity.isCamera)
     const uuid = this.entityCache.add(entity);
 
     if (!uuid) {
@@ -211,6 +237,8 @@ return class ThreeDevTools {
 
   send(type, data) {
     this.log('emitting', type, data);
+    console.log("three dev tools send type: ", type)
+    console.log("three dev tools send data: ", data)
     try {
       window.postMessage({
         id: 'three-devtools',

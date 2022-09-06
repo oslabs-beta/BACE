@@ -13424,6 +13424,12 @@ function Camera() {
 	this.projectionMatrix = new Matrix4();
 	this.projectionMatrixInverse = new Matrix4();
 
+	// added this also into the minified version of three.js that's being injected
+	if ( typeof __THREE_DEVTOOLS__ !== 'undefined' ) {
+		__THREE_DEVTOOLS__.dispatchEvent( new CustomEvent( 'observe', { detail: this } ) ); // eslint-disable-line no-undef
+
+	}
+
 }
 
 Camera.prototype = Object.assign( Object.create( Object3D.prototype ), {

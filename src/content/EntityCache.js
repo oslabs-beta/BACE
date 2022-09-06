@@ -57,8 +57,13 @@ return class EntityCache extends EventTarget {
       this._registerEntity(entity);
     } else if (typeof entity.render === 'function') {
       this.entityMap.set(id, entity);
+    } else if (entity.isCamera) {
+      console.log("CAMERA FOUND IN ENTITY CACHE")
+      this.scenes.add(entity);
+      this._registerEntity(entity);
+      console.log("scenes with camera? ", this.scenes)
     } else {
-      throw new Error('May only observe scenes and renderers currently.');
+      throw new Error('May only observe scenes, cameras and renderers currently.');
     }
 
     return id;
@@ -68,6 +73,10 @@ return class EntityCache extends EventTarget {
     const graph = {}
     const scene = this.getEntity(uuid);
     const objects = [scene];
+
+    console.log("scene in getSceneGraph: ", scene)
+    console.log("objects in getSceneGraph: ", objects)
+    console.log("uuid in getSceneGraph: ", uuid)
 
     while (objects.length) {
       const object = objects.shift();
@@ -105,6 +114,8 @@ return class EntityCache extends EventTarget {
     for (let scene of this.scenes) {
       if (type === 'scenes') {
         addEntity(scene);
+      } else if (type === 'camera') {
+
       } else {
         utils.forEachDependency(scene, entity => {
           this._registerEntity(entity);
@@ -150,14 +161,12 @@ return class EntityCache extends EventTarget {
   }
 
   getSerializedEntity(id) {
-    console.log("Getting Serialized entity in EntityCache")
     const entity = this.getEntity(id);
     if (!entity) {
       return;
     }
 
     if (/renderer/.test(id)) {
-      console.log("about to call InstrumentedToJSON")
       const data = InstrumentedToJSON.call(entity);
       data.type = 'renderer';
       data.uuid = id;

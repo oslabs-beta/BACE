@@ -46,6 +46,9 @@ return function InstrumentedToJSON (meta) {
   // base classes here.
   const baseType = utils.getBaseType(this);
 
+  console.log("THIS IN TOJSON: ", this)
+  console.log("toJSON in TOJSON: ", toJSON)
+
   let textureData;
   if (this.isTexture) {
     // If `image` is a plain object (via DataTexture or WebGLRenderTarget)
@@ -157,8 +160,8 @@ return function InstrumentedToJSON (meta) {
     console.log("TYPE IS A CAMERA! -- WE FOUND A CAMERA!!")
   }
 
-  if (meta.isCamera) {
-    console.log("META IS A CAMERA! -- WE FOUND A CAMERA!!")
+  if (this.isCamera) {
+    console.log("THIS IN TOJSON IS A CAMERA! -- WE FOUND A CAMERA!!")
   }
 
 

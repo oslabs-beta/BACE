@@ -25,6 +25,7 @@ export default class SceneViewElement extends LitElement {
 
   constructor() {
     super();
+    console.log("constructing scene view element")
     this[$onRefreshClick] = this[$onRefreshClick].bind(this);
     this[$onTreeItemSelect] = this[$onTreeItemSelect].bind(this);
     this[$onContentUpdate] = this[$onContentUpdate].bind(this);
@@ -44,6 +45,12 @@ export default class SceneViewElement extends LitElement {
   render() {
     const { activeScene, activeEntity, scenes, graph } = this;
 
+    console.log("this in scene view element: ", this)
+    console.log("activeScene in scene view element: ", activeScene)
+    console.log("activeEntity in scene view element: ", activeEntity)
+    console.log("scenes in scene view element: ", scenes)
+    console.log("graph in scene view element: ", graph)
+
     if (!scenes) {
       return html`<div></div>`;
     }
@@ -52,8 +59,16 @@ export default class SceneViewElement extends LitElement {
     if (graph && activeScene) {
       sceneGraphNode = this[$createSceneGraphNode](graph, activeScene, activeEntity);
     }
-
+    console.log("sceneGraphNode: ", sceneGraphNode)
     
+    // const otherNodes = [];
+    // for (let i = 0; i < scenes.length; i++) {
+    //   console.log("scenes[i].baseType: ", scenes[i].baseType)
+    //   if (scenes[i].baseType !== 'Scene') {
+    //     otherNodes.push(this[$createSceneGraphNode](graph, scenes[i].uuid, false))
+    //   }
+    // }
+    // console.log("otherNodes: ", otherNodes)
     return html`
 <style>
   :host {
@@ -85,7 +100,7 @@ export default class SceneViewElement extends LitElement {
 
   ${ChromeSelectStyle}
 </style>
-<title-bar title="Scene">
+<title-bar title="Scene & Cameras (click to select)">
   <select @change="${this[$onSceneSelect]}" class="chrome-select">
     ${scenes.map(scene => html`<option value="${scene.uuid}" title="${scene.uuid}">${scene.name || scene.uuid}</option>`)}
   </select>
@@ -98,6 +113,7 @@ ${sceneGraphNode}
 
   [$createSceneGraphNode](graph, uuid, selected, depth=0) {
     const obj = graph[uuid];
+    console.log("createSceneGraphNode graph: ", graph)
 
     return html`
     <tree-item

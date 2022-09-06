@@ -195,6 +195,7 @@ export default class ContentBridge extends EventTarget {
         break;
       case 'scene-graph':
         this[$sceneGraphs].set(data.uuid, data.graph);
+        console.log("onMessage scene-graph request: ", request)
         this.dispatchEvent(new CustomEvent('scene-graph-update', {
           detail: {
             uuid: data.uuid,

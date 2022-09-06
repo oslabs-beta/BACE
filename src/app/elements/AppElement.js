@@ -200,6 +200,7 @@ export default class AppElement extends LitElement {
   [$onCommand](e) {
     const { type } = e.detail;
 
+    console.log("type in onCommand: ", type)
     switch (type) {
       case 'refresh':
         this.refreshData();
@@ -220,6 +221,7 @@ export default class AppElement extends LitElement {
         this.content.requestEntity(e.detail.uuid);
         break;
       case 'request-overview':
+        console.log("e.detail.resourceType: ", e.detail.resourceType)
         this.content.requestOverview(e.detail.resourceType);
         break;
       case 'request-scene-graph':
@@ -246,6 +248,7 @@ export default class AppElement extends LitElement {
     const errorText = this.errorText || '';
 
     const graph = panel === 'scene' && this.activeScene ? this.content.getSceneGraph(this.activeScene) : void 0;
+    console.log("graph in appelement!: ", graph)
     const scenes = panel === 'scene' && this.activeScene ? this.content.getResourcesOverview('scenes') : void 0;
     const showResourceView = !!(panelDef.resource && panel !== 'scene');
     const resources = showResourceView ? this.content.getResourcesOverview(panelDef.resource) : [];
