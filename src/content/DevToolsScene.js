@@ -68,10 +68,6 @@ return class DevToolsScene extends THREE.Scene {
       render();
     })
   }
-
-  // highlightElement() {
-  //   console.log("hoping to highlight element")
-  // }
   
   setTransformMode(mode) {
     if (mode && this.transformControls.mode !== mode) {

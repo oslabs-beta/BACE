@@ -63,6 +63,7 @@ function propsToElements(entity, elements, props, entities) {
       </accordion-view>`);
       continue;
     } else if (entity.type === 'Camera' || entity.type === 'ArrayCamera' || entity.type === 'PerspectiveCamera' || entity.type === 'OrthographicCamera'|| entity.type === 'CubeCamera' ) {
+      // if entity is a camera, add numerical types and push to elements
       const { name, type, prop: propName, enumType, default: def, readonly } = prop;
       // updates to properties currently render in the tool but not on the dom
       let value = propByString(entity, propName);
@@ -164,8 +165,6 @@ export default class ParametersViewElement extends LitElement {
       const commonProps = entityData.type === 'renderer' ? [CommonProps.Type, CommonProps.Name] :
 		                                           [CommonProps.Type, CommonProps.UUID, CommonProps.Name];
 
-      // if (entityData.baseType === 'Camera' || entityData.baseType === 'ArrayCamera' || entityData.baseType === 'PerspectiveCamera' || entityData.baseType === 'OrthographicCamera'|| entityData.baseType === 'CubeCamera') {
-      // } else {
         let definition = CameraTypes[entityData.baseType] ||
                        RendererTypes[entityData.baseType] ||
                        ObjectTypes[entityData.baseType] ||
@@ -179,6 +178,7 @@ export default class ParametersViewElement extends LitElement {
         }
 
       propsToElements(entityData, elements, [...commonProps, ...definition.props], this.entities);
+      // if entity is a camera, send event to call TransformControls to run camera.updateMatrixWorld
       if (entityData.type === 'Camera' || entityData.type === 'ArrayCamera' || entityData.type === 'PerspectiveCamera' || entityData.type === 'OrthographicCamera'|| entityData.type === 'CubeCamera' ) {
         this.dispatchEvent(new CustomEvent('camera-update', {
           detail: {entity: entityData},

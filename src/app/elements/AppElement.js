@@ -256,7 +256,7 @@ export default class AppElement extends LitElement {
 
     const renderingInfo = panel === 'rendering' && this.activeRenderer ? this.content.getRenderingInfo(this.activeRenderer) : void 0;
 
-    // reload on first render? -- this removes need for button reload
+    // reload on first render -- this removes need for button reload
     this.isReady ? console.log('three-tool is ready') : this.needsReload ? this.content.reload() : console.log('three-tool is waiting')
     return html`
 <style>

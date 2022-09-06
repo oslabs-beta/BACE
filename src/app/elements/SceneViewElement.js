@@ -48,6 +48,7 @@ export default class SceneViewElement extends LitElement {
       return html`<div></div>`;
     }
 
+    // create new property -- altName to render in dropdown menu of scenes/cameras
     scenes.map(scene => scene.altName = scene.baseType + ', ' + scene.uuid)
 
     let sceneGraphNode;

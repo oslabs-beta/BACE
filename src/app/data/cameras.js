@@ -1,18 +1,5 @@
-// function copyCameraProperties(object, data){
-//   // handle camera properties
-//   if(object.fov !== undefined )	data.fov	= object.fov
-//   if(object.near !== undefined )	data.near	= object.near
-//   if(object.far !== undefined )	data.far	= object.far
-
-//   // OrthographicCamera
-//   if(object.left !== undefined )	data.left	= object.left
-//   if(object.right !== undefined )	data.right	= object.right
-//   if(object.top !== undefined )	data.top	= object.top
-//   if(object.bottom !== undefined)	data.bottom	= object.bottom
-// }
-
 const Camera = {
-  // these props might need to be adjusted
+  // general camera properties - not editable
   type: 'Camera',
   props: [{
     name: 'Matrix World Inverse',

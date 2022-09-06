@@ -47,6 +47,7 @@ return class ThreeDevTools {
           this.devtoolsScene.setTransformMode(mode);
         }
       } else {
+        // create devtoolsScene array elements for each camera in entityMap
         this.entityCache.entityMap.forEach((value, key) => {
           if (value.type === 'Camera') {
             return this.createDevToolsScene(this.entityCache.renderers[0], this.entityCache.entityMap);
@@ -121,6 +122,7 @@ return class ThreeDevTools {
     else {
       target[key] = value;
     }
+    // create an array of devtoolsScenes for each entityMap camera
     this.entityCache.entityMap.forEach((value, key) => {
       if (value.type === 'Camera') {
         this.devtoolsScene = this.createDevToolsScene(this.entityCache.renderers[0], this.entityCache.entityMap);
@@ -256,6 +258,9 @@ return class ThreeDevTools {
     }
 
     this.devtoolsScene = [];
+    // for each camera entity, create a new devtoolsScene
+    // currently all have the same domElement
+    // currently no access to individual entity domElements
     camera.forEach((value, key) => {
       if (value.type == 'Camera' || value.type == 'OrthographicCamera' || value.type == 'PerspectiveCamera') {
         this.devtoolsScene.push(new DevToolsScene(this.target, renderer.domElement, value));
