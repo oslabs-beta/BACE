@@ -4,7 +4,7 @@
   "description": "Developer tools for 3D library three.js.",
   "devtools_page": "src/extension/devtools.html",
   "background": {
-    "page": "src/extension/background.html"
+    "service_worker": "src/extension/background.html"
   },
   "icons": {
     "128": "assets/icon_128.png"
@@ -12,8 +12,9 @@
   "content_scripts": [
     {
       "matches": [
-        "http://*/*",
-        "https://*/*"
+        "http://*/*", 
+        "https://*/*", 
+        "<all_urls>" 
       ],
       "js": [
         "src/extension/contentScript.js"
@@ -22,14 +23,16 @@
     }
   ],
   "permissions": [
+    "tabs",
+    "activeTab",
     "storage",
-    "webNavigation",
-    "http://*/*",
-    "https://*/*"
+    "webNavigation"
   ],
-  "web_accessible_resources": [
-    "src/content/*.js"
+  "web_accessible_resources": [{
+    "resources":["src/content/*.js"],
+    "matches": ["<all_urls>"]
+  }
   ],
-  "manifest_version": 2,
+  "manifest_version": 3,
   "author": "Jordan Santell + BACE"
 }
