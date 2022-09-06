@@ -4,13 +4,8 @@ export default (THREE) => {
  * `THREE` in this context is the devtools own version of three
  * injected into this scope only.
  */
-console.log("inside DevToolsScene.js")
-// console.log("DevToolsScene target: ", target)
-// console.log("DevToolsScene domElement: ", domElement)
-// console.log("DevToolsScene camera: ", camera)
 return class DevToolsScene extends THREE.Scene {
   constructor(target, domElement, camera) {
-    console.log("constructor of DevToolsScene") // not ever run...
     super();
     this.onSelectedObjectRemove = this.onSelectedObjectRemove.bind(this);
     this.name = 'DevToolsScene';
@@ -46,32 +41,32 @@ return class DevToolsScene extends THREE.Scene {
       }));
     });
 
-    // console.log("THIS.DOMELEMENT: ", this.domElement)
-    // this.domElement.addEventListener('_highlight-element', event => {
-    //   console.log("highlight-event listener in devtoolsscene")
-    //   event.preventDefault();
+    // once the domElement is connected (ie not the 'canvas')
+    // will be able to highlight an element on selection
+    this.domElement.addEventListener('_highlight-element', event => {
+      event.preventDefault();
 
-    //   // mouse = new THREE.Vector2()
-    //   // raycaster = new THREE.Raycaster();
+      mouse = new THREE.Vector2()
+      raycaster = new THREE.Raycaster();
 
-    //   mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-    //   mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+      mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+      mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
     
-    //   raycaster.setFromCamera(mouse, camera);
+      raycaster.setFromCamera(mouse, camera);
     
-    //   var intersects = raycaster.intersectObject(scene, true);
+      var intersects = raycaster.intersectObject(scene, true);
     
-    //   if (intersects.length > 0) {
+      if (intersects.length > 0) {
       
-    //     object = intersects[0].object;
+        object = intersects[0].object;
     
-    //     object.material.color.set( Math.random() * 0xffffff );
+        object.material.color.set( Math.random() * 0xffffff );
     
-    //   }
-    //   else object.material.color.set(0xFFFFFF)
+      }
+      else object.material.color.set(0xFFFFFF)
       
-    //   render();
-    // })
+      render();
+    })
   }
 
   // highlightElement() {
@@ -95,7 +90,6 @@ return class DevToolsScene extends THREE.Scene {
   }
 
   selectObject(object) {
-    console.log("HI FROM DEVTOOLSSCENE SELECT OBJECT")
     if (this.selectedObject) {
       this.selectedObject.removeEventListener('removed', this.onSelectedObjectRemove);
       this.transformControls.detach();

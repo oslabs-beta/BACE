@@ -155,7 +155,6 @@ export default class AppElement extends LitElement {
         }
         break;
       case 'entity-update':
-        console.log("inside entity-update in AppElement: ", e)
         // @TODO figure out when this should be updated
         this.requestUpdate();
         break;
@@ -201,7 +200,6 @@ export default class AppElement extends LitElement {
   [$onCommand](e) {
     const { type } = e.detail;
 
-    console.log("type in onCommand: ", type)
     switch (type) {
       case 'refresh':
         this.refreshData();
@@ -222,7 +220,6 @@ export default class AppElement extends LitElement {
         this.content.requestEntity(e.detail.uuid);
         break;
       case 'request-overview':
-        console.log("e.detail.resourceType: ", e.detail.resourceType)
         this.content.requestOverview(e.detail.resourceType);
         break;
       case 'request-scene-graph':
@@ -249,7 +246,6 @@ export default class AppElement extends LitElement {
     const errorText = this.errorText || '';
 
     const graph = panel === 'scene' && this.activeScene ? this.content.getSceneGraph(this.activeScene) : void 0;
-    console.log("graph in appelement!: ", graph)
     const scenes = panel === 'scene' && this.activeScene ? this.content.getResourcesOverview('scenes') : void 0;
     const showResourceView = !!(panelDef.resource && panel !== 'scene');
     const resources = showResourceView ? this.content.getResourcesOverview(panelDef.resource) : [];
@@ -261,7 +257,7 @@ export default class AppElement extends LitElement {
     const renderingInfo = panel === 'rendering' && this.activeRenderer ? this.content.getRenderingInfo(this.activeRenderer) : void 0;
 
     // reload on first render? -- this removes need for button reload
-    this.isReady ? console.log('ready') : this.needsReload ? this.content.reload() : console.log('waiting')
+    this.isReady ? console.log('three-tool is ready') : this.needsReload ? this.content.reload() : console.log('three-tool is waiting')
     return html`
 <style>
   :host {

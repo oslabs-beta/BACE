@@ -6,7 +6,6 @@ const tempPosition = new THREE.Vector3();
 const tempRotation = new THREE.Quaternion();
 const tempScale = new THREE.Vector3();
 const tempEuler = new THREE.Euler();
-console.log("INSIDE toJSON.js")
 
 return function InstrumentedToJSON (meta) {
 /**
@@ -20,8 +19,6 @@ return function InstrumentedToJSON (meta) {
  * instrumentation-only options that can be attached
  * to the `meta` object, like smarter serialization of images.
  */
-
-  console.log("meta in InstrumentedToJSON: ", meta)
 
   const toJSON = this.constructor &&
                  this.constructor.prototype &&
@@ -152,15 +149,13 @@ return function InstrumentedToJSON (meta) {
       data.capabilities.vertexTextures = capabilities.vertexTextures;
     }
   }
-  // Handle camera functionality:
+
+  // Handle camera functionality: 
+  // to work with camera functionality, might need to add additional properties on camera
+  // e.g. methods
   // else if (baseType === 'Camera' || baseType === 'ArrayCamera' || baseType === 'PerspectiveCamera' || baseType === 'OrthographicCamera'|| baseType === 'CubeCamera') {
   //   console.log("TYPE IS A CAMERA! -- WE FOUND A CAMERA!!")
   // }
-
-  // if (this.isCamera) {
-  //   console.log("THIS IN TOJSON IS A CAMERA! -- WE FOUND A CAMERA!!")
-  // }
-
 
   if (data.object) {
     data.object.baseType = baseType;

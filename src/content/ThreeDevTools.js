@@ -14,7 +14,6 @@ return class ThreeDevTools {
     this.scenes = new Set();
     this.renderers = new Set();
 
-    console.log("target in ThreeDevTools: ", this.target)
     this.entityCache = new EntityCache();
     this.entitiesRecentlyObserved = new Set();
 
@@ -48,14 +47,13 @@ return class ThreeDevTools {
           this.devtoolsScene.setTransformMode(mode);
         }
       } else {
-        this.createDevToolsScene()
+        this.entityCache.entityMap.forEach((value, key) => {
+          if (value.type === 'Camera') {
+            return this.createDevToolsScene(this.entityCache.renderers[0], this.entityCache.entityMap);
+          }
+        });
       }
     });
-    // this.target.addEventListener('_highlight-element', event => {
-    //   console.log(this.entityCache.renderers[0].domElement);
-    //   console.log(this);
-    //   console.log(this.selected);
-    // })
 
     // The 'visualization-change' event is fired by DevToolsScene, indicating
     // something has changed and if not rendering on a RAF loop, a render
@@ -97,7 +95,6 @@ return class ThreeDevTools {
   }
 
   update({ uuid, property, value, dataType }) {
-    console.log("update in ThreeDevTools: ", uuid, property, value, dataType)
     this.log('update', uuid, property, value, dataType);
     const entity = this.entityCache.getEntity(uuid);
 
@@ -124,7 +121,16 @@ return class ThreeDevTools {
     else {
       target[key] = value;
     }
-    console.log("target in ThreeDevTools update: ", target)
+    this.entityCache.entityMap.forEach((value, key) => {
+      if (value.type === 'Camera') {
+        this.devtoolsScene = this.createDevToolsScene(this.entityCache.renderers[0], this.entityCache.entityMap);
+      }
+    });
+    for (let i = 0; i < this.devtoolsScene.length; i++) {
+      if (this.devtoolsScene[i].transformControls) {
+        this.devtoolsScene[i].transformControls.updateMatrixWorld();
+      }
+    }
   }
 
   register(revision) {
@@ -138,37 +144,12 @@ return class ThreeDevTools {
     this.log('requestSceneGraph', uuid);
     try {
       const data = this.entityCache.getSceneGraph(uuid);
-      // console.log("requestSceneGraph entity cache: ", this.entityCache)
-      console.log("requestSceneGraph from entity cache: ", data)
-      // for (let i = 0; i < this.entityCache.entityMap.length; i++) {
-      //   console.log("this.entityCache.entityMap[i] ", this.entityCache.entityMap[i])
-      //   data[this.entityCache.entityMap[i].uuid] = this.entityCache.entityMap[i]
-      // }
-      // this.entityCache.entityMap.forEach((value, key) => {
-      //   if (!(key in data) && value.type) {
-      //     // add cameras but not renderers to data
-      //     // pick(value, [ 'children',  'name', 'uuid', 'type'])
-      //     const {children, name, uuid, type} = value;
-      //     const newValue = {
-      //       children,
-      //       name,
-      //       uuid,
-      //       type
-      //     }
-      //     newValue.baseType = type
-      //     data[key] = newValue
-      //     console.log("newValue: ", newValue)
-      //   }
-      // })
-      // console.log("data after trying to add in cameras? ", data)
       this.send('scene-graph', {
         uuid,
         graph: data,
       });
     } catch (e) {
-      // Why must this be wrapped in a try/catch
-      // to report errors? Where's the async??
-      console.log("this mapping isn't working")
+      // must be wrapped in a try/catch to report errors
       console.error(e);
     }
   }
@@ -190,7 +171,6 @@ return class ThreeDevTools {
 
   requestEntity(uuid) {
     this.log('requestEntity', uuid);
-    console.log("requesting Entity in ThreeDevTools")
     try {
       let data = this.entityCache.getSerializedEntity(uuid);
       if (data) {
@@ -213,8 +193,6 @@ return class ThreeDevTools {
 
   observe(entity) {
     this.log('observe', entity);
-    console.log("entity in ThreeDevTools before it's added to entityCache: ", entity)
-    console.log("entity.isCamera in ThreeDevTools before it's added to entityCache: ", entity.isCamera)
     const uuid = this.entityCache.add(entity);
 
     if (!uuid) {
@@ -239,8 +217,6 @@ return class ThreeDevTools {
 
   send(type, data) {
     this.log('emitting', type, data);
-    console.log("three dev tools send type: ", type)
-    console.log("three dev tools send data: ", data)
     try {
       window.postMessage({
         id: 'three-devtools',
@@ -279,7 +255,13 @@ return class ThreeDevTools {
       return this.devtoolsScene;
     }
 
-    this.devtoolsScene = new DevToolsScene(this.target, renderer.domElement, camera);
+    this.devtoolsScene = [];
+    camera.forEach((value, key) => {
+      if (value.type == 'Camera' || value.type == 'OrthographicCamera' || value.type == 'PerspectiveCamera') {
+        this.devtoolsScene.push(new DevToolsScene(this.target, renderer.domElement, value));
+      }
+    });
+    // this.devtoolsScene = new DevToolsScene(this.target, renderer.domElement, camera);
     return this.devtoolsScene;
   }
 

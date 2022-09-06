@@ -62,6 +62,36 @@ function propsToElements(entity, elements, props, entities) {
         ${subProps}
       </accordion-view>`);
       continue;
+    } else if (entity.type === 'Camera' || entity.type === 'ArrayCamera' || entity.type === 'PerspectiveCamera' || entity.type === 'OrthographicCamera'|| entity.type === 'CubeCamera' ) {
+      const { name, type, prop: propName, enumType, default: def, readonly } = prop;
+      // updates to properties currently render in the tool but not on the dom
+      let value = propByString(entity, propName);
+      if (value === undefined) {
+        value = def;
+      }
+
+      // For number/int types
+      let min = 'min' in prop ? prop.min : -Infinity;
+      let max = 'max' in prop ? prop.max : Infinity;
+      let step = 'step' in prop ? prop.step :
+                 type === 'int' ? 1 : 0.01;
+      let precision = 'precision' in prop ? prop.precision :
+                      type === 'int' ? 0 : 3; 
+
+      elements.push(html`
+        <key-value uuid=${entity.uuid}
+          key-name="${name}"
+          .value="${value}"
+          type="${type}"
+          property="${propName}"
+          .enumType="${enumType || ''}"
+          .min="${min}"
+          .max="${max}"
+          .step="${step}"
+          .precision="${precision}"
+          .readonly="${readonly === true}"
+          >
+        </key-value>`);
     } else {
       const { name, type, prop: propName, enumType, default: def, readonly } = prop;
 
@@ -116,7 +146,6 @@ export default class ParametersViewElement extends LitElement {
   }
 
   [$onRefresh](e) {
-    console.log("I'M REFRESHING IN PARAMETERSVIEWELEMENT")
     this.dispatchEvent(new CustomEvent('command', {
       detail: {
         type: 'refresh',
@@ -130,11 +159,6 @@ export default class ParametersViewElement extends LitElement {
     const entityData = (this.entities && this.entities[this.uuid]) || null;
     const entityTitle = entityData ? getEntityName(entityData) : '';
     const elements = [];
-
-    // if (entityData && (entityData.baseType === 'Camera' || entityData.baseType === 'ArrayCamera' || entityData.baseType === 'PerspectiveCamera' || entityData.baseType === 'OrthographicCamera'|| entityData.baseType === 'CubeCamera')) {
-    //   console.log("CAMERA TYPE!!")
-
-    // }
 
     if (entityData) {
       const commonProps = entityData.type === 'renderer' ? [CommonProps.Type, CommonProps.Name] :
@@ -154,11 +178,14 @@ export default class ParametersViewElement extends LitElement {
           definition = ObjectTypes.Object3D;
         }
 
-        // const commonProps = entityData.type === 'renderer' ? [CommonProps.Type, CommonProps.Name] :
-        //                                          [CommonProps.Type, CommonProps.UUID, CommonProps.Name];
-        // console.log("commonProps: ", commonProps)
-      // }
       propsToElements(entityData, elements, [...commonProps, ...definition.props], this.entities);
+      if (entityData.type === 'Camera' || entityData.type === 'ArrayCamera' || entityData.type === 'PerspectiveCamera' || entityData.type === 'OrthographicCamera'|| entityData.type === 'CubeCamera' ) {
+        this.dispatchEvent(new CustomEvent('camera-update', {
+          detail: {entity: entityData},
+          bubbles: true,
+          composed: true
+        }))
+      }
     }
     
 

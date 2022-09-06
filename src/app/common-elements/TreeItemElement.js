@@ -196,10 +196,8 @@ export default class TreeItemElement extends LitElement {
   }
 
   [$onClick](e) {
+    // use this to "highlight elements" - needs access to the domElements first
     e.stopPropagation();
-    console.log(e.target);
-    console.log(document.body);
-    // console.log("prev at beginning: ", prev)
     // if (e.target === document.body ||
     //   (prev && prev === e.target)) {
     // return;
@@ -219,7 +217,6 @@ export default class TreeItemElement extends LitElement {
       bubbles: true,
       composed: true,
     }));
-    // console.log("prev at end: ", prev)
     this.select();
   }
 
@@ -291,7 +288,6 @@ export default class TreeItemElement extends LitElement {
   }
 
   render() {
-    // console.log("TREE ITEM ELEMENT: ", this)
     if (!this.unique) {
       console.warn(`TreeItemElement's "unique" attribute not set.`);
     }

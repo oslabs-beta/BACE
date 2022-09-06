@@ -5,7 +5,6 @@ const PATCHED = '__SERIALIZATION_PATCHED__';
 return class EntityCache extends EventTarget {
   constructor() {
     super();
-    console.log("CONSTRUCTING ENTITYCACHE")
     this.scenes = new Set();
     this.renderers = [];
 
@@ -27,9 +26,6 @@ return class EntityCache extends EventTarget {
   }
 
   getEntity(id) {
-    console.log("ENTITY MAP IN ENTITY CACHE: ", this.entityMap)
-    console.log("EntityMap entity: ", this.entityMap.get(id))
-    console.log("EntityMap entity baseType: ", utils.getBaseType(this.entityMap.get(id)))
     return this.entityMap.get(id);
   }
 
@@ -52,16 +48,11 @@ return class EntityCache extends EventTarget {
       return;
     }
 
-    if (entity.isScene) {
+    if (entity.isScene || entity.isCamera) {
       this.scenes.add(entity); 
       this._registerEntity(entity);
     } else if (typeof entity.render === 'function') {
       this.entityMap.set(id, entity);
-    } else if (entity.isCamera) {
-      console.log("CAMERA FOUND IN ENTITY CACHE")
-      this.scenes.add(entity);
-      this._registerEntity(entity);
-      console.log("scenes with camera? ", this.scenes)
     } else {
       throw new Error('May only observe scenes, cameras and renderers currently.');
     }
@@ -73,10 +64,6 @@ return class EntityCache extends EventTarget {
     const graph = {}
     const scene = this.getEntity(uuid);
     const objects = [scene];
-
-    console.log("scene in getSceneGraph: ", scene)
-    console.log("objects in getSceneGraph: ", objects)
-    console.log("uuid in getSceneGraph: ", uuid)
 
     while (objects.length) {
       const object = objects.shift();
@@ -115,7 +102,7 @@ return class EntityCache extends EventTarget {
       if (type === 'scenes') {
         addEntity(scene);
       } else if (type === 'camera') {
-
+        addEntity(scene);
       } else {
         utils.forEachDependency(scene, entity => {
           this._registerEntity(entity);
@@ -337,7 +324,6 @@ return class EntityCache extends EventTarget {
         rendererIndex = this.renderers.length;
         this.renderers.push(entity);
       }
-      console.log("this.renderers in EntityCache: ", this.renderers)
       return `renderer-${rendererIndex}`;
     } else if (entity.uuid) {
       return entity.uuid;

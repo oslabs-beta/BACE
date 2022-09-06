@@ -2,12 +2,9 @@ export default (THREE) => {
 /**
  * @author arodic / https://github.com/arodic
  */
-console.log("inside TransformControls file")
-// const camera = new THREE.camera();
 
 THREE.TransformControls = function ( camera, domElement ) {
 
-	console.log("constructing TransformControls")
 	if ( domElement === undefined ) {
 
 		console.warn( 'THREE.TransformControls: The second parameter "domElement" is now mandatory.' );
@@ -19,8 +16,6 @@ THREE.TransformControls = function ( camera, domElement ) {
 
 	this.visible = false;
 	this.domElement = domElement;
-
-	console.log("this.domElement in TransformControls: ", this.domElement);
 
 	var _gizmo = new THREE.TransformControlsGizmo();
 	this.add( _gizmo );
@@ -127,6 +122,10 @@ THREE.TransformControls = function ( camera, domElement ) {
 
 	}
 
+	document.addEventListener('camera-update', e => {
+		this.updateMatrixWorld();
+	})
+
 	this.dispose = function () {
 
 		domElement.removeEventListener( "mousedown", onPointerDown );
@@ -208,7 +207,6 @@ THREE.TransformControls = function ( camera, domElement ) {
 
 	// updateMatrixWorld  updates key transformation variables
 	this.updateMatrixWorld = function () {
-
 		if ( this.object !== undefined ) {
 
 			this.object.updateMatrixWorld();
