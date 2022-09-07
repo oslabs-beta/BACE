@@ -52,8 +52,7 @@ return class EntityCache extends EventTarget {
       this.scenes.add(entity); 
       this._registerEntity(entity);
     } else if (typeof entity.render === 'function') {
-      this.entityMap.set(id, entity);
-      console.log('this is Katie this.entityMap in entityCache in entity.isScene', this.entityMap);
+      this.entityMap.set(id, entity); oc
     } else {
       throw new Error('May only observe scenes, cameras and renderers currently.');
     }

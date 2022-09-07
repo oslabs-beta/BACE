@@ -41,7 +41,6 @@ export default class ImagePreviewElement extends LitElement {
 </style>
 <img @load="${this[$onLoad]}" @click="${this[$onActivate]}" src="${image.url}" />
 <div class="dimensions">${this.width + ' x ' + this.height}</div>
-<button>Hi, I'm a button</button>
 `;
   }
 

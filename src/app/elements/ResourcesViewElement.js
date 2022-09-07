@@ -102,7 +102,6 @@ export default class ResourcesViewElement extends LitElement {
 </tree-item>
 `;
   }
-// <button>Hi, I'm a button</button> shows up in buffer geometry
   updated() {
     const selected = this.shadowRoot.querySelector('tree-item[selected]');
     if (selected && selected.parentElement) {

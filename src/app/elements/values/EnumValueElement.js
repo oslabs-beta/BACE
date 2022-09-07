@@ -55,7 +55,6 @@ ${ChromeSelectStyle}
 `;
   }
 
-  // button above shows up on shadow side in materials bar
   [$onInput](e) {
     const selected = [...e.target.querySelectorAll('option')].filter(o => o.selected)[0];
     const value = +selected.value;
