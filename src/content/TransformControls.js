@@ -122,6 +122,10 @@ THREE.TransformControls = function ( camera, domElement ) {
 
 	}
 
+	document.addEventListener('camera-update', e => {
+		this.updateMatrixWorld();
+	})
+
 	this.dispose = function () {
 
 		domElement.removeEventListener( "mousedown", onPointerDown );
@@ -203,7 +207,6 @@ THREE.TransformControls = function ( camera, domElement ) {
 
 	// updateMatrixWorld  updates key transformation variables
 	this.updateMatrixWorld = function () {
-
 		if ( this.object !== undefined ) {
 
 			this.object.updateMatrixWorld();
@@ -225,7 +228,6 @@ THREE.TransformControls = function ( camera, domElement ) {
 	};
 
 	this.pointerHover = function ( pointer ) {
-
 		if ( this.object === undefined || this.dragging === true || ( pointer.button !== undefined && pointer.button !== 0 ) ) return;
 
 		ray.setFromCamera( pointer, this.camera );

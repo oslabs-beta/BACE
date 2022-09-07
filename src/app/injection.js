@@ -31,3 +31,5 @@ console.log('%c▲%cthree-devtools%c',
 })();
 
 `;
+// const camera = new THREE.PerspectiveCamera();
+// const document = "document obj test";

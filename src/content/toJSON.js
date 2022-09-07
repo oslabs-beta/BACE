@@ -150,6 +150,13 @@ return function InstrumentedToJSON (meta) {
     }
   }
 
+  // Handle camera functionality: 
+  // to work with camera functionality, might need to add additional properties on camera
+  // e.g. methods
+  // else if (baseType === 'Camera' || baseType === 'ArrayCamera' || baseType === 'PerspectiveCamera' || baseType === 'OrthographicCamera'|| baseType === 'CubeCamera') {
+  //   console.log("TYPE IS A CAMERA! -- WE FOUND A CAMERA!!")
+  // }
+
   if (data.object) {
     data.object.baseType = baseType;
 

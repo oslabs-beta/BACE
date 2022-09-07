@@ -133,6 +133,12 @@ export default class ContentBridge extends EventTarget {
     }
   }
 
+  // highlight element in the DOM
+  highlightElement(uuid) {
+    // const object = this.getEntity(uuid);
+    this[$dispatchToContent]('_highlight-element', { uuid })
+  }
+
   /**
    * Request latest data from content for the object
    * with UUID.

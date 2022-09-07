@@ -50,6 +50,8 @@ export default class SceneViewElement extends LitElement {
       `;
     }
 
+    // create new property -- altName to render in dropdown menu of scenes/cameras
+    scenes.map(scene => scene.altName = scene.baseType + ', ' + scene.uuid)
 
     let sceneGraphNode;
     if (graph && activeScene) {
@@ -77,19 +79,27 @@ export default class SceneViewElement extends LitElement {
     outline: none;
   }
 
+  #text {
+    background-color: rgba(141, 141, 141, 0.606); 
+  }
+
+  ::placeholder {
+  color: white;
+  
+}
+
   ${ChromeSelectStyle}
 </style>
-<title-bar title="Scene">
+<title-bar title="Scene & Cameras (click to select)">
   <select @change="${this[$onSceneSelect]}" class="chrome-select">
-    ${scenes.map(scene => html`<option value="${scene.uuid}" title="${scene.uuid}">${scene.name || scene.uuid}</option>`)}
+    ${scenes.filter(scene => scene.name != 'DevToolsScene').map(scene => html`<option value="${scene.uuid}" title="${scene.uuid}">${scene.name || scene.altName}</option>`)}
   </select>
   <devtools-icon-button icon="refresh" @click="${this[$onRefreshClick]}">
 </title-bar>
-<input type="text" id="inputUUID" placeholder="Search Entities by UUID, Name or Type" @change="${this[$setInputUUID]}"></input>
+<input type="text" id="text" id="inputUUID" placeholder="Search Entities by UUID, Name or Type" @change="${this[$setInputUUID]}"></input>
 ${sceneGraphNode}
 `;
   }
-  // button here shows up in scene <button>Hi, I'm a button</button>
 
   [$createSceneGraphNode](graph, uuid, selected, depth=0) {
     const obj = graph[uuid];
@@ -110,7 +120,7 @@ ${sceneGraphNode}
     </tree-item>
   `;
   }
-// button here shows up in scene in the first page <button>Hi, I'm a button</button>
+
 
   [$setInputUUID](e) {
     inputUUID = e.target.value

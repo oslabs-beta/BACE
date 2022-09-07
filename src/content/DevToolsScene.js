@@ -40,6 +40,33 @@ return class DevToolsScene extends THREE.Scene {
         },
       }));
     });
+
+    // once the domElement is connected (ie not the 'canvas')
+    // will be able to highlight an element on selection
+    this.domElement.addEventListener('_highlight-element', event => {
+      event.preventDefault();
+
+      mouse = new THREE.Vector2()
+      raycaster = new THREE.Raycaster();
+
+      mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+      mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    
+      raycaster.setFromCamera(mouse, camera);
+    
+      var intersects = raycaster.intersectObject(scene, true);
+    
+      if (intersects.length > 0) {
+      
+        object = intersects[0].object;
+    
+        object.material.color.set( Math.random() * 0xffffff );
+    
+      }
+      else object.material.color.set(0xFFFFFF)
+      
+      render();
+    })
   }
   
   setTransformMode(mode) {

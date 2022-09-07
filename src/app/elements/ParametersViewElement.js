@@ -5,6 +5,7 @@ import LightTypes from '../data/lights.js';
 import MaterialTypes from '../data/materials.js';
 import GeometryTypes from '../data/geometry.js';
 import TextureTypes from '../data/textures.js';
+import CameraTypes from '../data/cameras.js'
 import { getEntityName } from '../utils.js';
 import clone from '../../../web_modules/just-clone/index.mjs';
 
@@ -63,9 +64,6 @@ function propsToElements(entity, elements, props, entities, onSave, displayData)
     if (prop.type === 'group') {
       const subProps = [];
       propsToElements(entity, subProps, [...prop.props]);
-      console.log('this is subProps', subProps);
-      console.log('this is props', props);
-      console.log('this is props.name', prop.name);
       if (prop.name === 'Transform') {
         elements.push(html`
         <accordion-view>
@@ -82,7 +80,39 @@ function propsToElements(entity, elements, props, entities, onSave, displayData)
       </accordion-view>`);
       }
       continue;
-    } else {
+    } else if (entity.type === 'Camera' || entity.type === 'ArrayCamera' || entity.type === 'PerspectiveCamera' || entity.type === 'OrthographicCamera'|| entity.type === 'CubeCamera' ) {
+      // if entity is a camera, add numerical types and push to elements
+      const { name, type, prop: propName, enumType, default: def, readonly } = prop;
+      // updates to properties currently render in the tool but not on the dom
+      let value = propByString(entity, propName);
+      if (value === undefined) {
+        value = def;
+      }
+
+      // For number/int types
+      let min = 'min' in prop ? prop.min : -Infinity;
+      let max = 'max' in prop ? prop.max : Infinity;
+      let step = 'step' in prop ? prop.step :
+                 type === 'int' ? 1 : 0.01;
+      let precision = 'precision' in prop ? prop.precision :
+                      type === 'int' ? 0 : 3; 
+
+      elements.push(html`
+        <key-value uuid=${entity.uuid}
+          key-name="${name}"
+          .value="${value}"
+          type="${type}"
+          property="${propName}"
+          .enumType="${enumType || ''}"
+          .min="${min}"
+          .max="${max}"
+          .step="${step}"
+          .precision="${precision}"
+          .readonly="${readonly === true}"
+          >
+        </key-value>`);
+    } 
+    else {
       const {
         name, type, prop: propName, enumType, default: def, readonly,
       } = prop;
@@ -151,18 +181,12 @@ export default class ParametersViewElement extends LitElement {
     e.preventDefault();
     savedData = (this.entities && this.entities[this.uuid]) || null;
     copyInfo = clone(savedData);
+    console.log('Transform data has been saved!');
   };
 
   [$displayData] = (e, subProps, elements) => {
     e.preventDefault();
     const copy2 = clone(copyInfo);
-    console.log('this is subprops[0].values[2] position', subProps[0].values[2]);
-    console.log('this is subprops[1].values[2] rotation', subProps[1].values[2]);
-    console.log('this is subprops[2].values[2] scale', subProps[2].values[2]);
-    console.log('this is elements in displayData', elements);
-    console.log('this is elements[3].values[2][0].values[2]', elements[3].values[2][0].values[2]);
-    console.log('this is elements[3].values[2][1].values[2]', elements[3].values[2][1].values[2]);
-    console.log('this is elements[3].values[2][2].values[2]', elements[3].values[2][2].values[2]);
  
     const savedPosition = [copy2['position.x'], copy2['position.y'], copy2['position.z']];
     const savedRotation = [copy2['rotation.x'], copy2['rotation.y'], copy2['rotation.z'], 'XYZ'];
@@ -200,9 +224,9 @@ export default class ParametersViewElement extends LitElement {
     console.log('this is savedScale 2', savedScale);
 
     // keeping elements to see if there is a way to reload elements when button is clicked
-    elements[3].values[2][0].values[2] = savedPosition;
-    elements[3].values[2][1].values[2] = savedRotation;
-    elements[3].values[2][2].values[2] = savedScale;
+    // elements[3].values[2][0].values[2] = savedPosition;
+    // elements[3].values[2][1].values[2] = savedRotation;
+    // elements[3].values[2][2].values[2] = savedScale;
   };
 
  
@@ -210,23 +234,34 @@ export default class ParametersViewElement extends LitElement {
     const entityData = (this.entities && this.entities[this.uuid]) || null;
     const entityTitle = entityData ? getEntityName(entityData) : '';
     const elements = [];
-    console.log('this is the entityData in parametersviewelement', entityData);
-    console.log('this is entityTitle', entityTitle);
-    if (entityData) {
-      let definition = RendererTypes[entityData.baseType]
-                       || ObjectTypes[entityData.baseType]
-                       || LightTypes[entityData.baseType]
-                       || MaterialTypes[entityData.baseType]
-                       || GeometryTypes[entityData.baseType]
-                       || TextureTypes[entityData.baseType];
-      if (!definition) {
-        definition = ObjectTypes.Object3D;
-      }
 
-      const commonProps = entityData.type === 'renderer' ? [CommonProps.Type, CommonProps.Name]
-		                                    : [CommonProps.Type, CommonProps.UUID, CommonProps.Name];
+    if (entityData) {
+      const commonProps = entityData.type === 'renderer' ? [CommonProps.Type, CommonProps.Name] :
+		                                           [CommonProps.Type, CommonProps.UUID, CommonProps.Name];
+
+        let definition = CameraTypes[entityData.baseType] ||
+                       RendererTypes[entityData.baseType] ||
+                       ObjectTypes[entityData.baseType] ||
+                       LightTypes[entityData.baseType] ||
+                       MaterialTypes[entityData.baseType] ||
+                       GeometryTypes[entityData.baseType] ||
+                       TextureTypes[entityData.baseType]
+                       ;
+        if (!definition) {
+          definition = ObjectTypes.Object3D;
+        }
+
       propsToElements(entityData, elements, [...commonProps, ...definition.props], this.entities, this[$onSave], this[$displayData]);
+      // if entity is a camera, send event to call TransformControls to run camera.updateMatrixWorld
+      if (entityData.type === 'Camera' || entityData.type === 'ArrayCamera' || entityData.type === 'PerspectiveCamera' || entityData.type === 'OrthographicCamera'|| entityData.type === 'CubeCamera' ) {
+        this.dispatchEvent(new CustomEvent('camera-update', {
+          detail: {entity: entityData},
+          bubbles: true,
+          composed: true
+        }))
+      }
     }
+    
 
     return html`
 <style>
@@ -270,7 +305,7 @@ export default class ParametersViewElement extends LitElement {
 
 </style>
 <title-bar title="${entityTitle}">
-  <devtools-icon-button icon="refresh" class="${!this.entity ? 'hide' : ''}" @click="${() => this[$onRefresh]()}">
+  <devtools-icon-button icon="refresh" class="${!this.entity ? 'hide' : ''}" @click="${this[$onRefresh]}">
 </title-bar>
 <div class="properties">
   ${elements} 

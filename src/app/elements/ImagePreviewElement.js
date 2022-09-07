@@ -24,7 +24,6 @@ export default class ImagePreviewElement extends LitElement {
       return html`None`;
     }
 
-    console.log('render imagepreview', image);
     return html`
 <style>
   :host {

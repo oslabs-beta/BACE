@@ -48,14 +48,14 @@ return class EntityCache extends EventTarget {
       return;
     }
 
-    if (entity.isScene) {
+    if (entity.isScene || entity.isCamera) {
       this.scenes.add(entity); 
       this._registerEntity(entity);
     } else if (typeof entity.render === 'function') {
       this.entityMap.set(id, entity);
       console.log('this is Katie this.entityMap in entityCache in entity.isScene', this.entityMap);
     } else {
-      throw new Error('May only observe scenes and renderers currently.');
+      throw new Error('May only observe scenes, cameras and renderers currently.');
     }
 
     return id;
@@ -101,6 +101,8 @@ return class EntityCache extends EventTarget {
 
     for (let scene of this.scenes) {
       if (type === 'scenes') {
+        addEntity(scene);
+      } else if (type === 'camera') {
         addEntity(scene);
       } else {
         utils.forEachDependency(scene, entity => {

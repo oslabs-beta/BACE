@@ -242,6 +242,9 @@ export default class AppElement extends LitElement {
         const { uuid, property, value, dataType } = e.detail;
         this.content.updateProperty(uuid, property, value, dataType);
         break;
+      case 'highlight-element':
+        this.content.highlightElement(e.detail.uuid);
+        break;
       default:
         console.warn(`Unknown command ${type}`);
     }
@@ -263,8 +266,8 @@ export default class AppElement extends LitElement {
 
     const renderingInfo = panel === 'rendering' && this.activeRenderer ? this.content.getRenderingInfo(this.activeRenderer) : void 0;
 
-    // reload on first render? -- this removes need for button reload
-    this.isReady ? console.log('ready') : this.needsReload ? this.content.reload() : console.log('waiting')
+    // reload on first render -- this removes need for button reload
+    this.isReady ? console.log('three-tool is ready') : this.needsReload ? this.content.reload() : console.log('three-tool is waiting')
     return html`
 <style>
   :host {
@@ -396,11 +399,11 @@ export default class AppElement extends LitElement {
 
   <!-- Application panes -->
   <tab-bar class="flex inverse collapsible" visible-when='ready' @click=${this[$onPanelClick]}>
-    <x-icon class="collapsible" panel="scene" title="${panels.scene.title}" ?active=${panel === 'scene'} icon="cubes" fill></x-icon>
-    <x-icon class="collapsible" panel="geometries" title="${panels.geometries.title}" ?active=${panel === 'geometries'} icon="dice-d20" fill></x-icon>
-    <x-icon class="collapsible" panel="materials" title="${panels.materials.title}" ?active=${panel === 'materials'} icon="paint-brush" fill></x-icon>
+    <x-icon class="collapsible" panel="scene" title="${panels.scene.title}" ?active=${panel === 'scene'} icon="shapes" fill></x-icon>
+    <x-icon class="collapsible" panel="geometries" title="${panels.geometries.title}" ?active=${panel === 'geometries'} icon="cube" fill></x-icon>
+    <x-icon class="collapsible" panel="materials" title="${panels.materials.title}" ?active=${panel === 'materials'} icon="brush" fill></x-icon>
     <x-icon class="collapsible" panel="textures" title="${panels.textures.title}" ?active=${panel === 'textures'} icon="chess-board" fill></x-icon>
-    <x-icon class="collapsible" panel="rendering" title="${panels.rendering.title}" ?active=${panel === 'rendering'} icon="video" fill></x-icon>
+    <x-icon class="collapsible" panel="rendering" title="${panels.rendering.title}" ?active=${panel === 'rendering'} icon="spinner" fill></x-icon>
   </tab-bar>
 
   <div class="frame flex" visible-when='ready'> 
