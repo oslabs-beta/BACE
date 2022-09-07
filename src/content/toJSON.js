@@ -165,6 +165,11 @@ return function InstrumentedToJSON (meta) {
     data.baseType = baseType;
   }
 
+  console.log(data)
+
+  // let isDownload = true
+  // if (isDownload) toGLTF(data)
+
   return data;
 }
 });

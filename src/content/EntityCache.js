@@ -1,3 +1,5 @@
+// import { createClient } from '../../web_modules/redis/dist/index.js';
+
 export default (() => {
 
 const PATCHED = '__SERIALIZATION_PATCHED__';
@@ -7,6 +9,7 @@ return class EntityCache extends EventTarget {
     super();
     this.scenes = new Set();
     this.renderers = [];
+    // this.DB = false;
 
     this.entityMap = new Map();
     // Map of uuid to version, if any, of a large
@@ -25,9 +28,22 @@ return class EntityCache extends EventTarget {
     };
   }
 
+  // async redisStart() {
+  //   // creating Redis client
+  //   this.DB = true;
+  //   const client = createClient();
+  //   // awaiting connection to Redis DB
+  //   await client.connect();
+  // }
+
   getEntity(id) {
     return this.entityMap.get(id);
   }
+
+  // async getEntityRedis(id) {
+  //   const value = await client.get(id);
+  //   return value;
+  // }
 
   /**
    * Adds a renderer or scene to be registered and observed
@@ -36,7 +52,7 @@ return class EntityCache extends EventTarget {
    * @param {THREE.Scene | THREE.WebGLRenderer} entity 
    * @return {String} returns the ID of the entity if and only if it was added.
    */
-  add(entity) {
+  async add(entity) {
     if (!entity || utils.isHiddenFromTools(entity)) {
       //console.error('ThreeDevTools#observe must have event detail.');
       return;
@@ -53,6 +69,8 @@ return class EntityCache extends EventTarget {
       this._registerEntity(entity);
     } else if (typeof entity.render === 'function') {
       this.entityMap.set(id, entity);
+    // } else if (typeof entity.render === 'function' && this.DB) {
+    //   await client.set(id, entity);
     } else {
       throw new Error('May only observe scenes and renderers currently.');
     }
@@ -169,6 +187,11 @@ return class EntityCache extends EventTarget {
       this.entityMap.delete(id);
       return;
     }
+
+    // if (utils.isHiddenFromTools(entity) && this.DB) {
+    //   client.del(id)
+    //   return;
+    // }
 
     // Cache attribute and image generation if possible
     const meta =  {
@@ -292,8 +315,11 @@ return class EntityCache extends EventTarget {
     if (uuid && !this.entityMap.has(uuid)) {
       this._patchToJSON(entity);
       this.entityMap.set(uuid, entity);
+    // } else if (uuid && this.DB && client.get(uuid) === 'nil') {
+    //   client.set(uuid, entity)
     }
   }
+
 
   /**
    * Run after collecting resources. Ensure that this
