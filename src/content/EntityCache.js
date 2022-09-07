@@ -52,7 +52,7 @@ return class EntityCache extends EventTarget {
       this.scenes.add(entity); 
       this._registerEntity(entity);
     } else if (typeof entity.render === 'function') {
-      this.entityMap.set(id, entity); oc
+      this.entityMap.set(id, entity); 
     } else {
       throw new Error('May only observe scenes, cameras and renderers currently.');
     }
