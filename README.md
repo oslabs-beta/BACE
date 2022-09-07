@@ -7,8 +7,8 @@ This project iterates on the previous [**three-devtools**](https://github.com/th
 - [Referencing three-devtools](#Referencing-three-devtools)
 - [Documentation](#Documentation)
 - [Changes from three-devtools](#Changes-from-three-devtools)
-- [Next Steps](#Next-Steps)
-- [Trouble Shooting](#Trouble-Shooting)
+- [Next Steps](#Recommended-Next-Steps)
+- [Troubleshooting](#Troubleshooting)
 - [To Contribute](#To-Contribute)
 
 ## Basic Setup as Chrome Extension
