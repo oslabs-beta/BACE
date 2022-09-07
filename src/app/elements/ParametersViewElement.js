@@ -70,6 +70,16 @@ function propsToElements(entity, elements, props, entities, onSave, displayData)
         <accordion-view>
         <div class="accordion-title" slot="content">${prop.name}</div>
         ${subProps}
+        <style>
+        #btn{
+          background-color: gray;
+          color:white
+        }
+        #btn:hover {
+          background-color: black;
+          color: white;
+        }
+        </style>
         <button id='transform-cache' @click='${(e) => onSave(e)}'>Save</button>
         <button id='display-transform-cache' @click='${(e) => displayData(e, subProps, elements)}'>Display Saved Data</button>
       </accordion-view>
