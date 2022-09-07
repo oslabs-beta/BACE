@@ -1,5 +1,5 @@
 {
-  "name": "BACE Three.js Developer Tools",
+  "name": "Three-tools",
   "version": "0.4.1",
   "description": "Developer tools for 3D library three.js.",
   "devtools_page": "src/extension/devtools.html",
@@ -31,5 +31,5 @@
     "src/content/*.js"
   ],
   "manifest_version": 2,
-  "author": "Jordan Santell + BACE"
+  "author": "Emily Bae, Katie Ahn, Alyssa Chew, & Karl Eden"
 }
