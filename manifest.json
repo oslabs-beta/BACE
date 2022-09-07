@@ -18,8 +18,7 @@
       ],
       "js": [
         "src/extension/contentScript.js"
-      ],
-      "run_at": "document_start"
+      ]
     }
   ],
   "permissions": [
@@ -29,7 +28,7 @@
     "webNavigation"
   ],
   "web_accessible_resources": [{
-    "resources":["src/content/*.js"],
+    "resources":["src/content/*.js","src/content/inject.js" ],
     "matches": ["<all_urls>"]
   }
   ],

@@ -3,15 +3,12 @@
 // https://bugs.chromium.org/p/chromium/issues/detail?id=634381#c3
 
 
-function injectScript(file_path) {
-  const node = document.getElementsByTagName('body');
-  console.log(node)
-  console.log(node[0])
-  //console.log(node.0)
-  //console.log(node[0]);
+function injectScript(file_path, tag) {
+  const node = document.getElementsByTagName(tag)[0];
   const script = document.createElement('script');
   script.setAttribute('type', 'text/javascript');
   script.setAttribute('src', file_path);
+  console.log(script)
   script.onload = () => {
     script.parentNode.removeChild(script);
   }
@@ -19,7 +16,7 @@ function injectScript(file_path) {
 }
 //the content script is going to be listen to messages from the injected script since its now apart of the page
 // getURL gets us a file within the extension we created
-injectScript(chrome.runtime.getURL('../content/inject.js'));
+injectScript(chrome.runtime.getURL('../content/inject.js'), 'body');
 
 
 // (document.head || document.documentElement).appendChild(script);

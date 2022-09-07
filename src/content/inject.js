@@ -1,5 +1,5 @@
 
-(() => {
+export default (() => {
 /**
  * This script injected by the installed three.js developer
  * tools extension.
@@ -38,3 +38,5 @@ Object.defineProperty(window, '__THREE_DEVTOOLS__', {
   value: target,
 });
 })();
+
+
