@@ -67,11 +67,18 @@ function propsToElements(entity, elements, props, entities, onSave, displayData)
       propsToElements(entity, subProps, [...prop.props]);
       if (prop.name === 'Transform') {
         elements.push(html`
-        <accordion-view>
-        <div class="accordion-title" slot="content">${prop.name}</div>
-        ${subProps}
-        <button id='transform-cache' @click='${(e) => onSave(e)}'>Save</button>
-        <button id='display-transform-cache' @click='${(e) => displayData(e, subProps, elements)}'>Display Saved Data</button>
+        <style>
+        .btn{
+          background-color: gray;
+          color:white
+        }
+        .btn:hover {
+          background-color: black;
+          color: white;
+        }
+        </style>
+        <button class='btn' id='transform-cache' @click='${(e) => onSave(e)}'>Save</button>
+        <button class='btn' id='display-transform-cache' @click='${(e) => displayData(e, subProps, elements)}'>Display Saved Data</button>
       </accordion-view>
       `);
       } else {
@@ -229,7 +236,9 @@ export default class ParametersViewElement extends LitElement {
     // elements[3].values[2][1].values[2] = savedRotation;
     // elements[3].values[2][2].values[2] = savedScale;
 
-    let popup = window.open('about:blank', `Saved Transform ${popupWindow}`, 'location=no,width=300,height=300')
+    const popup = window.open("", `Saved Transform ${popupWindow}`, 
+    'location=no,width=280,height=220,resizable=yes,'
+    )
 
     popup.document.title = `Saved Transform Features ${popupWindow}`;
     popupWindow++;
@@ -248,9 +257,17 @@ export default class ParametersViewElement extends LitElement {
     savedRotationDiv.appendChild(savedRotationContent);
     savedScaleDiv.appendChild(savedScaleContent);
 
-    popup.document.body.appendChild(savedPosDiv);
-    popup.document.body.appendChild(savedRotationDiv);
-    popup.document.body.appendChild(savedScaleDiv);
+    const popupBody = popup.document.body;
+    popupBody.appendChild(savedPosDiv);
+    popupBody.appendChild(savedRotationDiv);
+    popupBody.appendChild(savedScaleDiv);
+    
+    //add styling
+    popupBody.style.background = '#1c1c1b'
+    popupBody.style.color = 'white'
+    popupBody.style.fontFamily = 'Courier New'
+    popupBody.style.fontSize = '85%'
+  
   };
 
  
