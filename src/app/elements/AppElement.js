@@ -232,6 +232,9 @@ export default class AppElement extends LitElement {
         const { uuid, property, value, dataType } = e.detail;
         this.content.updateProperty(uuid, property, value, dataType);
         break;
+      case 'highlight-element':
+        this.content.highlightElement(e.detail.uuid);
+        break;
       default:
         console.warn(`Unknown command ${type}`);
     }
@@ -253,8 +256,8 @@ export default class AppElement extends LitElement {
 
     const renderingInfo = panel === 'rendering' && this.activeRenderer ? this.content.getRenderingInfo(this.activeRenderer) : void 0;
 
-    // reload on first render? -- this removes need for button reload
-    this.isReady ? console.log('ready') : this.needsReload ? this.content.reload() : console.log('waiting')
+    // reload on first render -- this removes need for button reload
+    this.isReady ? console.log('three-tool is ready') : this.needsReload ? this.content.reload() : console.log('three-tool is waiting')
     return html`
 <style>
   :host {

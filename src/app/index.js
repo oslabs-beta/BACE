@@ -71,7 +71,6 @@ if (browser.devtools.panels.onThemeChanged) {
 changeTheme(browser.devtools.panels.themeName);
 
 const agent = getAgent(window.navigator.userAgent);
-console.log('Parsed agent:', agent);
 if (agent.os.name === 'window') {
   document.body.classList.add('platform-windows');
 } else if (agent.os.name === 'mac') {
@@ -83,15 +82,3 @@ if (agent.os.name === 'window') {
 window.addEventListener('error', e => {
   document.querySelector('three-devtools-app').setError(e.message);
 });
-
-// const uuidSearchInput = document.getElementById('inputUUID')
-// console.log("UUID SEARCH INPUT: ", uuidSearchInput)
-// uuidSearchInput.addEventListener("input", (e) => {
-//   console.log("search uuid has been found");
-//   let value = e.target.value;
-
-//   if (isUUID(value)) {
-//     console.log("UUID is valid", this.requestEntity(value))
-//     return this.requestEntity(value)
-//   }
-// })

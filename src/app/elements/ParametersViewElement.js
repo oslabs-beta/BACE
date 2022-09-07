@@ -5,6 +5,7 @@ import LightTypes from '../data/lights.js';
 import MaterialTypes from '../data/materials.js';
 import GeometryTypes from '../data/geometry.js';
 import TextureTypes from '../data/textures.js';
+import CameraTypes from '../data/cameras.js'
 import { getEntityName } from '../utils.js';
 
 // https://stackoverflow.com/a/6491621
@@ -61,6 +62,37 @@ function propsToElements(entity, elements, props, entities) {
         ${subProps}
       </accordion-view>`);
       continue;
+    } else if (entity.type === 'Camera' || entity.type === 'ArrayCamera' || entity.type === 'PerspectiveCamera' || entity.type === 'OrthographicCamera'|| entity.type === 'CubeCamera' ) {
+      // if entity is a camera, add numerical types and push to elements
+      const { name, type, prop: propName, enumType, default: def, readonly } = prop;
+      // updates to properties currently render in the tool but not on the dom
+      let value = propByString(entity, propName);
+      if (value === undefined) {
+        value = def;
+      }
+
+      // For number/int types
+      let min = 'min' in prop ? prop.min : -Infinity;
+      let max = 'max' in prop ? prop.max : Infinity;
+      let step = 'step' in prop ? prop.step :
+                 type === 'int' ? 1 : 0.01;
+      let precision = 'precision' in prop ? prop.precision :
+                      type === 'int' ? 0 : 3; 
+
+      elements.push(html`
+        <key-value uuid=${entity.uuid}
+          key-name="${name}"
+          .value="${value}"
+          type="${type}"
+          property="${propName}"
+          .enumType="${enumType || ''}"
+          .min="${min}"
+          .max="${max}"
+          .step="${step}"
+          .precision="${precision}"
+          .readonly="${readonly === true}"
+          >
+        </key-value>`);
     } else {
       const { name, type, prop: propName, enumType, default: def, readonly } = prop;
 
@@ -130,20 +162,32 @@ export default class ParametersViewElement extends LitElement {
     const elements = [];
 
     if (entityData) {
-      let definition = RendererTypes[entityData.baseType] ||
+      const commonProps = entityData.type === 'renderer' ? [CommonProps.Type, CommonProps.Name] :
+		                                           [CommonProps.Type, CommonProps.UUID, CommonProps.Name];
+
+        let definition = CameraTypes[entityData.baseType] ||
+                       RendererTypes[entityData.baseType] ||
                        ObjectTypes[entityData.baseType] ||
                        LightTypes[entityData.baseType] ||
                        MaterialTypes[entityData.baseType] ||
                        GeometryTypes[entityData.baseType] ||
-                       TextureTypes[entityData.baseType];
-      if (!definition) {
-        definition = ObjectTypes.Object3D;
-      }
+                       TextureTypes[entityData.baseType]
+                       ;
+        if (!definition) {
+          definition = ObjectTypes.Object3D;
+        }
 
-      const commonProps = entityData.type === 'renderer' ? [CommonProps.Type, CommonProps.Name] :
-		                                           [CommonProps.Type, CommonProps.UUID, CommonProps.Name];
       propsToElements(entityData, elements, [...commonProps, ...definition.props], this.entities);
+      // if entity is a camera, send event to call TransformControls to run camera.updateMatrixWorld
+      if (entityData.type === 'Camera' || entityData.type === 'ArrayCamera' || entityData.type === 'PerspectiveCamera' || entityData.type === 'OrthographicCamera'|| entityData.type === 'CubeCamera' ) {
+        this.dispatchEvent(new CustomEvent('camera-update', {
+          detail: {entity: entityData},
+          bubbles: true,
+          composed: true
+        }))
+      }
     }
+    
 
     return html`
 <style>
