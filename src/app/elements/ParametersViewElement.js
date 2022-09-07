@@ -228,8 +228,6 @@ export default class ParametersViewElement extends LitElement {
     // elements[3].values[2][0].values[2] = savedPosition;
     // elements[3].values[2][1].values[2] = savedRotation;
     // elements[3].values[2][2].values[2] = savedScale;
-    // document.getElementById('savedElements').innerText = `${savedPosition}`;
-    // ./elements/savedElements.html
 
     let popup = window.open('about:blank', `Saved Transform ${popupWindow}`, 'location=no,width=300,height=300')
 
