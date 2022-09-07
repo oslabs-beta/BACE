@@ -207,12 +207,14 @@ const WebGLRenderer = {
     prop: 'physicallyCorrectLights',
     type: 'boolean',
     default: false,
-  }, {
-    name: 'Gamma',
-    prop: 'gammaFactor',
-    type: 'number',
-    default: 2,
-  }, {
+  },
+  //  {
+  //   name: 'Gamma',
+  //   prop: 'gammaFactor',
+  //   type: 'number',
+  //   default: 2,
+  // }, 
+  {
     name: 'Output Encoding',
     prop: 'outputEncoding',
     type: 'enum',
