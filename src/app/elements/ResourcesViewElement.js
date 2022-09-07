@@ -102,7 +102,6 @@ export default class ResourcesViewElement extends LitElement {
 </tree-item>
 `;
   }
-
   updated() {
     const selected = this.shadowRoot.querySelector('tree-item[selected]');
     if (selected && selected.parentElement) {

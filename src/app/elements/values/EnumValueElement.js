@@ -51,6 +51,7 @@ export default class EnumValueElement extends LitElement {
 ${ChromeSelectStyle}
 </style>
 <select class="chrome-select" @input="${this[$onInput]}">${options}</select>
+
 `;
   }
 

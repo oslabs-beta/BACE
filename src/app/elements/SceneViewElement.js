@@ -45,7 +45,9 @@ export default class SceneViewElement extends LitElement {
     const { activeScene, activeEntity, scenes, graph } = this;
 
     if (!scenes) {
-      return html`<div></div>`;
+      return html`<div></div>
+
+      `;
     }
 
     // create new property -- altName to render in dropdown menu of scenes/cameras
@@ -55,6 +57,7 @@ export default class SceneViewElement extends LitElement {
     if (graph && activeScene) {
       sceneGraphNode = this[$createSceneGraphNode](graph, activeScene, activeEntity);
     }
+
     
     return html`
 <style>

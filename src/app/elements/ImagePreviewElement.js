@@ -18,7 +18,7 @@ export default class ImagePreviewElement extends LitElement {
   }
 
   render() {
-    const image = null;//this.getEntity();
+    const image = null; // this.getEntity();
 
     if (!image) {
       return html`None`;
