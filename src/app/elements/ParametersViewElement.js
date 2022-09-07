@@ -31,6 +31,7 @@ const $displayData = Symbol('displayData');
 
 let savedData;
 let copyInfo;
+let popupWindow = 1;
 
 const CommonProps = {
   Type: {
@@ -69,8 +70,8 @@ function propsToElements(entity, elements, props, entities, onSave, displayData)
         <accordion-view>
         <div class="accordion-title" slot="content">${prop.name}</div>
         ${subProps}
-        <button id='transform-cache' @click='${(e) => onSave(e)}'>Save 1</button>
-        <button id='display-transform-cache' @click='${(e) => displayData(e, subProps, elements)}'>Console Log Save 1</button>
+        <button id='transform-cache' @click='${(e) => onSave(e)}'>Save</button>
+        <button id='display-transform-cache' @click='${(e) => displayData(e, subProps, elements)}'>Display Saved Data</button>
       </accordion-view>
       `);
       } else {
@@ -219,14 +220,37 @@ export default class ParametersViewElement extends LitElement {
     if (savedScale[2] === undefined) {
       savedScale[2] = copy2.scale[2];
     }
-    console.log('this is savedPosition 2', savedPosition);
-    console.log('this is savedRotation 2', savedRotation);
-    console.log('this is savedScale 2', savedScale);
+    console.log('this is savedPosition', savedPosition);
+    console.log('this is savedRotation', savedRotation);
+    console.log('this is savedScale', savedScale);
 
     // keeping elements to see if there is a way to reload elements when button is clicked
     // elements[3].values[2][0].values[2] = savedPosition;
     // elements[3].values[2][1].values[2] = savedRotation;
     // elements[3].values[2][2].values[2] = savedScale;
+
+    let popup = window.open('about:blank', `Saved Transform ${popupWindow}`, 'location=no,width=300,height=300')
+
+    popup.document.title = `Saved Transform Features ${popupWindow}`;
+    popupWindow++;
+    // create new div elements
+    const savedPosDiv = popup.document.createElement("div");
+    const savedRotationDiv = popup.document.createElement("div");
+    const savedScaleDiv = popup.document.createElement("div");
+
+    // and give them some content
+    const savedPosContent = popup.document.createTextNode(`Saved Position: ${savedPosition}`);
+    const savedRotationContent = popup.document.createTextNode(`Saved Rotation: ${savedRotation}`);
+    const savedScaleContent = popup.document.createTextNode(`Saved Scale: ${savedScale}`);
+
+    // add the text nodes to the newly created divs
+    savedPosDiv.appendChild(savedPosContent);
+    savedRotationDiv.appendChild(savedRotationContent);
+    savedScaleDiv.appendChild(savedScaleContent);
+
+    popup.document.body.appendChild(savedPosDiv);
+    popup.document.body.appendChild(savedRotationDiv);
+    popup.document.body.appendChild(savedScaleDiv);
   };
 
  
