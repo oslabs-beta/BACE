@@ -43,4 +43,5 @@ export default class TitleBarElement extends LitElement {
 <slot></slot>
 `;
   }
+  // button here literally shows up in the bar with all the icons
 }

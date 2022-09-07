@@ -69,7 +69,11 @@ export default class AppElement extends LitElement {
     this.content.addEventListener('scene-graph-update', this[$onContentUpdate]);
     this.content.addEventListener('overview-update', this[$onContentUpdate]);
     this.content.addEventListener('observe', this[$onContentUpdate]);
+    this.content.addEventListener('save-transform', this[$onContentUpdate]);
     this.addEventListener('command', this[$onCommand]);
+    // this.querySelector('#transform-cache').addEventListener('click', () => {
+    //   console.log('Ahoy!  Hello!');
+    // });
   }
 
   setError(error) {
@@ -165,6 +169,12 @@ export default class AppElement extends LitElement {
         break;
       case 'scene-graph-update':
         if (this.panel === 'scene' && this.activeScene === e.detail.uuid) {
+          this.requestUpdate();
+        }
+        break;
+      case 'save-transform':
+        if (this.panel === 'scene' && this.activeScene === e.detail.uuid){
+          console.log('made it to inside save-transform switch');
           this.requestUpdate();
         }
         break;
@@ -424,4 +434,5 @@ export default class AppElement extends LitElement {
 </div>
 `;
   }
+  // this also shows as a giant button in the front of the page
 }

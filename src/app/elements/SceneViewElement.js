@@ -45,8 +45,11 @@ export default class SceneViewElement extends LitElement {
     const { activeScene, activeEntity, scenes, graph } = this;
 
     if (!scenes) {
-      return html`<div></div>`;
+      return html`<div></div>
+
+      `;
     }
+
 
     let sceneGraphNode;
     if (graph && activeScene) {
@@ -86,6 +89,7 @@ export default class SceneViewElement extends LitElement {
 ${sceneGraphNode}
 `;
   }
+  // button here shows up in scene <button>Hi, I'm a button</button>
 
   [$createSceneGraphNode](graph, uuid, selected, depth=0) {
     const obj = graph[uuid];
@@ -106,7 +110,7 @@ ${sceneGraphNode}
     </tree-item>
   `;
   }
-
+// button here shows up in scene in the first page <button>Hi, I'm a button</button>
 
   [$setInputUUID](e) {
     inputUUID = e.target.value

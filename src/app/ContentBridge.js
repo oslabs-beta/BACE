@@ -61,6 +61,10 @@ export default class ContentBridge extends EventTarget {
         this[$dispatchToContent]('_transform-controls-update', { mode, space });
       }
     }, { passive: true })
+
+    // document.querySelector('#transform-cache').addEventListener('click', () => {
+    //   console.log('Ahoy!  Hello!');
+    // });
   }
 
   reload() {

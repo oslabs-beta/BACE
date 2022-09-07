@@ -18,13 +18,13 @@ export default class ImagePreviewElement extends LitElement {
   }
 
   render() {
-    const image = null;//this.getEntity();
+    const image = null; // this.getEntity();
 
     if (!image) {
       return html`None`;
     }
 
-    console.log('render imagepreview',image);
+    console.log('render imagepreview', image);
     return html`
 <style>
   :host {
@@ -42,6 +42,7 @@ export default class ImagePreviewElement extends LitElement {
 </style>
 <img @load="${this[$onLoad]}" @click="${this[$onActivate]}" src="${image.url}" />
 <div class="dimensions">${this.width + ' x ' + this.height}</div>
+<button>Hi, I'm a button</button>
 `;
   }
 

@@ -51,9 +51,11 @@ export default class EnumValueElement extends LitElement {
 ${ChromeSelectStyle}
 </style>
 <select class="chrome-select" @input="${this[$onInput]}">${options}</select>
+
 `;
   }
 
+  // button above shows up on shadow side in materials bar
   [$onInput](e) {
     const selected = [...e.target.querySelectorAll('option')].filter(o => o.selected)[0];
     const value = +selected.value;
