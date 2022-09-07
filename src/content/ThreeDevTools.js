@@ -6,6 +6,7 @@ export default (() => {
  * `scene`
  * `renderer`
  */
+
 return class ThreeDevTools {
   constructor(target) {
     this.USE_RENDER_OVERLAY = false;
@@ -45,6 +46,13 @@ return class ThreeDevTools {
         if (mode) {
           this.devtoolsScene.setTransformMode(mode);
         }
+      } else {
+        // create devtoolsScene array elements for each camera in entityMap
+        this.entityCache.entityMap.forEach((value, key) => {
+          if (value.type === 'Camera') {
+            return this.createDevToolsScene(this.entityCache.renderers[0], this.entityCache.entityMap);
+          }
+        });
       }
     });
 
@@ -114,6 +122,17 @@ return class ThreeDevTools {
     else {
       target[key] = value;
     }
+    // create an array of devtoolsScenes for each entityMap camera
+    this.entityCache.entityMap.forEach((value, key) => {
+      if (value.type === 'Camera') {
+        this.devtoolsScene = this.createDevToolsScene(this.entityCache.renderers[0], this.entityCache.entityMap);
+      }
+    });
+    for (let i = 0; i < this.devtoolsScene.length; i++) {
+      if (this.devtoolsScene[i].transformControls) {
+        this.devtoolsScene[i].transformControls.updateMatrixWorld();
+      }
+    }
   }
 
   register(revision) {
@@ -132,8 +151,7 @@ return class ThreeDevTools {
         graph: data,
       });
     } catch (e) {
-      // Why must this be wrapped in a try/catch
-      // to report errors? Where's the async??
+      // must be wrapped in a try/catch to report errors
       console.error(e);
     }
   }
@@ -239,7 +257,16 @@ return class ThreeDevTools {
       return this.devtoolsScene;
     }
 
-    this.devtoolsScene = new DevToolsScene(this.target, renderer.domElement, camera);
+    this.devtoolsScene = [];
+    // for each camera entity, create a new devtoolsScene
+    // currently all have the same domElement
+    // currently no access to individual entity domElements
+    camera.forEach((value, key) => {
+      if (value.type == 'Camera' || value.type == 'OrthographicCamera' || value.type == 'PerspectiveCamera') {
+        this.devtoolsScene.push(new DevToolsScene(this.target, renderer.domElement, value));
+      }
+    });
+    // this.devtoolsScene = new DevToolsScene(this.target, renderer.domElement, camera);
     return this.devtoolsScene;
   }
 

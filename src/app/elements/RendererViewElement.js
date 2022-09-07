@@ -106,6 +106,7 @@ export default class RendererViewElement extends LitElement {
 <title-bar title="Memory"></title-bar>
 
 <ul>
+  <li><a href="https://threejs.org/docs/#api/en/renderers/WebGLRenderer.info" target="_blank">If this information looks incorrect, please read the three.js docs on renderer.info</a></li> 
   <li><span>geometries</span><span>${info.memory.geometries || 0}</span></li>
   <li><span>textures</span><span>${info.memory.textures || 0}</span></li>
   <li><span>programs</span><span>${info.programs || 0}</span></li>

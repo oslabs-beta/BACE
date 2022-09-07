@@ -27,9 +27,30 @@ const GeometryRenderable = {
   ]
 }
 
+const background = {
+  name: 'Background',
+  type: 'group',
+  props: [
+    {
+      name: 'Background Color',
+      prop: 'background',
+      type: 'color',
+    },
+    // {
+    //   // background texture is not yet functional
+    //   name: 'Background Texture',
+    //   prop: 'background',
+    //   type: 'texture',
+    // }
+  ]
+}
+
 const Scene = {
   type: 'scene',
-  props: object,
+  props: [
+    ...object,
+    background
+  ]
 }
 
 const Helper = {

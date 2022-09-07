@@ -29,7 +29,6 @@ export default class DevtoolsIconElement extends LitElement {
 
   render() {
     const icon = icons[this.icon || "refresh"];
-    // console.log("devtools icon element: ", this.icon)
     // if (this.icon === "visibility_on" || this.icon === "visibility_off") {
     //   return specific html code for those two icons if import separately -- relies on Eden's code
     //   return html`

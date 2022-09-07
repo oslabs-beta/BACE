@@ -45,8 +45,13 @@ export default class SceneViewElement extends LitElement {
     const { activeScene, activeEntity, scenes, graph } = this;
 
     if (!scenes) {
-      return html`<div></div>`;
+      return html`<div></div>
+
+      `;
     }
+
+    // create new property -- altName to render in dropdown menu of scenes/cameras
+    scenes.map(scene => scene.altName = scene.baseType + ', ' + scene.uuid)
 
     let sceneGraphNode;
     if (graph && activeScene) {
@@ -85,9 +90,9 @@ export default class SceneViewElement extends LitElement {
 
   ${ChromeSelectStyle}
 </style>
-<title-bar title="Scene">
+<title-bar title="Scene & Cameras (click to select)">
   <select @change="${this[$onSceneSelect]}" class="chrome-select">
-    ${scenes.map(scene => html`<option value="${scene.uuid}" title="${scene.uuid}">${scene.name || scene.uuid}</option>`)}
+    ${scenes.filter(scene => scene.name != 'DevToolsScene').map(scene => html`<option value="${scene.uuid}" title="${scene.uuid}">${scene.name || scene.altName}</option>`)}
   </select>
   <devtools-icon-button icon="refresh" @click="${this[$onRefreshClick]}">
 </title-bar>

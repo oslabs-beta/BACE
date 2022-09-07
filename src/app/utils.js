@@ -21,8 +21,6 @@ export const cssStringToHexNumber = string => +`0x${string.substr(1)}`;
  * matching UUID.
  */
 export const getObjectByUUID = (obj, uuid) => {
-  console.log("this is obj in getObjectByUUID: ", obj)
-  console.log("uuid in getObjectByUUID: ", uuid)
   if (obj.uuid === uuid) {
     return obj;
   } else if (obj.children && obj.children.length) {
