@@ -72,17 +72,17 @@ function propsToElements(entity, elements, props, entities, onSave, displayData)
         <div class="accordion-title" slot="content">${prop.name}</div>
         ${subProps}
         <style>
-        #btn{
+        .btn{
           background-color: gray;
           color:white
         }
-        #btn:hover {
+        .btn:hover {
           background-color: black;
           color: white;
         }
         </style>
-        <button id='transform-cache' @click='${(e) => onSave(e)}'>Save</button>
-        <button id='display-transform-cache' @click='${(e) => displayData(e, subProps, elements)}'>Display Saved Data</button>
+        <button class='btn' id='transform-cache' @click='${(e) => onSave(e)}'>Save</button>
+        <button class='btn' id='display-transform-cache' @click='${(e) => displayData(e, subProps, elements)}'>Display Saved Data</button>
       </accordion-view>
       `);
       } else {
@@ -243,30 +243,39 @@ export default class ParametersViewElement extends LitElement {
       // elements[3].values[2][0].values[2] = savedPosition;
       // elements[3].values[2][1].values[2] = savedRotation;
       // elements[3].values[2][2].values[2] = savedScale;
-
-      let popup = window.open('about:blank', `Saved Transform ${popupWindow}`, 'location=no,width=300,height=300')
-
+      const popup = window.open("", `Saved Transform ${popupWindow}`, 
+      'location=no,width=280,height=220,resizable=yes,'
+      )
+      
       popup.document.title = `Saved Transform Features ${popupWindow}`;
       popupWindow++;
       // create new div elements
       const savedPosDiv = popup.document.createElement("div");
       const savedRotationDiv = popup.document.createElement("div");
       const savedScaleDiv = popup.document.createElement("div");
-
+      
       // and give them some content
       const savedPosContent = popup.document.createTextNode(`Saved Position: ${savedPosition}`);
       const savedRotationContent = popup.document.createTextNode(`Saved Rotation: ${savedRotation}`);
       const savedScaleContent = popup.document.createTextNode(`Saved Scale: ${savedScale}`);
-
+      
       // add the text nodes to the newly created divs
       savedPosDiv.appendChild(savedPosContent);
       savedRotationDiv.appendChild(savedRotationContent);
       savedScaleDiv.appendChild(savedScaleContent);
-
-      popup.document.body.appendChild(savedPosDiv);
-      popup.document.body.appendChild(savedRotationDiv);
-      popup.document.body.appendChild(savedScaleDiv);
-    }
+      
+      const popupBody = popup.document.body;
+      popupBody.appendChild(savedPosDiv);
+      popupBody.appendChild(savedRotationDiv);
+      popupBody.appendChild(savedScaleDiv);
+      
+      //add styling
+      popupBody.style.background = '#1c1c1b'
+      popupBody.style.color = 'white'
+      popupBody.style.fontFamily = 'Courier New'
+      popupBody.style.fontSize = '85%'
+      
+      };
   };
 
  
