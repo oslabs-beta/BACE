@@ -1,7 +1,7 @@
 const connections = new Map();
 
 /**
- * When opening the three-devtools panel, store
+ * When opening the three-tools panel, store
  * a connection to communicate later.
  */
 browser.runtime.onConnect.addListener(port => {

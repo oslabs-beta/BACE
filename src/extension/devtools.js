@@ -15,5 +15,5 @@ async function createPanel() {
   // Use `/` to circumvent.
   const icon = '/assets/icon_128.png';
   const url = '/src/app/index.html';
-  const panel = await browser.devtools.panels.create(`BACE-three-devtools`, icon, url);
+  const panel = await browser.devtools.panels.create(`three-tools`, icon, url);
 }
