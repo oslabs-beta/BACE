@@ -377,7 +377,7 @@ export default class AppElement extends LitElement {
 <div class="flex" state=${this.isReady ? 'ready' : this.needsReload ? 'needs-reload' : 'waiting'} id="container">
   <!-- Reload panes only when needs to reload, but should autoreload normally -->
   <devtools-message visible-when='needs-reload'>
-    <span>BACE Three Devtools requires a page reload.</span>
+    <span>three-tools requires a page reload.</span>
     <devtools-button @click="${() => this.content.reload()}">
       <span>Reload</span>
     </devtools-button>

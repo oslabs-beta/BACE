@@ -8,6 +8,7 @@ script.text = `
  * This script injected by the installed three.js developer
  * tools extension.
  * https://github.com/threejs/three-devtools
+ * https://github.com/oslabs-beta/BACE 
  */
 
 const $devtoolsReady = Symbol('devtoolsReady');

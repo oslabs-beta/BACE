@@ -12,7 +12,7 @@ const blue = "rgb(120, 250, 228)";
 
 export default `
 
-console.log('%c▲%cthree-devtools%c',
+console.log('%c▲%cthree-tools%c',
   'font-size:150%; color:${green}; text-shadow: -10px 0px ${red}, 10px 0px ${blue}; padding: 0 15px 0 10px;',
   'font-size: 110%; background-color: #666; color:white; padding: 0 5px;',
   'font-size: 110%; background-color: ${blue}; color:#666; padding: 0 5px;');
