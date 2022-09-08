@@ -32,6 +32,7 @@ const $displayData = Symbol('displayData');
 let savedData;
 let copyInfo;
 let popupWindow = 1;
+let isClicked = false;
 
 const CommonProps = {
   Type: {
@@ -65,7 +66,7 @@ function propsToElements(entity, elements, props, entities, onSave, displayData)
     if (prop.type === 'group') {
       const subProps = [];
       propsToElements(entity, subProps, [...prop.props]);
-      if (prop.name === 'Transform') {
+      if (prop.name === 'Transform' && prop.props[0].name !== 'Offset' && prop.props[1].name !== 'Repeat') {
         elements.push(html`
         <accordion-view>
         <div class="accordion-title" slot="content">${prop.name}</div>
@@ -190,6 +191,7 @@ export default class ParametersViewElement extends LitElement {
 
   [$onSave] = (e) => {
     e.preventDefault();
+    isClicked = true;
     savedData = (this.entities && this.entities[this.uuid]) || null;
     copyInfo = clone(savedData);
     console.log('Transform data has been saved!');
@@ -197,70 +199,74 @@ export default class ParametersViewElement extends LitElement {
 
   [$displayData] = (e, subProps, elements) => {
     e.preventDefault();
-    const copy2 = clone(copyInfo);
- 
-    const savedPosition = [copy2['position.x'], copy2['position.y'], copy2['position.z']];
-    const savedRotation = [copy2['rotation.x'], copy2['rotation.y'], copy2['rotation.z'], 'XYZ'];
-    const savedScale = [copy2['scale.x'], copy2['scale.y'], copy2['scale.z']];
-    // this is to handle edge cases
-    if (savedPosition[0] === undefined) {
-      savedPosition[0] = copy2.position[0];
-    }
-    if (savedPosition[1] === undefined) {
-      savedPosition[1] = copy2.position[1];
-    }
-    if (savedPosition[2] === undefined) {
-      savedPosition[2] = copy2.position[2];
-    }
-    if (savedRotation[0] === undefined) {
-      savedRotation[0] = copy2.rotation[0];
-    }
-    if (savedRotation[1] === undefined) {
-      savedRotation[1] = copy2.rotation[1];
-    }
-    if (savedRotation[2] === undefined) {
-      savedRotation[2] = copy2.rotation[2];
-    }
-    if (savedScale[0] === undefined) {
-      savedScale[0] = copy2.scale[0];
-    }
-    if (savedScale[1] === undefined) {
-      savedScale[1] = copy2.scale[1];
-    }
-    if (savedScale[2] === undefined) {
-      savedScale[2] = copy2.scale[2];
-    }
-    console.log('this is savedPosition', savedPosition);
-    console.log('this is savedRotation', savedRotation);
-    console.log('this is savedScale', savedScale);
+    if(isClicked === false){
+      alert('No saved transform values');
+    } else {
+      const copy2 = clone(copyInfo);
+  
+      const savedPosition = [copy2['position.x'], copy2['position.y'], copy2['position.z']];
+      const savedRotation = [copy2['rotation.x'], copy2['rotation.y'], copy2['rotation.z'], 'XYZ'];
+      const savedScale = [copy2['scale.x'], copy2['scale.y'], copy2['scale.z']];
+      // this is to handle edge cases
+      if (savedPosition[0] === undefined) {
+        savedPosition[0] = copy2.position[0];
+      }
+      if (savedPosition[1] === undefined) {
+        savedPosition[1] = copy2.position[1];
+      }
+      if (savedPosition[2] === undefined) {
+        savedPosition[2] = copy2.position[2];
+      }
+      if (savedRotation[0] === undefined) {
+        savedRotation[0] = copy2.rotation[0];
+      }
+      if (savedRotation[1] === undefined) {
+        savedRotation[1] = copy2.rotation[1];
+      }
+      if (savedRotation[2] === undefined) {
+        savedRotation[2] = copy2.rotation[2];
+      }
+      if (savedScale[0] === undefined) {
+        savedScale[0] = copy2.scale[0];
+      }
+      if (savedScale[1] === undefined) {
+        savedScale[1] = copy2.scale[1];
+      }
+      if (savedScale[2] === undefined) {
+        savedScale[2] = copy2.scale[2];
+      }
+      console.log('this is savedPosition', savedPosition);
+      console.log('this is savedRotation', savedRotation);
+      console.log('this is savedScale', savedScale);
 
-    // keeping elements to see if there is a way to reload elements when button is clicked
-    // elements[3].values[2][0].values[2] = savedPosition;
-    // elements[3].values[2][1].values[2] = savedRotation;
-    // elements[3].values[2][2].values[2] = savedScale;
+      // keeping elements to see if there is a way to reload elements when button is clicked
+      // elements[3].values[2][0].values[2] = savedPosition;
+      // elements[3].values[2][1].values[2] = savedRotation;
+      // elements[3].values[2][2].values[2] = savedScale;
 
-    let popup = window.open('about:blank', `Saved Transform ${popupWindow}`, 'location=no,width=300,height=300')
+      let popup = window.open('about:blank', `Saved Transform ${popupWindow}`, 'location=no,width=300,height=300')
 
-    popup.document.title = `Saved Transform Features ${popupWindow}`;
-    popupWindow++;
-    // create new div elements
-    const savedPosDiv = popup.document.createElement("div");
-    const savedRotationDiv = popup.document.createElement("div");
-    const savedScaleDiv = popup.document.createElement("div");
+      popup.document.title = `Saved Transform Features ${popupWindow}`;
+      popupWindow++;
+      // create new div elements
+      const savedPosDiv = popup.document.createElement("div");
+      const savedRotationDiv = popup.document.createElement("div");
+      const savedScaleDiv = popup.document.createElement("div");
 
-    // and give them some content
-    const savedPosContent = popup.document.createTextNode(`Saved Position: ${savedPosition}`);
-    const savedRotationContent = popup.document.createTextNode(`Saved Rotation: ${savedRotation}`);
-    const savedScaleContent = popup.document.createTextNode(`Saved Scale: ${savedScale}`);
+      // and give them some content
+      const savedPosContent = popup.document.createTextNode(`Saved Position: ${savedPosition}`);
+      const savedRotationContent = popup.document.createTextNode(`Saved Rotation: ${savedRotation}`);
+      const savedScaleContent = popup.document.createTextNode(`Saved Scale: ${savedScale}`);
 
-    // add the text nodes to the newly created divs
-    savedPosDiv.appendChild(savedPosContent);
-    savedRotationDiv.appendChild(savedRotationContent);
-    savedScaleDiv.appendChild(savedScaleContent);
+      // add the text nodes to the newly created divs
+      savedPosDiv.appendChild(savedPosContent);
+      savedRotationDiv.appendChild(savedRotationContent);
+      savedScaleDiv.appendChild(savedScaleContent);
 
-    popup.document.body.appendChild(savedPosDiv);
-    popup.document.body.appendChild(savedRotationDiv);
-    popup.document.body.appendChild(savedScaleDiv);
+      popup.document.body.appendChild(savedPosDiv);
+      popup.document.body.appendChild(savedRotationDiv);
+      popup.document.body.appendChild(savedScaleDiv);
+    }
   };
 
  
