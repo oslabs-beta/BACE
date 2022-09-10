@@ -180,15 +180,15 @@ View rendering info from the scenes available.  Note: this information is not al
   - information is then opened in a popup window and logged in the console
 
 ## Recommended Next Steps:
-- add support to change camera properties (Recommended to take a look at TransformControls.js)
-- once the camera works, add functionality to 'highlight' the selected scene
-- update Manifest version to version 3 (version 2 will be deprecated in ~1 year)
+- Add support to change camera properties (Recommended to take a look at TransformControls.js)
+- Once the camera works, add functionality to 'highlight' the selected scene
+- Update Manifest version to version 3 (version 2 will be deprecated in ~1 year)
   - Update Manifest.json to accept inject.js file as a web resource
   - Activate background.js as a usable service worker
-- ensure support for all Materials properties
-- make the panels resizeable
-- create a persistent unique identifier (UUID is not persistent currently)
-- renderer info is not always correct -- please see renderer.info in the three.js docs (hyperlinked in the renderer info tab of the devtool)
+- Ensure support for all Materials properties
+- Make the panels resizeable
+- Create a persistent unique identifier (UUID is not persistent currently)
+- Renderer info is not always correct -- please see renderer.info in the three.js docs (hyperlinked in the renderer info tab of the devtool)
 
 ## Troubleshooting:
 - You have an error that you cannot describe or it is your first error
@@ -205,6 +205,7 @@ View rendering info from the scenes available.  Note: this information is not al
 
 ## To Contribute:
 - Fork this repository
-- create a new branch with the name of the feature to add / change
-- create a PR to the dev branch
-- use descriptive commit messages and include comments in the description of your PR
+- Create a new branch with the name of the feature to add / change
+- Create a PR to the dev branch
+- Use descriptive commit messages and include comments in the description of your PR
+- When completed with your feature please send an email to bacetools@gmail.com, and one of the members will review and merge
