@@ -31,8 +31,6 @@ The [architecture](https://github.com/threejs/three-devtools/blob/master/DEVELOP
 - JavaScript
 - [Webextension Browser-Polyfill](https://github.com/mozilla/webextension-polyfill) to make custom-elements Chrome-compatible
 - [Chrome API](https://developer.chrome.com/docs/extensions/reference/runtime/) to create DevTools panel and enable message passing
-- [Jest](https://jestjs.io/) for testing
-- [Node-Redis](https://github.com/redis/node-redis) to set-up an in-memory database that caches entity data
 
 #### Frontend Tech Stack
 - JavaScript/HTML/CSS
@@ -202,6 +200,9 @@ View rendering info from the scenes available.  Note: this information is not al
   - Chrome extension still does not have any compatabilities with websites using i-frames, if you would like to use our tool remove any iframes for our product to register your code. 
 - You cannot type h into the searchbar
   - Chrome extension has a bug where h cannot be typed into our extensions searchbar, use shift h in this case
+- You are having an issue with the build-dist.sh file
+  - Check this [stack overflow](https://stackoverflow.com/questions/14219092/bash-script-and-bin-bashm-bad-interpreter-no-such-file-or-directory) 
+    - Recommended to try `sed -i -e 's/\r$//' build-dist.sh` and `./build-dist.sh`
 
 ## To Contribute:
 - Fork this repository
