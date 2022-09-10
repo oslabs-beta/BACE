@@ -12,11 +12,12 @@ function injectScript(file_path, tag) {
   script.onload = () => {
     script.parentNode.removeChild(script);
   }
-  node.appendChild(script);
+  node.prepend(script);
+  
 }
 //the content script is going to be listen to messages from the injected script since its now apart of the page
 // getURL gets us a file within the extension we created
-injectScript(chrome.runtime.getURL('../content/inject.js'), 'body');
+injectScript(chrome.runtime.getURL('../content/inject.js'), 'html');
 
 
 // (document.head || document.documentElement).appendChild(script);
