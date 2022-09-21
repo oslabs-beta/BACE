@@ -77,7 +77,9 @@ return class EntityCache extends EventTarget {
       };
  
       if (object.parent) {
-        graph[object.parent.uuid].children.push(object.uuid);
+        if(graph[object.parent.uuid]) {
+          graph[object.parent.uuid].children.push(object.uuid);
+        }
       }
 
       if (object.children) {
