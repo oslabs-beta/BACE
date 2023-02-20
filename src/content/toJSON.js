@@ -51,7 +51,7 @@ return function InstrumentedToJSON (meta) {
     // Patch for DataTexture.toJSON (https://github.com/mrdoob/three.js/pull/17745)
     if (isObject(this.image) || (Array.isArray(this.image) && this.image.some(isObject))) {
       textureData = this.image;
-      this.image = undefined;
+      this.image = null;
     }
   }
 
