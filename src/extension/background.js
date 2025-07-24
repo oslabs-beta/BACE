@@ -4,7 +4,7 @@ const connections = new Map();
  * When opening the three-tools panel, store
  * a connection to communicate later.
  */
-browser.runtime.onConnect.addListener(port => {
+chrome.runtime.onConnect.addListener(port => {
   let tabId;
   const onMessage = (message) => {
     tabId = message.tabId;
@@ -26,7 +26,7 @@ browser.runtime.onConnect.addListener(port => {
  * When receiving a message from content, pass it
  * along to the devtools panel.
  */
-browser.runtime.onMessage.addListener((request, sender) => {
+chrome.runtime.onMessage.addListener((request, sender) => {
   if (sender.tab) {
     const tabId = sender.tab.id;
     if (connections.has(tabId)) {
@@ -40,7 +40,7 @@ browser.runtime.onMessage.addListener((request, sender) => {
  * When a page has reloaded; if three-devtools are open, notify
  * the devtools panel so it can inject the content-side of the tools.
  */
-browser.webNavigation.onDOMContentLoaded.addListener(({ tabId, frameId }) => {
+chrome.webNavigation.onDOMContentLoaded.addListener(({ tabId, frameId }) => {
   // Only support top-level frame for now
   if (frameId !== 0) {
     return;
