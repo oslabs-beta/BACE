@@ -31,8 +31,14 @@
     "https://*/*"
   ],
   "web_accessible_resources": [{
-    "resources": ["src/content/*.js"],
+    "resources": [
+      "src/content/*.js",
+      "src/content/injected-script.js"
+    ],
     "matches": ["http://*/*", "https://*/*"]
   }],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; style-src 'self' 'unsafe-inline';"
+  },
   "author": "Emily Bae, Katie Ahn, Alyssa Chew, & Karl Eden"
 }
