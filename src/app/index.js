@@ -63,12 +63,12 @@ function changeTheme(themeName) {
 
 // firefox devtools are not reloaded when the theme is changed
 // so we have to add a listener for it
-if (browser.devtools.panels.onThemeChanged) {
-  browser.devtools.panels.onThemeChanged.addListener(changeTheme);
+if (chrome.devtools.panels.onThemeChanged) {
+  chrome.devtools.panels.onThemeChanged.addListener(changeTheme);
 }
 
 // match browser devtools theme setting
-changeTheme(browser.devtools.panels.themeName);
+changeTheme(chrome.devtools.panels.themeName);
 
 const agent = getAgent(window.navigator.userAgent);
 if (agent.os.name === 'window') {

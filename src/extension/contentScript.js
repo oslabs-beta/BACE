@@ -56,16 +56,11 @@ window.addEventListener('message', e => {
     return;
   }
 
-  // Don't bring in the 35kb polyfill on every page
-  // for a single command that doesn't matter if its callback
-  // promise; handle this manually.
-  const extRoot = globalThis.chrome ? globalThis.chrome : globalThis.browser;
-
   try {
-    extRoot.runtime.sendMessage(e.data);
+    chrome.runtime.sendMessage(e.data);
   } catch (error) {
     console.error(error);
-    extRoot.runtime.sendMessage({
+    chrome.runtime.sendMessage({
       type: 'error',
       id: 'three-devtools',
       data: error.toString(), 

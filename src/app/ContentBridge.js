@@ -32,14 +32,14 @@ export default class ContentBridge extends EventTarget {
     this[$renderers] = new Map();
     this[$renderingInfo] = new Map();
 
-    this.port = browser.runtime.connect({
+    this.port = chrome.runtime.connect({
       name: 'three-devtools',
     });
 
     // Notify background port that the tools panel is open
     this.port.postMessage({
       name: 'connect',
-      tabId: browser.devtools.inspectedWindow.tabId,
+      tabId: chrome.devtools.inspectedWindow.tabId,
     });
 
     this.port.onDisconnect.addListener(request => {
@@ -64,7 +64,7 @@ export default class ContentBridge extends EventTarget {
   }
 
   reload() {
-    browser.devtools.inspectedWindow.reload();
+    chrome.devtools.inspectedWindow.reload();
   }
 
   getEntity(uuid) {
@@ -259,7 +259,7 @@ export default class ContentBridge extends EventTarget {
 
   async [$eval](string) {
     this[$log]('EVAL', string);
-    const [result, error] = await browser.devtools.inspectedWindow.eval(string);
+    const [result, error] = await chrome.devtools.inspectedWindow.eval(string);
     if (error) {
       console.warn(error);
     }
